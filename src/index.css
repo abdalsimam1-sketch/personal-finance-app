@@ -1,0 +1,148 @@
+:root {
+  /* Beige */
+  --color-beige-500: #98908b;
+  --color-beige-100: #f8f4f0;
+
+  /* Slate */
+  --color-slate-600: #666ca3;
+
+  /* Grey */
+  --color-grey-900: #201f24;
+  --color-grey-500: #696868;
+  --color-grey-300: #b3b3b3;
+  --color-grey-100: #f2f2f2;
+
+  /* Green */
+  --color-green: #277c78;
+
+  /* Yellow */
+  --color-yellow: #f2cdac;
+
+  /* Cyan */
+  --color-cyan: #82c9d7;
+
+  /* Navy */
+  --color-navy: #626070;
+
+  /* Red */
+  --color-red: #c94736;
+
+  /* Purple */
+  --color-purple: #826cb0;
+
+  /* Turquoise */
+  --color-turquoise: #597c7c;
+
+  /* Brown */
+  --color-brown: #93674f;
+
+  /* Magenta */
+  --color-magenta: #934f6f;
+
+  /* Blue */
+  --color-blue: #3f82b2;
+
+  /* Navy Grey */
+  --color-navy-grey: #97a0ac;
+
+  /* Army Green */
+  --color-army-green: #7f9161;
+
+  /* Gold */
+  --color-gold: #cab361;
+
+  /* Orange */
+  --color-orange: #be6c49;
+
+  /* White */
+  --color-white: #ffffff;
+
+  /* Font Families */
+  --font-family-bold: "Public Sans Bold", sans-serif;
+  --font-family-regular: "Public Sans Regular", sans-serif;
+
+  /* Font Sizes */
+  --font-size-preset-1: 32px;
+  --font-size-preset-2: 20px;
+  --font-size-preset-3: 16px;
+  --font-size-preset-4: 14px;
+  --font-size-preset-5: 12px;
+
+  /* Line Heights */
+  --line-height-preset-1: 120%;
+  --line-height-preset-2: 120%;
+  --line-height-preset-3: 150%;
+  --line-height-preset-4: 150%;
+  --line-height-preset-5: 150%;
+
+  /* Letter Spacing */
+  --letter-spacing-preset-1: 0px;
+  --letter-spacing-preset-2: 0px;
+  --letter-spacing-preset-3: 0px;
+  --letter-spacing-preset-4: 0px;
+  --letter-spacing-preset-5: 0px;
+
+  /* Font Weights */
+  --font-weight-preset-1: bold; /* Public Sans Bold */
+  --font-weight-preset-2: bold; /* Public Sans Bold */
+  --font-weight-preset-3: bold; /* Public Sans Bold */
+  --font-weight-preset-4: normal; /* Public Sans Regular */
+  --font-weight-preset-4-bold: bold; /* Public Sans Bold */
+  --font-weight-preset-5: normal; /* Public Sans Regular */
+  --font-weight-preset-5-bold: bold; /* Public Sans Bold */
+}
+.text-preset-1 {
+  font-family: var(--font-family-bold);
+  font-size: var(--font-size-preset-1);
+  font-weight: var(--font-weight-preset-1);
+  line-height: var(--line-height-preset-1);
+  letter-spacing: var(--letter-spacing-preset-1);
+}
+
+.text-preset-2 {
+  font-family: var(--font-family-bold);
+  font-size: var(--font-size-preset-2);
+  font-weight: var(--font-weight-preset-2);
+  line-height: var(--line-height-preset-2);
+  letter-spacing: var(--letter-spacing-preset-2);
+}
+
+.text-preset-3 {
+  font-family: var(--font-family-bold);
+  font-size: var(--font-size-preset-3);
+  font-weight: var(--font-weight-preset-3);
+  line-height: var(--line-height-preset-3);
+  letter-spacing: var(--letter-spacing-preset-3);
+}
+
+.text-preset-4 {
+  font-family: var(--font-family-regular);
+  font-size: var(--font-size-preset-4);
+  font-weight: var(--font-weight-preset-4);
+  line-height: var(--line-height-preset-4);
+  letter-spacing: var(--letter-spacing-preset-4);
+}
+
+.text-preset-4-bold {
+  font-family: var(--font-family-bold);
+  font-size: var(--font-size-preset-4);
+  font-weight: var(--font-weight-preset-4-bold);
+  line-height: var(--line-height-preset-4);
+  letter-spacing: var(--letter-spacing-preset-4);
+}
+
+.text-preset-5 {
+  font-family: var(--font-family-regular);
+  font-size: var(--font-size-preset-5);
+  font-weight: var(--font-weight-preset-5);
+  line-height: var(--line-height-preset-5);
+  letter-spacing: var(--letter-spacing-preset-5);
+}
+
+.text-preset-5-bold {
+  font-family: var(--font-family-bold);
+  font-size: var(--font-size-preset-5);
+  font-weight: var(--font-weight-preset-5-bold);
+  line-height: var(--line-height-preset-5);
+  letter-spacing: var(--letter-spacing-preset-5);
+}

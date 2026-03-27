@@ -146,3 +146,42 @@
   line-height: var(--line-height-preset-5);
   letter-spacing: var(--letter-spacing-preset-5);
 }
+
+/* BUTTON STYLES */
+
+.btn.btn-primary {
+  background-color: var(--color-grey-900);
+  color: var(--color-grey-100);
+  border: var(--color-grey-900);
+}
+.btn.btn-primary:hover {
+  background-color: var(--color-grey-500);
+}
+
+.btn.btn-secondary {
+  background-color: var(--color-beige-100);
+  color: var(--color-grey-900);
+  border: var(--color-beige-100);
+}
+.btn.btn-secondary:hover {
+  background-color: white;
+  color: var(--color-grey-900);
+  border: 1px solid var(--color-beige-500);
+}
+.btn.btn-destroy {
+  color: white;
+  background-color: var(--color-red);
+}
+.btn.btn-destroy:hover {
+  background-color: var(--color-red);
+  color: white;
+  opacity: 80%;
+}
+.btn.btn-tertiary {
+  background: transparent;
+  border: none;
+  color: var(--color-grey-500);
+}
+.btn.btn-tertiary:hover {
+  color: black;
+}

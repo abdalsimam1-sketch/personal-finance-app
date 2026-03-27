@@ -149,10 +149,14 @@
 
 /* BUTTON STYLES */
 
-.btn-1 {
-  background-color: var(--color-grey-900) !important;
-  color: var(--color-grey-100) !important;
+.btn.btn-primary {
+  background-color: var(--color-grey-900);
+  color: var(--color-grey-100);
+  border: var(--color-grey-900);
 }
-.btn-1:hover {
-  background-color: var(--color-grey-500) !important;
+.btn.btn-primary:hover {
+  background-color: var(--color-grey-500);
+}
+
+.btn-2 {
 }

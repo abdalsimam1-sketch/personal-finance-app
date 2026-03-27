@@ -5,6 +5,7 @@ import { RecurringBills } from "./pages/RecurringBills";
 import { Transactions } from "./pages/Transactions";
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "./components/Layout/Layout";
+import { TestingPage } from "./pages/TestingPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             element={<Transactions></Transactions>}
           ></Route>
         </Route>
+        <Route path="/test" element={<TestingPage></TestingPage>}></Route>
       </Routes>
     </>
   );

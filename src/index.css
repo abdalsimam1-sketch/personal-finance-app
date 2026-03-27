@@ -146,3 +146,13 @@
   line-height: var(--line-height-preset-5);
   letter-spacing: var(--letter-spacing-preset-5);
 }
+
+/* BUTTON STYLES */
+
+.btn-1 {
+  background-color: var(--color-grey-900) !important;
+  color: var(--color-grey-100) !important;
+}
+.btn-1:hover {
+  background-color: var(--color-grey-500) !important;
+}

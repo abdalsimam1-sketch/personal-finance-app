@@ -7,11 +7,11 @@ export const Layout = () => {
   };
 
   return (
-    <div>
+    <main className="container">
       <section>
         <Sidebar menuIsOpen={menuIsOpen} toggleMenu={toggleMenu}></Sidebar>
       </section>
       <section></section>
-    </div>
+    </main>
   );
 };

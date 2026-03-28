@@ -7,7 +7,7 @@ export const Layout = () => {
   };
 
   return (
-    <main className="container">
+    <main className="">
       <section>
         <Sidebar menuIsOpen={menuIsOpen} toggleMenu={toggleMenu}></Sidebar>
       </section>

@@ -6,15 +6,21 @@ import transactions from "../assets/images/icon-nav-transactions.svg";
 
 export const sidebar = [
   {
-    icon: budgets,
-    name: "Budgets",
-    path: "/budgets",
-  },
-  {
     icon: overview,
     name: "Overview",
     path: "/",
   },
+  {
+    icon: transactions,
+    name: "Transactions",
+    path: "/transactions",
+  },
+  {
+    icon: budgets,
+    name: "Budgets",
+    path: "/budgets",
+  },
+
   {
     icon: pots,
     name: "Pots",
@@ -24,10 +30,5 @@ export const sidebar = [
     icon: bills,
     name: "Recurring Bills",
     path: "/bills",
-  },
-  {
-    icon: transactions,
-    name: "Transactions",
-    path: "/transactions",
   },
 ];

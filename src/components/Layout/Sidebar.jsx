@@ -3,7 +3,7 @@ import largeLogo from "../../assets/images/logo-large.svg";
 import close from "../../assets/images/icon-minimize-menu.svg";
 import { sidebar } from "../../data/SideBarData";
 import { Link } from "react-router-dom";
-export const Sidebar = () => {
+export const Sidebar = ({ menuIsOpen, toggleMenu }) => {
   return (
     <main>
       <section
@@ -11,7 +11,11 @@ export const Sidebar = () => {
         style={{ height: "600px", width: "300px" }}
       >
         <div>
-          <img src={largeLogo} alt="" className="mb-3" />
+          {menuIsOpen ? (
+            <img src={largeLogo} alt="" className="mb-3" />
+          ) : (
+            <img src={smallLogo} alt="" />
+          )}
           <div className="nav-links d-flex flex-column gap-2">
             {sidebar.map((item, index) => (
               <div className="col-12 " key={index}>
@@ -25,7 +29,7 @@ export const Sidebar = () => {
             ))}
           </div>
         </div>
-        <div className="d-flex gap-2 btn">
+        <div className="d-flex gap-2 btn" onClick={toggleMenu}>
           <img src={close} alt="" />
           <span className="text-light">Minimize Menu</span>
         </div>

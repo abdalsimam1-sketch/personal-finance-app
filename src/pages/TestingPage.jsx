@@ -11,6 +11,7 @@ export const TestingPage = () => {
         placeholder="Placeholder"
         label="Basic field"
         helper="Helper"
+        variant=""
       ></Input>
     </div>
   );

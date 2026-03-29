@@ -5,14 +5,20 @@ export const Input = ({ placeholder, helper, name, label, variant }) => {
         {label}
       </label>
       <div className="input-wrapper">
-        <span className=" text-muted">$</span>
+        <span
+          className={`text-muted prefix ${variant !== "prefix" ? "d-none" : ""}`}
+        >
+          $
+        </span>
         <input
           type="text"
           placeholder={placeholder}
           id={name}
           className="form-control ps-4"
         />
-        <i className="bi bi-search icon text-muted"></i>
+        <i
+          className={`bi bi-search icon text-muted ${variant !== "icon" ? "d-none" : ""}`}
+        ></i>
       </div>
       <span className="align-self-end fw-bold text-end d-block helper-text">
         {helper}

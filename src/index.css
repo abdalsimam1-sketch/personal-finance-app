@@ -185,3 +185,28 @@
 .btn.btn-tertiary:hover {
   color: black;
 }
+
+/* INPUT COMPONENT */
+.input-label,
+.helper-text {
+  color: var(--color-beige-500);
+}
+
+.form-control {
+  border-color: var(--color-beige-500) !important;
+}
+.input-wrapper {
+  position: relative;
+}
+.prefix {
+  position: absolute;
+  left: 12px;
+  transform: translateY(-50%);
+  top: 50%;
+}
+.icon {
+  position: absolute;
+  right: 12px;
+  transform: translateY(-50%);
+  top: 50%;
+}

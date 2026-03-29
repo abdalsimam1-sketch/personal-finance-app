@@ -185,3 +185,13 @@
 .btn.btn-tertiary:hover {
   color: black;
 }
+
+/* INPUT COMPONENT */
+.input-label,
+.helper-text {
+  color: var(--color-beige-500);
+}
+
+.form-control {
+  border-color: var(--color-beige-500) !important;
+}

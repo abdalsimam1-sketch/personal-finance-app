@@ -8,8 +8,8 @@ export const TestingPage = () => {
       style={{ width: "100%", height: "100vh" }}
     >
       <Input
-        placeholder="placeholder"
-        label="Basic-field"
+        placeholder="Placeholder"
+        label="Basic field"
         helper="Helper"
       ></Input>
     </div>

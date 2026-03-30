@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 
 export const MobileNav = () => {
   return (
-    <div className="bg-dark d-flex justify-content-around rounded-top py-2">
+    <div
+      className="bg-dark d-flex justify-content-around rounded-top py-2 w-100"
+      style={{ position: "fixed", bottom: "0", left: "0" }}
+    >
       {sidebar.map((item, index) => (
         <Link to={item.path} className="text-decoration-none" key={index}>
           <div className="btn d-flex flex-column align-items-center justify-content-around">

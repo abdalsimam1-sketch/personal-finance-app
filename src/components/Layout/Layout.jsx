@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { MobileNav } from "./MobileNav";
-import { Title } from "../UI/Title";
+import { Outlet } from "react-router-dom";
 
 export const Layout = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(true);
@@ -21,7 +21,7 @@ export const Layout = () => {
       </section>
 
       <section className="text-dark">
-        <Title children="Overview"></Title>
+        <Outlet></Outlet>
       </section>
     </main>
   );

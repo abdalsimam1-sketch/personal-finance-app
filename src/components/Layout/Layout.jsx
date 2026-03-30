@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Sidebar } from "./Sidebar";
+import { MobileNav } from "./MobileNav";
 export const Layout = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(true);
   const toggleMenu = () => {
@@ -9,7 +10,12 @@ export const Layout = () => {
   return (
     <main className="">
       <section>
-        <Sidebar menuIsOpen={menuIsOpen} toggleMenu={toggleMenu}></Sidebar>
+        <div className="d-none d-lg-flex">
+          <Sidebar menuIsOpen={menuIsOpen} toggleMenu={toggleMenu}></Sidebar>
+        </div>
+        <div className="d-lg-none">
+          <MobileNav></MobileNav>
+        </div>
       </section>
       <section></section>
     </main>

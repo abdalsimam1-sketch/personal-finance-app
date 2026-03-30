@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { MobileNav } from "./MobileNav";
+import { Title } from "../UI/Title";
+
 export const Layout = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(true);
   const toggleMenu = () => {
@@ -8,7 +10,7 @@ export const Layout = () => {
   };
 
   return (
-    <main className="">
+    <main className="d-flex gap-5">
       <section>
         <div className="d-none d-lg-flex">
           <Sidebar menuIsOpen={menuIsOpen} toggleMenu={toggleMenu}></Sidebar>
@@ -17,7 +19,10 @@ export const Layout = () => {
           <MobileNav></MobileNav>
         </div>
       </section>
-      <section></section>
+
+      <section className="text-dark">
+        <Title children="Overview"></Title>
+      </section>
     </main>
   );
 };

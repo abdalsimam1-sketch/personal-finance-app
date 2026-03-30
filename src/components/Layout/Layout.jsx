@@ -10,7 +10,7 @@ export const Layout = () => {
   };
 
   return (
-    <main className="d-flex gap-5">
+    <main className="d-flex ">
       <section>
         <div className="d-none d-lg-flex">
           <Sidebar menuIsOpen={menuIsOpen} toggleMenu={toggleMenu}></Sidebar>
@@ -20,7 +20,7 @@ export const Layout = () => {
         </div>
       </section>
 
-      <section className="text-dark">
+      <section className="text-dark flex-grow-1">
         <Outlet></Outlet>
       </section>
     </main>

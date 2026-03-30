@@ -26,7 +26,7 @@ export const Overview = () => {
   ];
 
   return (
-    <div className="container px-3">
+    <div className="container px-3 d-flex flex-column gap-5">
       <section>
         <Title children="Overview"></Title>
       </section>

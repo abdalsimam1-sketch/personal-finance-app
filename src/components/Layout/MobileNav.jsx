@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export const MobileNav = () => {
   return (
-    <div className="container bg-dark d-flex justify-content-around">
+    <div className="bg-dark d-flex justify-content-around rounded-top">
       {sidebar.map((item, index) => (
         <Link to={item.path} className="text-decoration-none" key={index}>
           <div className="btn d-flex flex-column align-items-center justify-content-around">
@@ -14,7 +14,7 @@ export const MobileNav = () => {
               style={{ height: "20px" }}
               className="img-fluid"
             />
-            <span className="text-decoration-none text-light text-nowrap">
+            <span className="text-decoration-none text-light text-nowrap d-none d-md-block d-lg-none">
               {item.name}
             </span>
           </div>

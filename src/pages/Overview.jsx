@@ -3,6 +3,7 @@ import { Title } from "../components/UI/Title";
 import data from "../data/data.json";
 import { BalanceCard } from "../components/UI/BalanceCard";
 import PotsIcon from "../assets/images/icon-nav-pots.svg";
+import { SeeDetails } from "../components/UI/SeeDetails";
 
 export const Overview = () => {
   const balanceData = [
@@ -52,6 +53,11 @@ export const Overview = () => {
       <section className="row">
         <div className="col-left col-12 col-lg-6">
           <section className="pots-section card p-4 ">
+            <SeeDetails
+              SeeDetail="See Details"
+              label="Pots"
+              path="/pots"
+            ></SeeDetails>
             <div className="col-12 col-md-5 card pots-total p-4">
               <div className="d-flex gap-3">
                 <img

@@ -2,6 +2,7 @@ import React from "react";
 import { Title } from "../components/UI/Title";
 import data from "../data/data.json";
 import { BalanceCard } from "../components/UI/BalanceCard";
+import PotsIcon from "../assets/images/icon-nav-pots.svg";
 
 export const Overview = () => {
   const balanceData = [
@@ -24,6 +25,8 @@ export const Overview = () => {
       currency: "$",
     },
   ];
+
+  const TotalPots = data.pots.reduce((sum, pot) => sum + pot.total, 0);
 
   return (
     <div className="container px-3 d-flex flex-column gap-5">
@@ -48,7 +51,25 @@ export const Overview = () => {
 
       <section className="row">
         <div className="col-left col-12 col-lg-6">
-          <section className="pots-section card"></section>
+          <section className="pots-section card p-4 ">
+            <div className="col-12 col-md-5 card pots-total p-4">
+              <div className="d-flex gap-3">
+                <img
+                  src={PotsIcon}
+                  alt="pots icon"
+                  style={{ width: "1.3rem" }}
+                />
+                <div>
+                  <span className="text-preset-5">Total Saved</span>
+                  <h1 className="text-preset-1">
+                    <span>$</span>
+                    {TotalPots}
+                  </h1>
+                </div>
+              </div>
+            </div>
+            <div></div>
+          </section>
           <section className="transactions-section  card"></section>
         </div>
         <div className="col-right col-12 col-lg-6">

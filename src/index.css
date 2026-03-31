@@ -216,6 +216,12 @@
   background-color: var(--color-beige-100);
   min-height: 100vh;
 }
+
+/* OVERVIEW-POTS */
+div > .pots-total {
+  background-color: var(--color-beige-100);
+}
+
 @media (min-width: 768px) {
 }
 

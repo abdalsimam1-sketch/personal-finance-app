@@ -30,6 +30,7 @@ export const Overview = () => {
       <section>
         <Title children="Overview"></Title>
       </section>
+
       <section>
         <div className="row g-4">
           {balanceData.map((item, index) => (
@@ -42,6 +43,19 @@ export const Overview = () => {
               ></BalanceCard>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section>
+        <div className="row">
+          <div className="col-left col-12 col-lg-6">
+            <section className="pots-section"></section>
+            <section className="transactions-section"></section>
+          </div>
+          <div className="col-right col-12 col-lg-6">
+            <section className="budgets-section"></section>
+            <section className="bills-section"></section>
+          </div>
         </div>
       </section>
     </div>

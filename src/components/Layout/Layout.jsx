@@ -10,7 +10,7 @@ export const Layout = () => {
   };
 
   return (
-    <main className="d-flex ">
+    <main className="d-flex  layout-page">
       <section>
         <div className="d-none d-lg-flex">
           <Sidebar menuIsOpen={menuIsOpen} toggleMenu={toggleMenu}></Sidebar>

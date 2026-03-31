@@ -216,6 +216,11 @@ div > .pots-total {
   background-color: var(--color-beige-100);
 }
 
+/* LAYOUT PAGE */
+.layout-page {
+  background-color: var(--color-beige-100);
+}
+
 @media (min-width: 768px) {
 }
 

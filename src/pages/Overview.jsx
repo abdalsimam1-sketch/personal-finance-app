@@ -48,12 +48,12 @@ export const Overview = () => {
 
       <section className="row">
         <div className="col-left col-12 col-lg-6">
-          <section className="pots-section"></section>
-          <section className="transactions-section"></section>
+          <section className="pots-section card"></section>
+          <section className="transactions-section  card"></section>
         </div>
         <div className="col-right col-12 col-lg-6">
-          <section className="budgets-section"></section>
-          <section className="bills-section"></section>
+          <section className="budgets-section  card"></section>
+          <section className="bills-section  card"></section>
         </div>
       </section>
     </div>

@@ -63,8 +63,8 @@ export const Overview = () => {
                   </span>
                 </Link>
               </div>
-              <div className="row">
-                <div className="card col-5 pots-total p-4">
+              <div className="row g-3">
+                <div className="card col-12 col-md-5 pots-total p-4">
                   <div className="d-flex align-items-center gap-3 ">
                     <img
                       src={PotsImage}
@@ -82,7 +82,7 @@ export const Overview = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-6">
+                <div className="col-12 col-md-7">
                   <div className="row g-4">
                     {data.pots.slice(0, 4).map((item, index) => (
                       <div className="col-6 " key={index}>
@@ -96,7 +96,7 @@ export const Overview = () => {
                             }}
                           ></div>
                           <div className="d-flex flex-column">
-                            <span className="text-preset-5 text-muted">
+                            <span className="text-preset-5 text-muted text-nowrap">
                               {item.name}
                             </span>
                             <span className="text-preset-5 fw-bold">

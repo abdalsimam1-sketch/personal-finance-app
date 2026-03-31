@@ -58,23 +58,50 @@ export const Overview = () => {
               label="Pots"
               path="/pots"
             ></SeeDetails>
-            <div className="col-12 col-md-5 card pots-total p-4">
-              <div className="d-flex gap-3">
-                <img
-                  src={PotsIcon}
-                  alt="pots icon"
-                  style={{ width: "1.3rem" }}
-                />
-                <div>
-                  <span className="text-preset-5">Total Saved</span>
-                  <h1 className="text-preset-1">
-                    <span>$</span>
-                    {TotalPots}
-                  </h1>
+            <div className="row g-3">
+              <div className="col-12 col-md-5 card pots-total p-4">
+                <div className="d-flex gap-3">
+                  <img
+                    src={PotsIcon}
+                    alt="pots icon"
+                    style={{ width: "1.3rem" }}
+                  />
+                  <div>
+                    <span className="text-preset-5">Total Saved</span>
+                    <h1 className="text-preset-1">
+                      <span>$</span>
+                      {TotalPots}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-md-7">
+                <div className="row g-3">
+                  {data.pots.slice(0, 4).map((item, index) => (
+                    <div className="col-6">
+                      <div className="d-flex gap-2 ">
+                        <div
+                          className="rounded-pill"
+                          style={{
+                            width: "4px",
+                            height: "2rem",
+                            backgroundColor: item.theme,
+                          }}
+                        ></div>
+                        <div className="d-flex flex-column">
+                          <span className="text-muted text-preset-5">
+                            {item.name}
+                          </span>
+                          <span className="fw-bold text-preset-4">
+                            ${item.total}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-            <div></div>
           </section>
           <section className="transactions-section  card"></section>
         </div>

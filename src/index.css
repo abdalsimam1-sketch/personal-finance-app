@@ -218,7 +218,7 @@
 }
 
 /* OVERVIEW-POTS */
-section > .pots-total {
+div > .pots-total {
   background-color: var(--color-beige-100);
 }
 

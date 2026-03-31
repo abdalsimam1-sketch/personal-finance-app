@@ -53,7 +53,7 @@ export const Overview = () => {
       <section>
         <div className="row">
           <div className="col-left col-12 col-lg-6">
-            <section className="pots-section card p-3">
+            <section className="pots-section card px-5 py-3">
               <div className="d-flex justify-content-between align-items-center">
                 <h2 className="text-preset-2">Pots</h2>
                 <Link to="/pots" className="text-decoration-none">
@@ -63,8 +63,8 @@ export const Overview = () => {
                   </span>
                 </Link>
               </div>
-              <div>
-                <div className="card col-4 pots-total p-4">
+              <div className="row">
+                <div className="card col-5 pots-total p-4">
                   <div className="d-flex align-items-center gap-3 ">
                     <img
                       src={PotsImage}
@@ -82,7 +82,32 @@ export const Overview = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-6"></div>
+                <div className="col-6">
+                  <div className="row g-4">
+                    {data.pots.slice(0, 4).map((item, index) => (
+                      <div className="col-6 " key={index}>
+                        <div className="d-flex gap-3">
+                          <div
+                            className="rounded-pill"
+                            style={{
+                              backgroundColor: item.theme,
+                              width: "4px",
+                              heightL: "4px",
+                            }}
+                          ></div>
+                          <div className="d-flex flex-column">
+                            <span className="text-preset-5 text-muted">
+                              {item.name}
+                            </span>
+                            <span className="text-preset-5 fw-bold">
+                              ${item.total}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </section>
             <section className="transactions-section card"></section>

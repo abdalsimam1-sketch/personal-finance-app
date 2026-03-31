@@ -219,6 +219,7 @@ div > .pots-total {
 /* LAYOUT PAGE */
 .layout-page {
   background-color: var(--color-beige-100);
+  min-height: 100vh;
 }
 
 @media (min-width: 768px) {

@@ -6,7 +6,8 @@ import PotsIcon from "../assets/images/icon-nav-pots.svg";
 import { SeeDetails } from "../components/UI/SeeDetails";
 import { FormatDate } from "../HelperFunctions/DateFormat";
 import { BudgetPieChart } from "../components/UI/BudgetPieChart";
-import { useEffect } from "react";
+
+import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
 
 export const Overview = () => {
   const balanceData = [
@@ -53,9 +54,27 @@ export const Overview = () => {
     (item) => item.recurring === true,
   );
 
-  useEffect(() => {
-    console.log(RecurringBills);
-  }, []);
+  const Paid = RecurringBills.filter(
+    (item) => CheckIfPaid(item.date) === "paid",
+  );
+  const PaidTotal = Paid.reduce((sum, item) => sum + Math.abs(item.amount), 0);
+
+  const Upcoming = RecurringBills.filter(
+    (item) => CheckIfPaid(item.date) === "upcoming",
+  );
+  const UpcomingTotal = Upcoming.reduce(
+    (sum, item) => sum + Math.abs(item.amount),
+    0,
+  );
+
+  const DueSoon = RecurringBills.filter(
+    (item) => CheckIfPaid(item.date) === "soon",
+  );
+  const DueSoonTotal = DueSoon.reduce(
+    (sum, item) => sum + Math.abs(item.amount),
+    0,
+  );
+
   return (
     <div className="container px-3 d-flex flex-column gap-3">
       <section>
@@ -228,6 +247,8 @@ export const Overview = () => {
                 label="Recurring Bills"
               ></SeeDetails>
             </div>
+
+            <div></div>
           </section>
         </div>
       </section>

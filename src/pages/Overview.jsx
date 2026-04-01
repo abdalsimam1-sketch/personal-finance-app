@@ -126,7 +126,7 @@ export const Overview = () => {
                       alt={item.avatar + " avatar"}
                       style={{ width: "3rem", borderRadius: "50%" }}
                     />
-                    <span>{item.name}</span>
+                    <span className="text-preset-4 fw-bold">{item.name}</span>
                   </div>
                   <div className="d-flex flex-column ">
                     <span

@@ -164,8 +164,8 @@ export const Overview = () => {
         </div>
 
         <div className="col-right col-12 col-lg-6">
-          <section className="budgets-section  card p-4">
-            <div className="" style={{ zIndex: "1000" }}>
+          <section className="budgets-section  card p-4 mt-4">
+            <div className="w-100" style={{ zIndex: "1000" }}>
               <SeeDetails
                 path="/budgets"
                 label="Budgets"

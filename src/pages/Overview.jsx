@@ -118,7 +118,7 @@ export const Overview = () => {
               {data.transactions.slice(0, 5).map((item, index) => (
                 <div
                   key={index}
-                  className="d-flex justify-content-between mb-2"
+                  className="d-flex justify-content-between align-items-center mb-2"
                 >
                   <div className="d-flex gap-3 align-items-center">
                     <img

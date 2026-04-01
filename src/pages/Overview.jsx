@@ -5,6 +5,7 @@ import { BalanceCard } from "../components/UI/BalanceCard";
 import PotsIcon from "../assets/images/icon-nav-pots.svg";
 import { SeeDetails } from "../components/UI/SeeDetails";
 import { FormatDate } from "../HelperFunctions/DateFormat";
+import { BudgetPieChart } from "../components/UI/BudgetPieChart";
 
 export const Overview = () => {
   const balanceData = [
@@ -29,6 +30,12 @@ export const Overview = () => {
   ];
 
   const TotalPots = data.pots.reduce((sum, pot) => sum + pot.total, 0);
+
+  const PieChartData = data.budgets.map((item) => ({
+    name: item.category,
+    value: item.maximum,
+    color: item.theme,
+  }));
 
   return (
     <div className="container px-3 d-flex flex-column gap-3">

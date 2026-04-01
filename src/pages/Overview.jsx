@@ -4,6 +4,7 @@ import data from "../data/data.json";
 import { BalanceCard } from "../components/UI/BalanceCard";
 import PotsIcon from "../assets/images/icon-nav-pots.svg";
 import { SeeDetails } from "../components/UI/SeeDetails";
+import { FormatDate } from "../HelperFunctions/DateFormat";
 
 export const Overview = () => {
   const balanceData = [
@@ -114,7 +115,7 @@ export const Overview = () => {
             </div>
 
             <div>
-              {data.transactions.slice(0, 5).map((item, index) => (
+              {data.transactions.slice(0, 4).map((item, index) => (
                 <div
                   key={index}
                   className="d-flex justify-content-between mb-2"
@@ -129,11 +130,13 @@ export const Overview = () => {
                   </div>
                   <div className="d-flex flex-column ">
                     <span
-                      className={`${item.amount > 0 ? "text-success" : "text-danger"}`}
+                      className={`${item.amount > 0 ? "text-success" : "text-danger"} text-preset-5 fw-bold`}
                     >
                       {item.amount > 0 ? <span>+</span> : ""} ${item.amount}
                     </span>
-                    <span>{item.date}</span>
+                    <span className="text-preset-5 text-muted">
+                      {FormatDate(item.date)}
+                    </span>
                   </div>
                 </div>
               ))}

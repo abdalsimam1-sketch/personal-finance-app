@@ -132,7 +132,8 @@ export const Overview = () => {
                     <span
                       className={`${item.amount > 0 ? "text-success" : "text-danger"} text-preset-5 fw-bold`}
                     >
-                      {item.amount > 0 ? <span>+</span> : ""} ${item.amount}
+                      {item.amount > 0 ? <span>+</span> : <span>-</span>} $
+                      {Math.abs(item.amount)}
                     </span>
                     <span className="text-preset-5 text-muted">
                       {FormatDate(item.date)}

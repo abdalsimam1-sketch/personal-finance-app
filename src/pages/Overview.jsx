@@ -165,11 +165,43 @@ export const Overview = () => {
 
         <div className="col-right col-12 col-lg-6">
           <section className="budgets-section  card p-4">
-            <BudgetPieChart
-              data={PieChartData}
-              TotalLimit={TotalLimit}
-              TotalSpent={TotalSpent}
-            ></BudgetPieChart>
+            <div className="row g-5 ">
+              <div className="col-12 col-md-6">
+                <BudgetPieChart
+                  data={PieChartData}
+                  TotalLimit={TotalLimit}
+                  TotalSpent={TotalSpent}
+                ></BudgetPieChart>
+              </div>
+
+              <div className="col-12 col-md-6">
+                <div className="row row-cols-2 row-cols-md-1 g-1 ">
+                  {PieChartData.slice(0, 4).map((item) => (
+                    <div
+                      className="d-flex gap-2 align-items-center"
+                      key={item.name}
+                    >
+                      <div
+                        className="rounded-pill"
+                        style={{
+                          width: "4px",
+                          height: "2rem",
+                          backgroundColor: item.color,
+                        }}
+                      ></div>
+                      <div className="d-flex flex-column">
+                        <span className="tetx-preset-5 text-muted">
+                          {item.name}
+                        </span>
+                        <span className="text-preset-4 fw-bold">
+                          ${item.value}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </section>
 
           <section className="bills-section  card"></section>

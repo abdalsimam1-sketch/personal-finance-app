@@ -52,7 +52,7 @@ export const Overview = () => {
 
       <section className="row">
         <div className="col-left col-12 col-lg-6">
-          <section className="pots-section card p-4 ">
+          <section className="pots-section card p-4 mb-4">
             <SeeDetails
               SeeDetail="See Details"
               label="Pots"
@@ -104,7 +104,7 @@ export const Overview = () => {
             </div>
           </section>
 
-          <section className="transactions-section  card">
+          <section className="transactions-section  card p-4">
             <div>
               <SeeDetails
                 label="Transactions"

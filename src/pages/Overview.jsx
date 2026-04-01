@@ -8,6 +8,7 @@ import { FormatDate } from "../HelperFunctions/DateFormat";
 import { BudgetPieChart } from "../components/UI/BudgetPieChart";
 
 import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
+import { BillsSummary } from "../components/UI/BillsSummary";
 
 export const Overview = () => {
   const balanceData = [
@@ -79,7 +80,7 @@ export const Overview = () => {
     { label: "Paid Bills", color: "var(--color-green)", total: PaidTotal },
     {
       label: "Total Upcoming",
-      color: "var(--color - yellow)",
+      color: "var(--color-yellow)",
       total: UpcomingTotal,
     },
     { label: "Due Soon", color: "var(--color-turquoise)", total: DueSoonTotal },
@@ -258,7 +259,17 @@ export const Overview = () => {
               ></SeeDetails>
             </div>
 
-            <div></div>
+            <div className="row g-3">
+              {bills.map((item) => (
+                <div key={item.label}>
+                  <BillsSummary
+                    label={item.label}
+                    color={item.color}
+                    total={item.total}
+                  ></BillsSummary>
+                </div>
+              ))}
+            </div>
           </section>
         </div>
       </section>

@@ -6,6 +6,7 @@ import PotsIcon from "../assets/images/icon-nav-pots.svg";
 import { SeeDetails } from "../components/UI/SeeDetails";
 import { FormatDate } from "../HelperFunctions/DateFormat";
 import { BudgetPieChart } from "../components/UI/BudgetPieChart";
+import { useEffect } from "react";
 
 export const Overview = () => {
   const balanceData = [
@@ -48,6 +49,13 @@ export const Overview = () => {
     limit: item.spent,
   }));
 
+  const RecurringBills = data.transactions.filter(
+    (item) => item.recurring === true,
+  );
+
+  useEffect(() => {
+    console.log(RecurringBills);
+  }, []);
   return (
     <div className="container px-3 d-flex flex-column gap-3">
       <section>

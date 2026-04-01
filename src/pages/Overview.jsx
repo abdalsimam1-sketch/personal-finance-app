@@ -103,10 +103,21 @@ export const Overview = () => {
               </div>
             </div>
           </section>
-          <section className="transactions-section  card"></section>
+
+          <section className="transactions-section  card">
+            <div>
+              <SeeDetails
+                label="Transactions"
+                SeeDetail="See Details"
+                path="/transactions"
+              ></SeeDetails>
+            </div>
+          </section>
         </div>
+
         <div className="col-right col-12 col-lg-6">
           <section className="budgets-section  card"></section>
+
           <section className="bills-section  card"></section>
         </div>
       </section>

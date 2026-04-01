@@ -112,6 +112,25 @@ export const Overview = () => {
                 path="/transactions"
               ></SeeDetails>
             </div>
+
+            <div>
+              {data.transactions.slice(0, 5).map((item, index) => (
+                <div key={index}>
+                  <div>
+                    <img src={item.avatar} alt={item.avatar + " avatar"} />
+                    <span>{item.name}</span>
+                  </div>
+                  <div className="d-flex">
+                    <span
+                      className={`${item.amount > 0 ? "text-success" : "text-danger"}`}
+                    >
+                      {item.amount > 0 ? <span>+</span> : ""} ${item.amount}
+                    </span>
+                    <span>{item.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </section>
         </div>
 

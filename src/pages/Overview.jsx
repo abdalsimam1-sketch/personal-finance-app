@@ -115,12 +115,19 @@ export const Overview = () => {
 
             <div>
               {data.transactions.slice(0, 5).map((item, index) => (
-                <div key={index}>
-                  <div>
-                    <img src={item.avatar} alt={item.avatar + " avatar"} />
+                <div
+                  key={index}
+                  className="d-flex justify-content-between mb-2"
+                >
+                  <div className="d-flex gap-3 align-items-center">
+                    <img
+                      src={item.avatar}
+                      alt={item.avatar + " avatar"}
+                      style={{ width: "3rem", borderRadius: "50%" }}
+                    />
                     <span>{item.name}</span>
                   </div>
-                  <div className="d-flex">
+                  <div className="d-flex flex-column ">
                     <span
                       className={`${item.amount > 0 ? "text-success" : "text-danger"}`}
                     >

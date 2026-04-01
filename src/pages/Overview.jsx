@@ -212,7 +212,15 @@ export const Overview = () => {
             </div>
           </section>
 
-          <section className="bills-section  card"></section>
+          <section className="bills-section  card p-4 mt-4">
+            <div>
+              <SeeDetails
+                path="/bills"
+                SeeDetail="See Details"
+                label="Recurring Bills"
+              ></SeeDetails>
+            </div>
+          </section>
         </div>
       </section>
     </div>

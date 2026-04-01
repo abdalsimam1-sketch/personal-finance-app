@@ -31,7 +31,7 @@ export const Overview = () => {
   const TotalPots = data.pots.reduce((sum, pot) => sum + pot.total, 0);
 
   return (
-    <div className="container px-3 d-flex flex-column gap-5">
+    <div className="container px-3 d-flex flex-column gap-3">
       <section>
         <Title children="Overview"></Title>
       </section>
@@ -115,7 +115,7 @@ export const Overview = () => {
             </div>
 
             <div>
-              {data.transactions.slice(0, 4).map((item, index) => (
+              {data.transactions.slice(0, 5).map((item, index) => (
                 <div
                   key={index}
                   className="d-flex justify-content-between mb-2"

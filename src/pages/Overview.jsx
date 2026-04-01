@@ -31,10 +31,21 @@ export const Overview = () => {
 
   const TotalPots = data.pots.reduce((sum, pot) => sum + pot.total, 0);
 
+  const TotalSpent = data.budgets.reduce(
+    (sum, budget) => sum + budget.spent || 0,
+    0,
+  );
+
+  const TotalLimit = data.budgets.reduce(
+    (sum, budget) => sum + budget.maximum || 0,
+    0,
+  );
+
   const PieChartData = data.budgets.map((item) => ({
     name: item.category,
     value: item.maximum,
     color: item.theme,
+    limit: item.spent,
   }));
 
   return (
@@ -153,7 +164,13 @@ export const Overview = () => {
         </div>
 
         <div className="col-right col-12 col-lg-6">
-          <section className="budgets-section  card"></section>
+          <section className="budgets-section  card p-4">
+            <BudgetPieChart
+              data={PieChartData}
+              TotalLimit={TotalLimit}
+              TotalSpent={TotalSpent}
+            ></BudgetPieChart>
+          </section>
 
           <section className="bills-section  card"></section>
         </div>

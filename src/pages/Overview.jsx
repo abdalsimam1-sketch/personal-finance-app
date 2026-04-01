@@ -5,6 +5,7 @@ import { BalanceCard } from "../components/UI/BalanceCard";
 import PotsIcon from "../assets/images/icon-nav-pots.svg";
 import { SeeDetails } from "../components/UI/SeeDetails";
 import { FormatDate } from "../HelperFunctions/DateFormat";
+import { BudgetPieChart } from "../components/UI/BudgetPieChart";
 
 export const Overview = () => {
   const balanceData = [
@@ -29,6 +30,23 @@ export const Overview = () => {
   ];
 
   const TotalPots = data.pots.reduce((sum, pot) => sum + pot.total, 0);
+
+  const TotalSpent = data.budgets.reduce(
+    (sum, budget) => sum + budget.spent || 0,
+    0,
+  );
+
+  const TotalLimit = data.budgets.reduce(
+    (sum, budget) => sum + budget.maximum || 0,
+    0,
+  );
+
+  const PieChartData = data.budgets.map((item) => ({
+    name: item.category,
+    value: item.maximum,
+    color: item.theme,
+    limit: item.spent,
+  }));
 
   return (
     <div className="container px-3 d-flex flex-column gap-3">
@@ -146,7 +164,53 @@ export const Overview = () => {
         </div>
 
         <div className="col-right col-12 col-lg-6">
-          <section className="budgets-section  card"></section>
+          <section className="budgets-section  card p-4 mt-4 m-lg-0">
+            <div className="w-100" style={{ zIndex: "1000" }}>
+              <SeeDetails
+                path="/budgets"
+                label="Budgets"
+                SeeDetail="See Details"
+              ></SeeDetails>
+            </div>
+
+            <div className="row g-5 ">
+              <div className="col-12 col-md-6">
+                <BudgetPieChart
+                  data={PieChartData}
+                  TotalLimit={TotalLimit}
+                  TotalSpent={TotalSpent}
+                ></BudgetPieChart>
+              </div>
+
+              <div className="col-12 col-md-6">
+                <div className="row row-cols-2 row-cols-md-1 g-1 ">
+                  {PieChartData.slice(0, 4).map((item) => (
+                    <div
+                      className="d-flex gap-2 align-items-center"
+                      key={item.name}
+                    >
+                      <div
+                        className="rounded-pill"
+                        style={{
+                          width: "4px",
+                          height: "2rem",
+                          backgroundColor: item.color,
+                        }}
+                      ></div>
+                      <div className="d-flex flex-column">
+                        <span className="tetx-preset-5 text-muted">
+                          {item.name}
+                        </span>
+                        <span className="text-preset-4 fw-bold">
+                          ${item.value}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
 
           <section className="bills-section  card"></section>
         </div>

@@ -75,6 +75,16 @@ export const Overview = () => {
     0,
   );
 
+  const bills = [
+    { label: "Paid Bills", color: "var(--color-green)", total: PaidTotal },
+    {
+      label: "Total Upcoming",
+      color: "var(--color - yellow)",
+      total: UpcomingTotal,
+    },
+    { label: "Due Soon", color: "var(--color-turquoise)", total: DueSoonTotal },
+  ];
+
   return (
     <div className="container px-3 d-flex flex-column gap-3">
       <section>

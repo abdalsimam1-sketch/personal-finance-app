@@ -20,7 +20,7 @@ export const Layout = () => {
         </div>
       </section>
 
-      <section className="text-dark flex-grow-1">
+      <section className="text-dark flex-grow-1 main-content">
         <Outlet></Outlet>
       </section>
     </main>

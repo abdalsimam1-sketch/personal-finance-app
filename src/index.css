@@ -221,9 +221,18 @@
 div > .pots-total {
   background-color: var(--color-beige-100);
 }
+.main-content {
+  padding-bottom: 5.5rem;
+}
 
 @media (min-width: 768px) {
+  .main-content {
+    padding-bottom: 7rem;
+  }
 }
 
 @media (min-width: 1150px) {
+  .main-content {
+    padding-bottom: 0;
+  }
 }

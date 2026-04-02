@@ -13,6 +13,31 @@ export const Transactions = () => {
     SetCategoryIsOpen(!CategoryIsOpen);
   };
 
+  const Sort = [
+    {
+      name: "Latest",
+    },
+    {
+      name: "Oldest",
+    },
+    {
+      name: "A-Z",
+    },
+    {
+      name: "Z-A",
+    },
+    {
+      name: "Highest",
+    },
+    {
+      name: "Lowest",
+    },
+  ];
+
+  const allCategories = data.transactions.map((item) => item.category);
+  const UniqueCategories = [...new Set(allCategories)];
+  const Categories = ["All Transactions", ...UniqueCategories];
+
   return (
     <div className="px-3 d-flex flex-column gap-3 ">
       <section>
@@ -25,27 +50,63 @@ export const Transactions = () => {
           </div>
           <div className="d-flex gap-5 ">
             <div className="position-relative">
-              <div className="d-none d-md-inline">
+              <div
+                className="d-none d-md-inline sort-dropdown"
+                onClick={toggleSort}
+              >
                 <span className="text-muted text-preset-5">Sort by</span>
                 <div className="form-control  d-flex justify-content-between  align-items-center gap-3">
                   <span className="text-preset-4"> Latest</span>
                   <i className="bi bi-caret-down-fill"></i>
                 </div>
               </div>
-              <i className=" btn bi bi-card-list m-0 d-md-none fs-2 "></i>
-              <div className="sort-dropdown position-absolute mt-3 top-100 start-0"></div>
+              <i
+                className=" btn bi bi-card-list m-0 d-md-none fs-2 "
+                onClick={toggleSort}
+              ></i>
+              {SortIsOpen && (
+                <div
+                  className="sort-dropdown position-absolute mt-3 top-100 start-0 d-flex flex-column bg-light p-3 rounded"
+                  style={{ width: "7rem" }}
+                >
+                  {Sort.map((item) => (
+                    <div key={item.name} className="btn">
+                      <span className="text-preset-4 text-nowrap">
+                        {item.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="position-relative">
-              <div className="d-none d-md-inline">
+              <div
+                className="d-none d-md-inline category-dropdown"
+                onClick={toggleCategory}
+              >
                 <span className="text-muted text-preset-5">Category</span>
                 <div className="form-control d-flex justify-content-between align-items-center gap-3">
                   <span className="text-preset-4"> All Transactions</span>
                   <i className="bi bi-caret-down-fill"></i>
                 </div>
               </div>
-              <i className="btn bi bi-funnel-fill m-0 d-md-none fs-2"></i>
-              <div className="category-dropdown position-absolute mt-3 top-100 end-0"></div>
+              <i
+                className="btn bi bi-funnel-fill m-0 d-md-none fs-2"
+                onClick={toggleCategory}
+              ></i>
+              {CategoryIsOpen && (
+                <div
+                  className="category-dropdown position-absolute mt-3 top-100 end-0 d-flex flex-column bg-light p-3 text-nowrap rounded "
+                  style={{ width: "9rem" }}
+                >
+                  {Categories.map((item) => (
+                    <div key={item} className="btn">
+                      <span className="text-preset-4">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

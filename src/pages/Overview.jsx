@@ -93,7 +93,7 @@ export const Overview = () => {
       </section>
 
       <section>
-        <div className="row g-4">
+        <div className="row g-3">
           {balanceData.map((item, index) => (
             <div key={index} className="col-12 col-md-4">
               <BalanceCard
@@ -107,9 +107,9 @@ export const Overview = () => {
         </div>
       </section>
 
-      <section className="row">
-        <div className="col-left col-12 col-lg-6">
-          <section className="pots-section card p-4 mb-4">
+      <section className="row gy-3 gx-3">
+        <div className="col-left col-12 col-lg-6  d-flex flex-column gap-3">
+          <section className="pots-section card p-4 ">
             <SeeDetails
               SeeDetail="See Details"
               label="Pots"
@@ -201,8 +201,8 @@ export const Overview = () => {
           </section>
         </div>
 
-        <div className="col-right col-12 col-lg-6">
-          <section className="budgets-section  card p-4 mt-4 m-lg-0">
+        <div className="col-right col-12 col-lg-6  d-flex flex-column gap-3">
+          <section className="budgets-section  card p-4 ">
             <div className="w-100" style={{ zIndex: "1000" }}>
               <SeeDetails
                 path="/budgets"
@@ -250,7 +250,7 @@ export const Overview = () => {
             </div>
           </section>
 
-          <section className="bills-section  card p-4 mt-4">
+          <section className="bills-section  card p-4  flex-grow-1">
             <div>
               <SeeDetails
                 path="/bills"

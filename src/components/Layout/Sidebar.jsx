@@ -6,16 +6,21 @@ import { Link } from "react-router-dom";
 export const Sidebar = ({ menuIsOpen, toggleMenu }) => {
   return (
     <section
-      className={` bg-dark  rounded-end ${menuIsOpen ? "p-5" : "p-3"} d-flex flex-column justify-content-between min-vh-100 sidebar-container`}
+      className={` bg-dark  rounded-end p-3 d-flex flex-column justify-content-between min-vh-100 sidebar-container`}
       style={{ width: menuIsOpen ? "300px" : "88px" }}
     >
       <div
         className={`d-flex flex-column gap-5 ${!menuIsOpen ? "align-items-center" : ""}`}
       >
         {menuIsOpen ? (
-          <img src={largeLogo} alt="large-logo" className="mb-3" />
+          <img
+            src={largeLogo}
+            alt="large-logo"
+            className="mb-3"
+            style={{ width: "10rem" }}
+          />
         ) : (
-          <img src={smallLogo} alt="small-logo" style={{ width: "3rem" }} />
+          <img src={smallLogo} alt="small-logo" style={{ width: "1.7rem" }} />
         )}
         <div className="nav-links d-flex flex-column gap-2">
           {sidebar.map((item, index) => (

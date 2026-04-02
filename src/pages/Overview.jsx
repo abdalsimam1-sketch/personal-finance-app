@@ -7,6 +7,9 @@ import { SeeDetails } from "../components/UI/SeeDetails";
 import { FormatDate } from "../HelperFunctions/DateFormat";
 import { BudgetPieChart } from "../components/UI/BudgetPieChart";
 
+import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
+import { BillsSummary } from "../components/UI/BillsSummary";
+
 export const Overview = () => {
   const balanceData = [
     {
@@ -47,6 +50,41 @@ export const Overview = () => {
     color: item.theme,
     limit: item.spent,
   }));
+
+  const RecurringBills = data.transactions.filter(
+    (item) => item.recurring === true,
+  );
+
+  const Paid = RecurringBills.filter(
+    (item) => CheckIfPaid(item.date) === "paid",
+  );
+  const PaidTotal = Paid.reduce((sum, item) => sum + Math.abs(item.amount), 0);
+
+  const Upcoming = RecurringBills.filter(
+    (item) => CheckIfPaid(item.date) === "upcoming",
+  );
+  const UpcomingTotal = Upcoming.reduce(
+    (sum, item) => sum + Math.abs(item.amount),
+    0,
+  );
+
+  const DueSoon = RecurringBills.filter(
+    (item) => CheckIfPaid(item.date) === "soon",
+  );
+  const DueSoonTotal = DueSoon.reduce(
+    (sum, item) => sum + Math.abs(item.amount),
+    0,
+  );
+
+  const bills = [
+    { label: "Paid Bills", color: "var(--color-green)", total: PaidTotal },
+    {
+      label: "Total Upcoming",
+      color: "var(--color-yellow)",
+      total: UpcomingTotal,
+    },
+    { label: "Due Soon", color: "var(--color-turquoise)", total: DueSoonTotal },
+  ];
 
   return (
     <div className="container px-3 d-flex flex-column gap-3">
@@ -212,7 +250,27 @@ export const Overview = () => {
             </div>
           </section>
 
-          <section className="bills-section  card"></section>
+          <section className="bills-section  card p-4 mt-4">
+            <div>
+              <SeeDetails
+                path="/bills"
+                SeeDetail="See Details"
+                label="Recurring Bills"
+              ></SeeDetails>
+            </div>
+
+            <div className="row g-3">
+              {bills.map((item) => (
+                <div key={item.label}>
+                  <BillsSummary
+                    label={item.label}
+                    color={item.color}
+                    total={item.total}
+                  ></BillsSummary>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
       </section>
     </div>

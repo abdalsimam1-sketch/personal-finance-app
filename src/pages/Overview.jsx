@@ -87,7 +87,7 @@ export const Overview = () => {
   ];
 
   return (
-    <div className="container px-3 d-flex flex-column gap-3">
+    <div className="container px-3 d-flex flex-column gap-3 justify-content-center h-100">
       <section>
         <Title children="Overview"></Title>
       </section>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Title } from "../components/UI/Title";
 import { Input } from "../components/UI/Input";
+import data from "../data/data.json";
 export const Transactions = () => {
   return (
     <div className="px-3 d-flex flex-column gap-3 ">

@@ -9,18 +9,21 @@ export const Sidebar = ({ menuIsOpen, toggleMenu }) => {
       className={` bg-dark  rounded-end p-3 d-flex flex-column justify-content-between min-vh-100 sidebar-container`}
       style={{ width: menuIsOpen ? "300px" : "88px" }}
     >
-      <div
-        className={`d-flex flex-column gap-5 ${!menuIsOpen ? "align-items-center" : ""}`}
-      >
+      <div className={`d-flex flex-column gap-5 align-items-center`}>
         {menuIsOpen ? (
           <img
             src={largeLogo}
             alt="large-logo"
-            className="mb-3"
+            className="my-3"
             style={{ width: "10rem" }}
           />
         ) : (
-          <img src={smallLogo} alt="small-logo" style={{ width: "1.7rem" }} />
+          <img
+            src={smallLogo}
+            alt="small-logo"
+            style={{ width: "1.7rem" }}
+            className="mt-3"
+          />
         )}
         <div className="nav-links d-flex flex-column gap-2">
           {sidebar.map((item, index) => (

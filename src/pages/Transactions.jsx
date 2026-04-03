@@ -12,6 +12,25 @@ export const Transactions = () => {
   const toggleCategory = () => {
     SetCategoryIsOpen(!CategoryIsOpen);
   };
+  const toggleSortMobile = () => {
+    SetSortIsOpen((prev) => {
+      const next = !prev;
+      if (next) {
+        SetCategoryIsOpen(false);
+      }
+      return next;
+    });
+  };
+
+  const toggleCategoryMobile = () => {
+    SetCategoryIsOpen((prev) => {
+      const next = !prev;
+      if (next) {
+        SetSortIsOpen(false);
+      }
+      return next;
+    });
+  };
 
   const Sort = [
     {
@@ -62,7 +81,7 @@ export const Transactions = () => {
               </div>
               <i
                 className=" btn bi bi-card-list m-0 d-md-none fs-2 "
-                onClick={toggleSort}
+                onClick={toggleSortMobile}
               ></i>
               {SortIsOpen && (
                 <div
@@ -93,7 +112,7 @@ export const Transactions = () => {
               </div>
               <i
                 className="btn bi bi-funnel-fill m-0 d-md-none fs-2"
-                onClick={toggleCategory}
+                onClick={toggleCategoryMobile}
               ></i>
               {CategoryIsOpen && (
                 <div

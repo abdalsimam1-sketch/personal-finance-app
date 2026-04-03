@@ -5,6 +5,7 @@ import data from "../data/data.json";
 export const Transactions = () => {
   const [SortIsOpen, SetSortIsOpen] = useState(false);
   const [CategoryIsOpen, SetCategoryIsOpen] = useState(false);
+  const [Search, SetSearch] = useState("");
 
   const toggleSort = () => {
     SetSortIsOpen(!SortIsOpen);
@@ -65,7 +66,12 @@ export const Transactions = () => {
       <section className="col-12 card p-4">
         <div className="filter-section d-flex justify-content-between align-items-center ">
           <div>
-            <Input placeholder="Search transaction" variant="icon"></Input>
+            <Input
+              placeholder="Search transaction"
+              variant="icon"
+              value={Search}
+              onChange={(e) => SetSearch(e.target.value)}
+            ></Input>
           </div>
           <div className="d-flex gap-5 ">
             <div className="position-relative">

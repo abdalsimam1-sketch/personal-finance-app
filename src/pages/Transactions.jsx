@@ -58,6 +58,10 @@ export const Transactions = () => {
   const UniqueCategories = [...new Set(allCategories)];
   const Categories = ["All Transactions", ...UniqueCategories];
 
+  const filteredTransactions = data.transactions.filter((item) =>
+    item.name.toLowerCase().includes(Search.trim().toLowerCase()),
+  );
+
   return (
     <div className="px-3 d-flex flex-column gap-3 container">
       <section>
@@ -136,7 +140,13 @@ export const Transactions = () => {
           </div>
         </div>
         <div className="table-title"></div>
-        <div className="transaction-list"></div>
+        <div className="transaction-list">
+          {filteredTransactions.map((item, index) => (
+            <div key={index}>
+              <span className="text-preset-4 success">{item.name}</span>
+            </div>
+          ))}
+        </div>
         <div className="pagination-section"></div>
       </section>
     </div>

@@ -1,4 +1,12 @@
-export const Input = ({ placeholder, helper, name, label, variant }) => {
+export const Input = ({
+  placeholder,
+  helper,
+  name,
+  label,
+  variant,
+  value,
+  onChange,
+}) => {
   return (
     <div>
       <label htmlFor={name} className="form-label fw-bold input-label">
@@ -15,6 +23,8 @@ export const Input = ({ placeholder, helper, name, label, variant }) => {
           placeholder={placeholder}
           id={name}
           className="form-control ps-4"
+          value={value}
+          onChange={onChange}
         />
         <i
           className={`bi bi-search icon text-muted ${variant !== "icon" ? "d-none" : ""}`}

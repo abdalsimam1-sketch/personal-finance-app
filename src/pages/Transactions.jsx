@@ -39,7 +39,7 @@ export const Transactions = () => {
   const Categories = ["All Transactions", ...UniqueCategories];
 
   return (
-    <div className="px-3 d-flex flex-column gap-3 ">
+    <div className="px-3 d-flex flex-column gap-3 container">
       <section>
         <Title>Transactions</Title>
       </section>

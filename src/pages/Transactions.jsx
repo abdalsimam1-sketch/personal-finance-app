@@ -11,16 +11,6 @@ export const Transactions = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Transactions");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const prev = () => {
-    if (currentPage > 1) {
-      setCurrentPage((page) => (page > 1 ? page - 1 : page));
-    }
-  };
-
-  const next = () => {
-    setCurrentPage((page) => page + 1);
-  };
-
   const toggleSort = () => {
     SetSortIsOpen(!SortIsOpen);
   };
@@ -106,13 +96,28 @@ export const Transactions = () => {
   };
   const sortedTransactions = sorting(SelectedSort);
 
-  const transactionsPerPage = 8;
+  const transactionsPerPage = 7;
   const totalPages = Math.ceil(sortedTransactions.length / transactionsPerPage);
+
+  const prev = () => {
+    if (currentPage > 1) {
+      setCurrentPage((page) => (page > 1 ? page - 1 : page));
+    }
+  };
+
+  const next = () => {
+    setCurrentPage((page) =>
+      page < totalPages ? page + 1 : setCurrentPage(1),
+    );
+  };
 
   const pageNumbers = Array.from(
     { length: totalPages },
     (_, index) => index + 1,
   );
+
+  const startIndex = (currentPage - 1) * transactionsPerPage;
+  const endIndex = startIndex + transactionsPerPage;
   return (
     <div className="px-3 d-flex flex-column gap-3 container justify-content-center h-100">
       <section>
@@ -234,28 +239,30 @@ export const Transactions = () => {
               </tr>
             </thead>
             <tbody>
-              {sortedTransactions.map((item, index) => (
-                <tr key={index}>
-                  <td className="d-flex gap-3 align-items-center ">
-                    <img
-                      src={item.avatar}
-                      alt={item.name + " avatar"}
-                      style={{ width: "3rem", borderRadius: "50%" }}
-                    />
-                    {item.name}
-                  </td>
-                  <td className="d-none d-md-table-cell">{item.category}</td>
-                  <td className="d-none d-md-table-cell">
-                    {FormatDate(item.date)}
-                  </td>
-                  <td
-                    className={`${item.amount > 0 ? "text-success" : "text-danger"} fw-bold`}
-                  >
-                    {item.amount < 0 ? <span>-</span> : <span>+</span>}$
-                    {Math.abs(item.amount).toFixed(2)}
-                  </td>
-                </tr>
-              ))}
+              {sortedTransactions
+                .slice(startIndex, endIndex)
+                .map((item, index) => (
+                  <tr key={index}>
+                    <td className="d-flex gap-3 align-items-center ">
+                      <img
+                        src={item.avatar}
+                        alt={item.name + " avatar"}
+                        style={{ width: "3rem", borderRadius: "50%" }}
+                      />
+                      {item.name}
+                    </td>
+                    <td className="d-none d-md-table-cell">{item.category}</td>
+                    <td className="d-none d-md-table-cell">
+                      {FormatDate(item.date)}
+                    </td>
+                    <td
+                      className={`${item.amount > 0 ? "text-success" : "text-danger"} fw-bold`}
+                    >
+                      {item.amount < 0 ? <span>-</span> : <span>+</span>}$
+                      {Math.abs(item.amount).toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

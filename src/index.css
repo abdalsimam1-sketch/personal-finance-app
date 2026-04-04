@@ -225,6 +225,12 @@ div > .pots-total {
   padding-bottom: 5.5rem;
 }
 
+/* TRANSACTIONS PAGE */
+.sort-dropdown:hover,
+.category-dropdown:hover {
+  cursor: pointer;
+}
+
 @media (min-width: 768px) {
   .main-content {
     padding-bottom: 7rem;

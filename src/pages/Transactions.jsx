@@ -119,7 +119,10 @@ export const Transactions = () => {
   const startIndex = (currentPage - 1) * transactionsPerPage;
   const endIndex = startIndex + transactionsPerPage;
   return (
-    <div className="px-3 d-flex flex-column gap-3 container justify-content-center h-100">
+    <div
+      className="px-3 d-flex flex-column gap-3 justify-content-center container h-100"
+      style={{ minHeight: "90vh" }}
+    >
       <section>
         <Title>Transactions</Title>
       </section>

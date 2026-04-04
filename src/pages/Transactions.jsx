@@ -240,7 +240,11 @@ export const Transactions = () => {
             </tbody>
           </table>
         </div>
-        <div className="pagination-section"></div>
+        <div className="pagination-section d-flex justify-content-between">
+          <div className="previous-section"></div>
+          <div className="pages-section"></div>
+          <div className="next-section"></div>
+        </div>
       </section>
     </div>
   );

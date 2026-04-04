@@ -266,18 +266,22 @@ export const Transactions = () => {
             </tbody>
           </table>
         </div>
-        <div className="pagination-section d-flex justify-content-between">
+        <div className="pagination-section d-flex justify-content-between align-items-center">
           <div className="previous-section">
             <button
-              className="btn prev-button px-2 d-flex gap-5"
+              className="btn prev-button px-2 d-flex gap-5 d-none d-md-flex"
               style={{
                 border: "1px solid var(--color-beige-500)",
               }}
               onClick={prev}
             >
-              <i className="bi bi-caret-left-fill"></i>
+              <i className="bi bi-caret-left-fill "></i>
               Prev
             </button>
+            <i
+              className="bi bi-caret-left-fill d-md-none btn border"
+              onClick={prev}
+            ></i>
           </div>
           <div className="pages-section d-flex gap-2">
             {pageNumbers.map((button) => (
@@ -292,7 +296,7 @@ export const Transactions = () => {
           </div>
           <div className="next-section">
             <button
-              className="btn prev-button px-2 d-flex gap-5"
+              className="btn prev-button px-2 d-flex gap-5 d-none d-md-flex"
               style={{
                 border: "1px solid var(--color-beige-500)",
               }}
@@ -301,6 +305,10 @@ export const Transactions = () => {
               Next
               <i className="bi bi-caret-right-fill"></i>
             </button>
+            <i
+              className="bi bi-caret-right-fill d-md-none btn border"
+              onClick={next}
+            ></i>
           </div>
         </div>
       </section>

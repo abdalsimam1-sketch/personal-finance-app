@@ -202,7 +202,7 @@ export const Transactions = () => {
             </div>
           </div>
         </div>
-        <div className="table-title"></div>
+
         <div className="transaction-list"></div>
         <div className="pagination-section"></div>
       </section>

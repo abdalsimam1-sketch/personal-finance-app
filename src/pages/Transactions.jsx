@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Title } from "../components/UI/Title";
 import { Input } from "../components/UI/Input";
 import data from "../data/data.json";
+import { FormatDate } from "../HelperFunctions/DateFormat";
 export const Transactions = () => {
   const [SortIsOpen, SetSortIsOpen] = useState(false);
   const [CategoryIsOpen, SetCategoryIsOpen] = useState(false);
@@ -99,7 +100,7 @@ export const Transactions = () => {
         <Title>Transactions</Title>
       </section>
       <section
-        className="col-12 card p-4 "
+        className="col-12 card p-4"
         onClick={() => {
           SetCategoryIsOpen(false);
           SetSortIsOpen(false);
@@ -203,7 +204,39 @@ export const Transactions = () => {
           </div>
         </div>
 
-        <div className="transaction-list"></div>
+        <div className="transaction-list responsive-table">
+          <table className="table table-striped align-middle ">
+            <thead className="text-preset-4 text-muted">
+              <tr>
+                <th>Recipient/Sender</th>
+                <th>Category</th>
+                <th>Transaction Date</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedTransactions.map((item) => (
+                <tr>
+                  <td className="d-flex gap-3 align-items-center ">
+                    <img
+                      src={item.avatar}
+                      alt={item.name + " avatar"}
+                      style={{ width: "3rem", borderRadius: "50%" }}
+                    />
+                    {item.name}
+                  </td>
+                  <td>{item.category}</td>
+                  <td>{FormatDate(item.date)}</td>
+                  <td
+                    className={`${item.amount > 0 ? "text-success" : "text-danger"} fw-bold`}
+                  >
+                    {item.amount < 0 && <span>-</span>}${Math.abs(item.amount)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <div className="pagination-section"></div>
       </section>
     </div>

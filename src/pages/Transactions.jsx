@@ -241,7 +241,17 @@ export const Transactions = () => {
           </table>
         </div>
         <div className="pagination-section d-flex justify-content-between">
-          <div className="previous-section"></div>
+          <div className="previous-section">
+            <button
+              className="btn prev-button px-2 d-flex gap-5"
+              style={{
+                border: "1px solid var(--color-beige-500)",
+              }}
+            >
+              <i className="bi bi-caret-left-fill"></i>
+              Prev
+            </button>
+          </div>
           <div className="pages-section"></div>
           <div className="next-section"></div>
         </div>

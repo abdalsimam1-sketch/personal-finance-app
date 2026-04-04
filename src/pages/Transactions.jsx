@@ -6,6 +6,7 @@ export const Transactions = () => {
   const [SortIsOpen, SetSortIsOpen] = useState(false);
   const [CategoryIsOpen, SetCategoryIsOpen] = useState(false);
   const [Search, SetSearch] = useState("");
+  const [SelectedSort, SetSelectedSort] = useState("Latest");
 
   const toggleSort = () => {
     SetSortIsOpen(!SortIsOpen);
@@ -62,6 +63,24 @@ export const Transactions = () => {
     item.name.toLowerCase().includes(Search.trim().toLowerCase()),
   );
 
+  const sorting = (SelectedSort) => {
+    const prev = [...filteredTransactions];
+    if (SelectedSort === "Oldest") {
+      prev.sort((a, b) => new Date(a.date) - new Date(b.date));
+    } else if (SelectedSort === "Latest") {
+      prev.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (SelectedSort === "A-Z") {
+      prev.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (SelectedSort === "Z-A") {
+      prev.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (SelectedSort === "Highest") {
+      prev.sort((a, b) => b.amount - a.amount);
+    } else if (SelectedSort === "Lowest") {
+      prev.sort((a, b) => a.amount - b.amount);
+    }
+    return prev;
+  };
+  const sortedTransactions = sorting(SelectedSort);
   return (
     <div className="px-3 d-flex flex-column gap-3 container">
       <section>
@@ -99,7 +118,11 @@ export const Transactions = () => {
                   style={{ width: "7rem" }}
                 >
                   {Sort.map((item) => (
-                    <div key={item.name} className="btn">
+                    <div
+                      key={item.name}
+                      className="btn"
+                      onClick={() => SetSelectedSort(item.name)}
+                    >
                       <span className="text-preset-4 text-nowrap">
                         {item.name}
                       </span>
@@ -141,9 +164,11 @@ export const Transactions = () => {
         </div>
         <div className="table-title"></div>
         <div className="transaction-list">
-          {filteredTransactions.map((item, index) => (
-            <div key={index}>
+          {sortedTransactions.map((item, index) => (
+            <div key={index} className="d-flex justify-content-between">
               <span className="text-preset-4 success">{item.name}</span>
+              <span>{item.date}</span>
+              <span>{item.amount}</span>
             </div>
           ))}
         </div>

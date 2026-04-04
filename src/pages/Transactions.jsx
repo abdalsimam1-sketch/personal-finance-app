@@ -253,7 +253,17 @@ export const Transactions = () => {
             </button>
           </div>
           <div className="pages-section"></div>
-          <div className="next-section"></div>
+          <div className="next-section">
+            <button
+              className="btn prev-button px-2 d-flex gap-5"
+              style={{
+                border: "1px solid var(--color-beige-500)",
+              }}
+            >
+              Next
+              <i className="bi bi-caret-right-fill"></i>
+            </button>
+          </div>
         </div>
       </section>
     </div>

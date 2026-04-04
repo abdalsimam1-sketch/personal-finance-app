@@ -105,6 +105,14 @@ export const Transactions = () => {
     return prev;
   };
   const sortedTransactions = sorting(SelectedSort);
+
+  const transactionsPerPage = 8;
+  const totalPages = Math.ceil(sortedTransactions.length / transactionsPerPage);
+
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1,
+  );
   return (
     <div className="px-3 d-flex flex-column gap-3 container justify-content-center h-100">
       <section>
@@ -263,7 +271,13 @@ export const Transactions = () => {
               Prev
             </button>
           </div>
-          <div className="pages-section"></div>
+          <div className="pages-section d-flex gap-2">
+            {pageNumbers.map((button, index) => (
+              <button key={index} className="btn border">
+                {button}
+              </button>
+            ))}
+          </div>
           <div className="next-section">
             <button
               className="btn prev-button px-2 d-flex gap-5"

@@ -9,6 +9,17 @@ export const Transactions = () => {
   const [Search, SetSearch] = useState("");
   const [SelectedSort, SetSelectedSort] = useState("Latest");
   const [selectedCategory, setSelectedCategory] = useState("All Transactions");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const prev = () => {
+    if (currentPage > 1) {
+      setCurrentPage((page) => (page > 1 ? page - 1 : page));
+    }
+  };
+
+  const next = () => {
+    setCurrentPage((page) => page + 1);
+  };
 
   const toggleSort = () => {
     SetSortIsOpen(!SortIsOpen);

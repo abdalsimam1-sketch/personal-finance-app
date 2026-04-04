@@ -98,7 +98,7 @@ export const Transactions = () => {
       <section>
         <Title>Transactions</Title>
       </section>
-      <section className="col-12 card p-4">
+      <section className="col-12 card p-4 ">
         <div className="filter-section d-flex justify-content-between align-items-center ">
           <div>
             <Input
@@ -133,7 +133,10 @@ export const Transactions = () => {
                     <div
                       key={item.name}
                       className="btn"
-                      onClick={() => SetSelectedSort(item.name)}
+                      onClick={() => {
+                        SetSelectedSort(item.name);
+                        SetSortIsOpen(false);
+                      }}
                     >
                       <span className="text-preset-4 text-nowrap">
                         {item.name}
@@ -168,7 +171,10 @@ export const Transactions = () => {
                     <div
                       key={item}
                       className="btn"
-                      onClick={() => setSelectedCategory(item)}
+                      onClick={() => {
+                        setSelectedCategory(item);
+                        SetCategoryIsOpen(false);
+                      }}
                     >
                       <span className="text-preset-4">{item}</span>
                     </div>

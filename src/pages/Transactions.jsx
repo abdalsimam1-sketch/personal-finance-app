@@ -98,7 +98,13 @@ export const Transactions = () => {
       <section>
         <Title>Transactions</Title>
       </section>
-      <section className="col-12 card p-4 ">
+      <section
+        className="col-12 card p-4 "
+        onClick={() => {
+          SetCategoryIsOpen(false);
+          SetSortIsOpen(false);
+        }}
+      >
         <div className="filter-section d-flex justify-content-between align-items-center ">
           <div>
             <Input
@@ -112,7 +118,10 @@ export const Transactions = () => {
             <div className="position-relative">
               <div
                 className="d-none d-md-inline sort-dropdown"
-                onClick={toggleSort}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleSort();
+                }}
               >
                 <span className="text-muted text-preset-5">Sort by</span>
                 <div className="form-control  d-flex justify-content-between  align-items-center gap-3">
@@ -122,7 +131,10 @@ export const Transactions = () => {
               </div>
               <i
                 className=" btn bi bi-card-list m-0 d-md-none fs-2 "
-                onClick={toggleSortMobile}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleSortMobile();
+                }}
               ></i>
               {SortIsOpen && (
                 <div
@@ -150,7 +162,10 @@ export const Transactions = () => {
             <div className="position-relative">
               <div
                 className="d-none d-md-inline category-dropdown"
-                onClick={toggleCategory}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleCategory();
+                }}
               >
                 <span className="text-muted text-preset-5">Category</span>
                 <div className="form-control d-flex justify-content-between align-items-center gap-3">
@@ -160,7 +175,10 @@ export const Transactions = () => {
               </div>
               <i
                 className="btn bi bi-funnel-fill m-0 d-md-none fs-2"
-                onClick={toggleCategoryMobile}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleCategoryMobile();
+                }}
               ></i>
               {CategoryIsOpen && (
                 <div

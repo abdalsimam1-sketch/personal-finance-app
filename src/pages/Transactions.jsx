@@ -209,14 +209,14 @@ export const Transactions = () => {
             <thead className="text-preset-4 text-muted">
               <tr>
                 <th>Recipient/Sender</th>
-                <th>Category</th>
-                <th>Transaction Date</th>
+                <th className="d-none d-md-table-cell">Category</th>
+                <th className="d-none d-md-table-cell">Transaction Date</th>
                 <th>Amount</th>
               </tr>
             </thead>
             <tbody>
-              {sortedTransactions.map((item) => (
-                <tr>
+              {sortedTransactions.map((item, index) => (
+                <tr key={index}>
                   <td className="d-flex gap-3 align-items-center ">
                     <img
                       src={item.avatar}
@@ -225,12 +225,15 @@ export const Transactions = () => {
                     />
                     {item.name}
                   </td>
-                  <td>{item.category}</td>
-                  <td>{FormatDate(item.date)}</td>
+                  <td className="d-none d-md-table-cell">{item.category}</td>
+                  <td className="d-none d-md-table-cell">
+                    {FormatDate(item.date)}
+                  </td>
                   <td
                     className={`${item.amount > 0 ? "text-success" : "text-danger"} fw-bold`}
                   >
-                    {item.amount < 0 && <span>-</span>}${Math.abs(item.amount)}
+                    {item.amount < 0 ? <span>-</span> : <span>+</span>}$
+                    {Math.abs(item.amount).toFixed(2)}
                   </td>
                 </tr>
               ))}

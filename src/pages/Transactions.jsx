@@ -7,6 +7,7 @@ export const Transactions = () => {
   const [CategoryIsOpen, SetCategoryIsOpen] = useState(false);
   const [Search, SetSearch] = useState("");
   const [SelectedSort, SetSelectedSort] = useState("Latest");
+  const [selectedCategory, setSelectedCategory] = useState("All Transactions");
 
   const toggleSort = () => {
     SetSortIsOpen(!SortIsOpen);
@@ -63,8 +64,19 @@ export const Transactions = () => {
     item.name.toLowerCase().includes(Search.trim().toLowerCase()),
   );
 
-  const sorting = (SelectedSort) => {
+  const categorize = (selectedCategory) => {
     const prev = [...filteredTransactions];
+    if (selectedCategory === "All Transactions") {
+      return prev;
+    } else {
+      return prev.filter((item) => item.category === selectedCategory);
+    }
+    return prev;
+  };
+  const categoryTransactions = categorize(selectedCategory);
+
+  const sorting = (SelectedSort) => {
+    const prev = [...categoryTransactions];
     if (SelectedSort === "Oldest") {
       prev.sort((a, b) => new Date(a.date) - new Date(b.date));
     } else if (SelectedSort === "Latest") {
@@ -104,7 +116,7 @@ export const Transactions = () => {
               >
                 <span className="text-muted text-preset-5">Sort by</span>
                 <div className="form-control  d-flex justify-content-between  align-items-center gap-3">
-                  <span className="text-preset-4"> Latest</span>
+                  <span className="text-preset-4">{SelectedSort}</span>
                   <i className="bi bi-caret-down-fill"></i>
                 </div>
               </div>
@@ -139,7 +151,7 @@ export const Transactions = () => {
               >
                 <span className="text-muted text-preset-5">Category</span>
                 <div className="form-control d-flex justify-content-between align-items-center gap-3">
-                  <span className="text-preset-4"> All Transactions</span>
+                  <span className="text-preset-4">{selectedCategory}</span>
                   <i className="bi bi-caret-down-fill"></i>
                 </div>
               </div>
@@ -153,7 +165,11 @@ export const Transactions = () => {
                   style={{ width: "9rem" }}
                 >
                   {Categories.map((item) => (
-                    <div key={item} className="btn">
+                    <div
+                      key={item}
+                      className="btn"
+                      onClick={() => setSelectedCategory(item)}
+                    >
                       <span className="text-preset-4">{item}</span>
                     </div>
                   ))}
@@ -169,6 +185,7 @@ export const Transactions = () => {
               <span className="text-preset-4 success">{item.name}</span>
               <span>{item.date}</span>
               <span>{item.amount}</span>
+              <span>{item.category}</span>
             </div>
           ))}
         </div>

@@ -94,7 +94,7 @@ export const Transactions = () => {
   };
   const sortedTransactions = sorting(SelectedSort);
   return (
-    <div className="px-3 d-flex flex-column gap-3 container">
+    <div className="px-3 d-flex flex-column gap-3 container justify-content-center h-100">
       <section>
         <Title>Transactions</Title>
       </section>
@@ -203,16 +203,7 @@ export const Transactions = () => {
           </div>
         </div>
         <div className="table-title"></div>
-        <div className="transaction-list">
-          {sortedTransactions.map((item, index) => (
-            <div key={index} className="d-flex justify-content-between">
-              <span className="text-preset-4 success">{item.name}</span>
-              <span>{item.date}</span>
-              <span>{item.amount}</span>
-              <span>{item.category}</span>
-            </div>
-          ))}
-        </div>
+        <div className="transaction-list"></div>
         <div className="pagination-section"></div>
       </section>
     </div>

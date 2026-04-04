@@ -100,7 +100,7 @@ export const Transactions = () => {
         <Title>Transactions</Title>
       </section>
       <section
-        className="col-12 card p-4"
+        className="col-12 card p-4 d-flex flex-column gap-3"
         onClick={() => {
           SetCategoryIsOpen(false);
           SetSortIsOpen(false);

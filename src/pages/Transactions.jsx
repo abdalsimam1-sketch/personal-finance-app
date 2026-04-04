@@ -266,14 +266,19 @@ export const Transactions = () => {
               style={{
                 border: "1px solid var(--color-beige-500)",
               }}
+              onClick={prev}
             >
               <i className="bi bi-caret-left-fill"></i>
               Prev
             </button>
           </div>
           <div className="pages-section d-flex gap-2">
-            {pageNumbers.map((button, index) => (
-              <button key={index} className="btn border">
+            {pageNumbers.map((button) => (
+              <button
+                key={button}
+                className={`btn border ${currentPage === button ? "bg-dark text-light" : ""}`}
+                onClick={() => setCurrentPage(button)}
+              >
                 {button}
               </button>
             ))}
@@ -284,6 +289,7 @@ export const Transactions = () => {
               style={{
                 border: "1px solid var(--color-beige-500)",
               }}
+              onClick={next}
             >
               Next
               <i className="bi bi-caret-right-fill"></i>

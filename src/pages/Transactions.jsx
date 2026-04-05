@@ -119,19 +119,17 @@ export const Transactions = () => {
   const startIndex = (currentPage - 1) * transactionsPerPage;
   const endIndex = startIndex + transactionsPerPage;
   return (
-    <div
-      className="px-3 d-flex flex-column gap-3 justify-content-center container h-100"
-      style={{ minHeight: "90vh" }}
-    >
+    <div className="px-3 d-flex flex-column gap-3 justify-content-center container h-100">
       <section>
         <Title>Transactions</Title>
       </section>
       <section
-        className="col-12 card p-4 d-flex flex-column gap-3"
+        className="col-12 card p-4 d-flex flex-column gap-3 "
         onClick={() => {
           SetCategoryIsOpen(false);
           SetSortIsOpen(false);
         }}
+        style={{ minHeight: "85vh" }}
       >
         <div className="filter-section d-flex justify-content-between align-items-center ">
           <div>
@@ -231,7 +229,7 @@ export const Transactions = () => {
           </div>
         </div>
 
-        <div className="transaction-list responsive-table">
+        <div className="transaction-list responsive-table flex-grow-1">
           <table className="table table-striped align-middle ">
             <thead className="text-preset-4 text-muted">
               <tr>

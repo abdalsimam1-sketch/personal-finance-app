@@ -1,5 +1,5 @@
 import { Title } from "../components/UI/Title";
-
+import { BudgetCard } from "../components/UI/BudgetCard";
 export const Budgets = () => {
   return (
     <div className="container">
@@ -9,7 +9,9 @@ export const Budgets = () => {
       </div>
       <div className="row">
         <section className="col-12 col-md-5"></section>
-        <section className="col-12 col-md-7"></section>
+        <section className="col-12 col-md-7 min-vh-100">
+          <BudgetCard></BudgetCard>
+        </section>
       </div>
     </div>
   );

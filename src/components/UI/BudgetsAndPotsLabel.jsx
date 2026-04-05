@@ -33,7 +33,7 @@ export const BudgetsAndPotsLabel = ({
         {dotsOpen && (
           <div
             className="d-flex flex-column position-absolute bg-light p-3 text-nowrap rounded end-0"
-            style={{ width: "10rem" }}
+            style={{ width: "10rem", zIndex: "100" }}
           >
             <span className="btn" onClick={onEdit}>
               Edit {variant}

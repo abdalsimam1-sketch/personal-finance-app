@@ -34,13 +34,47 @@ export const Budgets = () => {
         <Title>Budgets</Title>
         <button className="btn text-light bg-dark">+ Add New Budget</button>
       </div>
-      <div className="row align-items-start">
-        <section className="col-12 col-md-5 card ">
-          <BudgetPieChart
-            data={PieChartData}
-            TotalSpent={totalSpent}
-            TotalLimit={limit}
-          ></BudgetPieChart>
+      <div className="row align-items-start ">
+        <section className="col-11 mx-auto col-md-5 card mb-3 p-5">
+          <div className="mb-3">
+            <BudgetPieChart
+              data={PieChartData}
+              TotalSpent={totalSpent}
+              TotalLimit={limit}
+            ></BudgetPieChart>
+          </div>
+
+          <div className="">
+            <h2 className="text-preset-2">Spending Summary</h2>
+            {budgets.map((item) => (
+              <div className="d-flex justify-content-between mb-2">
+                <div className="d-flex gap-2 align-items-center">
+                  <span
+                    style={{
+                      height: "1.5rem",
+                      width: "3px",
+                      backgroundColor: item.theme,
+                    }}
+                    className="rounded"
+                  ></span>
+                  <span className="text-preset-5 text-muted">
+                    {item.category}
+                  </span>
+                </div>
+                <div>
+                  <span className="d-flex text-preset-5 gap-1">
+                    <span className="fw-bold ">
+                      $
+                      {Math.abs(
+                        totalSpentForEachCategory(item.category),
+                      ).toFixed(2)}
+                    </span>
+                    <span className="text-muted">of ${item.maximum}</span>
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
         <section className="col-12 col-md-7 min-vh-100 flex-grow-1">
           {budgets.map((item) => (

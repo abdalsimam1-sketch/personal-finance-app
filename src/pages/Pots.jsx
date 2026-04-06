@@ -13,7 +13,7 @@ export const Pots = () => {
       </div>
       <section className="row g-3">
         {pots.map((item) => (
-          <div className="col-12 col-lg-6">
+          <div className="col-12 col-lg-6" key={item.name}>
             <PotsCard
               label={item.name}
               color={item.theme}

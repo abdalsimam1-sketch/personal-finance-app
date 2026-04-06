@@ -5,7 +5,6 @@ export const PotsCard = ({ total, color, percentage, target, label }) => {
   return (
     <div className="card p-4 col-12 mx-auto d-flex flex-column gap-3">
       <section>
-        {" "}
         <BudgetsAndPotsLabel
           variant="Pot"
           label={label}

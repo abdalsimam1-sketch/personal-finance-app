@@ -1,5 +1,8 @@
 import { Title } from "../components/UI/Title";
 import { BudgetCard } from "../components/UI/BudgetCard";
+import data from "../data/data.json";
+const budgets = data.budgets;
+
 export const Budgets = () => {
   return (
     <div className="container d-flex flex-column gap-3">
@@ -10,7 +13,16 @@ export const Budgets = () => {
       <div className="row ">
         <section className="col-12 col-md-5"></section>
         <section className="col-12 col-md-7 min-vh-100">
-          <BudgetCard></BudgetCard>
+          {budgets.map((item) => (
+            <div className="d-flex flex-column mb-3">
+              <BudgetCard
+                maximum={item.maximum}
+                theme={item.theme}
+                category={item.category}
+                percentage={item.maximum / 100}
+              ></BudgetCard>
+            </div>
+          ))}
         </section>
       </div>
     </div>

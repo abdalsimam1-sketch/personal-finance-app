@@ -3,12 +3,15 @@ import { Button } from "../UI/Button";
 import { BudgetsAndPotsLabel } from "../UI/BudgetsAndPotsLabel";
 export const PotsCard = ({ total, color, percentage, target, label }) => {
   return (
-    <div className="card p-4 col-11 mx-auto">
-      <BudgetsAndPotsLabel
-        variant="Pot"
-        label={label}
-        color={color}
-      ></BudgetsAndPotsLabel>
+    <div className="card p-4 col-11 mx-auto d-flex flex-column gap-3">
+      <section>
+        {" "}
+        <BudgetsAndPotsLabel
+          variant="Pot"
+          label={label}
+          color={color}
+        ></BudgetsAndPotsLabel>
+      </section>
       <section className="d-flex justify-content-between align-items-center ">
         <span className="text-preset-4 text-muted">Total Saved</span>
         <h1 className="text-preset-1">${total}</h1>

@@ -9,6 +9,8 @@ export const BudgetCard = ({
   theme,
   percentage,
   latest3 = [],
+  spent = [],
+  remaining = [],
 }) => {
   const path = "/transactions";
   return (
@@ -25,14 +27,14 @@ export const BudgetCard = ({
           <span style={{ width: "4px", height: "2.5rem", color: theme }}></span>
           <div className="d-flex flex-column">
             <span className="text-preset-5 text-muted">Spent</span>
-            <span className="fw-bold text-preset-4">$</span>
+            <span className="fw-bold text-preset-4">${spent}</span>
           </div>
         </div>
         <div>
           <span style={{ width: "4px", height: "2.5rem", color: theme }}></span>
           <div className="d-flex flex-column">
             <span className="text-preset-5 text-muted">Remaining</span>
-            <span className="fw-bold text-preset-4">$</span>
+            <span className="fw-bold text-preset-4">${remaining}</span>
           </div>
         </div>
       </div>

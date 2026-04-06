@@ -10,6 +10,13 @@ export const Budgets = () => {
       .sort((a, b) => new Date(b.date) - new Date(a.date))
       .slice(0, 3);
   };
+
+  const totalSpentForEachCategory = (category) => {
+    return data.transactions
+      .filter((item) => item.category === category)
+      .reduce((sum, item) => sum + item.amount, 0);
+  };
+
   return (
     <div className="container d-flex flex-column gap-3">
       <div className="d-flex justify-content-between align-items-center mt-4">
@@ -25,8 +32,20 @@ export const Budgets = () => {
                 maximum={item.maximum}
                 theme={item.theme}
                 category={item.category}
-                percentage={item.maximum / 100}
+                percentage={Math.min(
+                  Math.abs(
+                    (totalSpentForEachCategory(item.category) / item.maximum) *
+                      100,
+                  ),
+                  100,
+                )}
                 latest3={getLatest3(item.category)}
+                spent={Math.abs(totalSpentForEachCategory(item.category))}
+                remaining={Math.max(
+                  item.maximum -
+                    Math.abs(totalSpentForEachCategory(item.category)),
+                  0,
+                )}
               ></BudgetCard>
             </div>
           ))}

@@ -3,7 +3,7 @@ import { Button } from "../UI/Button";
 import { BudgetsAndPotsLabel } from "../UI/BudgetsAndPotsLabel";
 export const PotsCard = ({ total, color, percentage, target, label }) => {
   return (
-    <div className="card p-4 col-11 mx-auto d-flex flex-column gap-3">
+    <div className="card p-4 col-12 mx-auto d-flex flex-column gap-3">
       <section>
         {" "}
         <BudgetsAndPotsLabel
@@ -24,14 +24,14 @@ export const PotsCard = ({ total, color, percentage, target, label }) => {
           className="rounded"
           style={{
             height: "100%",
-            backgroundColor: "var(--color-green)",
-            width: `{${percentage}%`,
+            backgroundColor: color,
+            width: `${percentage}%`,
           }}
         ></div>
       </section>
       <section className="text-preset-5 text-muted d-flex justify-content-between align-items-center">
-        <span>{percentage}</span>
-        <span>Target of {target}</span>
+        <span>{percentage}%</span>
+        <span>Target of ${target}</span>
       </section>
       <section className="d-flex justify-content-between">
         <Button variant="secondary">+ Add Money</Button>

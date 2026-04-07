@@ -6,6 +6,9 @@ import data from "../data/data.json";
 import { FormatDate } from "../HelperFunctions/DateFormat";
 import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
 import { suffix } from "../HelperFunctions/CurrentDate";
+import paidIcon from "../assets/images/icon-bill-paid.svg";
+import dueIcon from "../assets/images/icon-bill-due.svg";
+
 export const RecurringBills = () => {
   const recurringBills = data.transactions.filter(
     (item) => item.recurring === true,
@@ -46,26 +49,26 @@ export const RecurringBills = () => {
                 alt="bills icon"
                 style={{ width: "1.5rem" }}
               />
-              <div className="">
-                <span>Total Bills</span> <h1>${totalBills}</h1>
+              <div>
+                <span className="text-preset-2">Total Bills</span>{" "}
+                <h1 className="text-preset-1">${totalBills}</h1>
               </div>
             </div>
           </div>
           <div className="card p-3 w-100 d-flex flex-column gap-3">
-            <span>Summary</span>
+            <span className="text-preset-3">Summary</span>
             <div className="d-flex justify-content-between align-items-center text-preset-4 border-bottom">
-              <span className="text-muted">Paid Bills</span>
-              <span>{totalPaid}</span>
+              <span className="text-muted text-preset-4">Paid Bills</span>
+              <span className="text-preset-3">${totalPaid}</span>
             </div>
             <div className="d-flex justify-content-between align-items-center text-preset-4 border-bottom">
-              {" "}
               <span className="text-muted">Total Upcoming</span>
-              <span>{totalUpComing}</span>
+              <span className="text-preset-3">${totalUpComing}</span>
             </div>
-            <div className="d-flex justify-content-between align-items-center text-preset-4 border-bottom">
+            <div className="d-flex justify-content-between align-items-center text-preset-4 border-bottom text-danger">
               {" "}
-              <span className="text-danger">Due Soon</span>
-              <span>{totalDue}</span>
+              <span>Due Soon</span>
+              <span className="text-preset-3">${totalDue}</span>
             </div>
           </div>
         </section>
@@ -85,26 +88,54 @@ export const RecurringBills = () => {
               <table className="table">
                 <thead>
                   <tr className="text-muted">
-                    <th>Bill Title</th>
+                    <th className="d-none d-md-table-cell">Bill Title</th>
                     <th className="d-none d-md-table-cell">Due Date</th>
-                    <th>Amount</th>
+                    <th className="d-none d-md-table-cell">Amount</th>
                   </tr>
                 </thead>
-                <tbody className="">
-                  {recurringBills.map((item) => (
+                <tbody>
+                  {billsStatus.map((item) => (
                     <tr key={item.amount} className="align-middle">
-                      <td className="d-flex align-items-center gap-2">
-                        <img
-                          src={item.avatar}
-                          alt={item.name + " avatar"}
-                          style={{ width: "3rem", borderRadius: "50%" }}
-                        />
-                        {item.name}
+                      <td className="d-flex flex-column">
+                        <span className="d-flex align-items-center gap-2">
+                          <img
+                            src={item.avatar}
+                            alt={item.name + " avatar"}
+                            style={{ width: "3rem", borderRadius: "50%" }}
+                          />
+                          {item.name}
+                        </span>
+                        <span className="d-md-none text-success text-preset-4">
+                          Monthly-{new Date(item.date).getDate()}
+                          {suffix(new Date(item.date).getDate())}
+                          {item.status === "paid" ? (
+                            <img src={paidIcon} alt="" className="ps-2" />
+                          ) : item.status === "soon" ? (
+                            <img src={dueIcon} alt="" className="ps-1" />
+                          ) : (
+                            item.status === "upcoming"
+                          )}
+                        </span>
                       </td>
                       <td className="d-none d-md-table-cell">
-                        {FormatDate(item.date)}
+                        <span className=" text-success text-preset-4">
+                          Monthly-{new Date(item.date).getDate()}
+                          {suffix(new Date(item.date).getDate())}
+                          {item.status === "paid" ? (
+                            <img src={paidIcon} alt="" className="ps-2" />
+                          ) : item.status === "soon" ? (
+                            <img src={dueIcon} alt="" className="ps-1" />
+                          ) : (
+                            item.status === "upcoming"
+                          )}
+                        </span>
                       </td>
-                      <td>{item.amount}</td>
+                      <td
+                        className={`${item.amount < 0 ? "text-danger" : ""} text-preset-3`}
+                      >
+                        {item.amount < 0 ? <span>-</span> : <span>+</span>}$
+                        {Math.abs(item.amount)}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

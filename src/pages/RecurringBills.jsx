@@ -4,9 +4,33 @@ import billsIcon from "../assets/images/icon-nav-recurring-bills.svg";
 import { Input } from "../components/UI/Input";
 import data from "../data/data.json";
 import { FormatDate } from "../HelperFunctions/DateFormat";
+import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
+import { suffix } from "../HelperFunctions/CurrentDate";
 export const RecurringBills = () => {
   const recurringBills = data.transactions.filter(
     (item) => item.recurring === true,
+  );
+  const billsStatus = recurringBills.map((item) => ({
+    ...item,
+    status: CheckIfPaid(item.date),
+  }));
+  const paid = billsStatus.filter((item) => item.status === "paid");
+  const upComing = billsStatus.filter((item) => item.status === "upcoming");
+  const dueSoon = billsStatus.filter((item) => item.status === "soon");
+
+  const totalPaid = paid.reduce((sum, item) => sum + Math.abs(item.amount), 0);
+  const totalUpComing = upComing.reduce(
+    (sum, item) => sum + Math.abs(item.amount),
+    0,
+  );
+  const totalDue = dueSoon.reduce(
+    (sum, item) => sum + Math.abs(item.amount),
+    0,
+  );
+
+  const totalBills = recurringBills.reduce(
+    (sum, item) => sum + Math.abs(item.amount),
+    0,
   );
   return (
     <div className="container d-flex flex-column gap-3">
@@ -23,7 +47,7 @@ export const RecurringBills = () => {
                 style={{ width: "1.5rem" }}
               />
               <div className="">
-                <span>Total Bills</span> <h1>$</h1>
+                <span>Total Bills</span> <h1>${totalBills}</h1>
               </div>
             </div>
           </div>
@@ -31,24 +55,24 @@ export const RecurringBills = () => {
             <span>Summary</span>
             <div className="d-flex justify-content-between align-items-center text-preset-4 border-bottom">
               <span className="text-muted">Paid Bills</span>
-              <span></span>
+              <span>{totalPaid}</span>
             </div>
             <div className="d-flex justify-content-between align-items-center text-preset-4 border-bottom">
               {" "}
               <span className="text-muted">Total Upcoming</span>
-              <span></span>
+              <span>{totalUpComing}</span>
             </div>
             <div className="d-flex justify-content-between align-items-center text-preset-4 border-bottom">
               {" "}
               <span className="text-danger">Due Soon</span>
-              <span></span>
+              <span>{totalDue}</span>
             </div>
           </div>
         </section>
         <section className="col-12 col-lg-7 ">
           <div className="card p-3 d-flex flex-column gap-3">
             <section className="d-flex justify-content-between">
-              <Input variant="icon"></Input>
+              <Input variant="icon" placeholder="Search bills"></Input>
               <div>
                 <span className="text-muted text-preset-5">Sort by</span>
                 <div className="form-control d-flex gap-3 text-nowrap">

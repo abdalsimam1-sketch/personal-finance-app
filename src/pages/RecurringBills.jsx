@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Title } from "../components/UI/Title";
 import billsIcon from "../assets/images/icon-nav-recurring-bills.svg";
 import { Input } from "../components/UI/Input";
@@ -17,6 +17,7 @@ export const RecurringBills = () => {
     ...item,
     status: CheckIfPaid(item.date),
   }));
+
   const paid = billsStatus.filter((item) => item.status === "paid");
   const upComing = billsStatus.filter((item) => item.status === "upcoming");
   const dueSoon = billsStatus.filter((item) => item.status === "soon");
@@ -35,6 +36,12 @@ export const RecurringBills = () => {
     (sum, item) => sum + Math.abs(item.amount),
     0,
   );
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const search = billsStatus.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.trim().toLowerCase()),
+  );
+
   return (
     <div className="container d-flex flex-column gap-3">
       <div className="mt-4">
@@ -75,7 +82,13 @@ export const RecurringBills = () => {
         <section className="col-12 col-lg-7 ">
           <div className="card p-3 d-flex flex-column gap-3">
             <section className="d-flex justify-content-between align-items-center">
-              <Input variant="icon" placeholder="Search bills"></Input>
+              <Input
+                variant="icon"
+                placeholder="Search bills"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              ></Input>
+
               <div className="d-none d-md-inline" style={{ cursor: "pointer" }}>
                 <span className="text-muted text-preset-5">Sort by</span>
                 <div className="form-control d-flex gap-3 text-nowrap">
@@ -98,8 +111,8 @@ export const RecurringBills = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {billsStatus.map((item) => (
-                    <tr key={item.amount} className="align-middle">
+                  {search.map((item, index) => (
+                    <tr key={index} className="align-middle">
                       <td className="d-flex flex-column">
                         <span className="d-flex align-items-center gap-2">
                           <img

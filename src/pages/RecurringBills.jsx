@@ -3,11 +3,13 @@ import { Title } from "../components/UI/Title";
 import billsIcon from "../assets/images/icon-nav-recurring-bills.svg";
 import { Input } from "../components/UI/Input";
 import data from "../data/data.json";
-import { FormatDate } from "../HelperFunctions/DateFormat";
+
 import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
 import { suffix } from "../HelperFunctions/CurrentDate";
 import paidIcon from "../assets/images/icon-bill-paid.svg";
 import dueIcon from "../assets/images/icon-bill-due.svg";
+import { Sort } from "../data/sortData";
+import { sorting } from "../data/sortData";
 
 export const RecurringBills = () => {
   const recurringBills = data.transactions.filter(
@@ -89,7 +91,10 @@ export const RecurringBills = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               ></Input>
 
-              <div className="d-none d-md-inline" style={{ cursor: "pointer" }}>
+              <div
+                className="d-none d-md-inline "
+                style={{ cursor: "pointer" }}
+              >
                 <span className="text-muted text-preset-5">Sort by</span>
                 <div className="form-control d-flex gap-3 text-nowrap">
                   <span>Latest</span>

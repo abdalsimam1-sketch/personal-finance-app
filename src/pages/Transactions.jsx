@@ -3,6 +3,8 @@ import { Title } from "../components/UI/Title";
 import { Input } from "../components/UI/Input";
 import data from "../data/data.json";
 import { FormatDate } from "../HelperFunctions/DateFormat";
+import { Sort } from "../data/sortData";
+import { sorting } from "../data/sortData";
 export const Transactions = () => {
   const [SortIsOpen, SetSortIsOpen] = useState(false);
   const [CategoryIsOpen, SetCategoryIsOpen] = useState(false);
@@ -36,27 +38,6 @@ export const Transactions = () => {
     });
   };
 
-  const Sort = [
-    {
-      name: "Latest",
-    },
-    {
-      name: "Oldest",
-    },
-    {
-      name: "A-Z",
-    },
-    {
-      name: "Z-A",
-    },
-    {
-      name: "Highest",
-    },
-    {
-      name: "Lowest",
-    },
-  ];
-
   const allCategories = data.transactions.map((item) => item.category);
   const UniqueCategories = [...new Set(allCategories)];
   const Categories = ["All Transactions", ...UniqueCategories];
@@ -76,24 +57,7 @@ export const Transactions = () => {
   };
   const categoryTransactions = categorize(selectedCategory);
 
-  const sorting = (SelectedSort) => {
-    const prev = [...categoryTransactions];
-    if (SelectedSort === "Oldest") {
-      prev.sort((a, b) => new Date(a.date) - new Date(b.date));
-    } else if (SelectedSort === "Latest") {
-      prev.sort((a, b) => new Date(b.date) - new Date(a.date));
-    } else if (SelectedSort === "A-Z") {
-      prev.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (SelectedSort === "Z-A") {
-      prev.sort((a, b) => b.name.localeCompare(a.name));
-    } else if (SelectedSort === "Highest") {
-      prev.sort((a, b) => b.amount - a.amount);
-    } else if (SelectedSort === "Lowest") {
-      prev.sort((a, b) => a.amount - b.amount);
-    }
-    return prev;
-  };
-  const sortedTransactions = sorting(SelectedSort);
+  const sortedTransactions = sorting(SelectedSort, categoryTransactions);
   return (
     <div className="px-3 d-flex flex-column gap-3 container justify-content-center h-100">
       <section>

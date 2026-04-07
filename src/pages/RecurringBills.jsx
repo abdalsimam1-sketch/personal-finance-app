@@ -74,15 +74,19 @@ export const RecurringBills = () => {
         </section>
         <section className="col-12 col-lg-7 ">
           <div className="card p-3 d-flex flex-column gap-3">
-            <section className="d-flex justify-content-between">
+            <section className="d-flex justify-content-between align-items-center">
               <Input variant="icon" placeholder="Search bills"></Input>
-              <div>
+              <div className="d-none d-md-inline" style={{ cursor: "pointer" }}>
                 <span className="text-muted text-preset-5">Sort by</span>
                 <div className="form-control d-flex gap-3 text-nowrap">
                   <span>Latest</span>
                   <i className="bi bi-caret-down-fill"></i>
                 </div>
               </div>
+              <i
+                className="bi bi-sort-down btn fs-1 d-md-none"
+                style={{ transform: "translateY(17%)" }}
+              ></i>
             </section>
             <section>
               <table className="table">

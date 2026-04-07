@@ -136,6 +136,7 @@ export const Transactions = () => {
                   e.stopPropagation();
                   toggleSortMobile();
                 }}
+                style={{ transform: "translateY(15%)" }}
               ></i>
               {SortIsOpen && (
                 <div
@@ -180,6 +181,7 @@ export const Transactions = () => {
                   e.stopPropagation();
                   toggleCategoryMobile();
                 }}
+                style={{ transform: "translateY(15%)" }}
               ></i>
               {CategoryIsOpen && (
                 <div

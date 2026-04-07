@@ -130,11 +130,35 @@ export const RecurringBills = () => {
                   </div>
                 )}
               </div>
-              <i
-                className="bi bi-sort-down btn fs-1 d-md-none"
-                style={{ transform: "translateY(17%)" }}
-                onClick={toggleMenu}
-              ></i>
+
+              <div className="d-md-none">
+                <i
+                  className="bi bi-sort-down btn fs-1 d-md-none"
+                  style={{
+                    transform: "translateY(18%)",
+                  }}
+                  onClick={toggleMenu}
+                ></i>
+                {menuIsOpen && (
+                  <div
+                    className="position-absolute end-0 p-3 bg-light rounded d-flex flex-column mt-2 text-nowrap"
+                    style={{ left: "18rem", width: "7rem" }}
+                  >
+                    {Sort.map((item) => (
+                      <div
+                        className="btn"
+                        key={item.name}
+                        onClick={() => {
+                          setSelectedSort(item.name);
+                          setMenuIsOpen(false);
+                        }}
+                      >
+                        {item.name}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </section>
             <section>
               <table className="table">

@@ -74,16 +74,24 @@ export const RecurringBills = () => {
             <span className="text-preset-3">Summary</span>
             <div className="d-flex justify-content-between align-items-center text-preset-4 border-bottom">
               <span className="text-muted text-preset-4">Paid Bills</span>
-              <span className="text-preset-3">${totalPaid}</span>
+              <span className="text-preset-3">
+                {paid.length}(${totalPaid})
+              </span>
             </div>
             <div className="d-flex justify-content-between align-items-center text-preset-4 border-bottom">
               <span className="text-muted">Total Upcoming</span>
-              <span className="text-preset-3">${totalUpComing}</span>
+              <span className="text-preset-3">
+                {" "}
+                {upComing.length}(${totalUpComing})
+              </span>
             </div>
             <div className="d-flex justify-content-between align-items-center text-preset-4 border-bottom text-danger mb-3">
               {" "}
               <span>Due Soon</span>
-              <span className="text-preset-3">${totalDue}</span>
+              <span className="text-preset-3">
+                {" "}
+                {dueSoon.length}(${totalDue})
+              </span>
             </div>
           </div>
         </section>

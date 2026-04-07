@@ -43,6 +43,12 @@ export const RecurringBills = () => {
   const search = billsStatus.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.trim().toLowerCase()),
   );
+  const [selectedSort, setSelectedSort] = useState("Latest");
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const toggleMenu = () => {
+    setMenuIsOpen(!menuIsOpen);
+  };
+  const sortedBills = sorting(selectedSort, search);
 
   return (
     <div className="container d-flex flex-column gap-3">
@@ -92,18 +98,34 @@ export const RecurringBills = () => {
               ></Input>
 
               <div
-                className="d-none d-md-inline "
+                className="d-none d-md-inline position-relative "
                 style={{ cursor: "pointer" }}
+                onClick={toggleMenu}
               >
                 <span className="text-muted text-preset-5">Sort by</span>
                 <div className="form-control d-flex gap-3 text-nowrap">
-                  <span>Latest</span>
+                  <span>{selectedSort}</span>
                   <i className="bi bi-caret-down-fill"></i>
                 </div>
+
+                {menuIsOpen && (
+                  <div className="position-absolute start-0 p-3 bg-light rounded d-flex flex-column mt-2">
+                    {Sort.map((item) => (
+                      <div
+                        className="btn"
+                        key={item.name}
+                        onClick={() => setSelectedSort(item.name)}
+                      >
+                        {item.name}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
               <i
                 className="bi bi-sort-down btn fs-1 d-md-none"
                 style={{ transform: "translateY(17%)" }}
+                onClick={toggleMenu}
               ></i>
             </section>
             <section>
@@ -116,7 +138,7 @@ export const RecurringBills = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {search.map((item, index) => (
+                  {sortedBills.map((item, index) => (
                     <tr key={index} className="align-middle">
                       <td className="d-flex flex-column">
                         <span className="d-flex align-items-center gap-2">

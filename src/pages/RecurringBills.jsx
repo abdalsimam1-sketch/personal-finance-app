@@ -57,7 +57,7 @@ export const RecurringBills = () => {
       </div>
       <main className="row g-3">
         <section className="col-12 col-lg-5 d-flex flex-column flex-md-row flex-lg-column gap-3">
-          <div className="p-3 bg-dark card text-light w-100 ">
+          <div className="p-5 bg-dark card text-light w-100 ">
             <div className="d-flex gap-3 flex-md-column">
               <img
                 src={billsIcon}
@@ -70,7 +70,7 @@ export const RecurringBills = () => {
               </div>
             </div>
           </div>
-          <div className="card p-3 w-100 d-flex flex-column gap-3">
+          <div className="card p-5 w-100 d-flex flex-column gap-3">
             <span className="text-preset-3">Summary</span>
             <div className="d-flex justify-content-between align-items-center text-preset-4 border-bottom">
               <span className="text-muted text-preset-4">Paid Bills</span>
@@ -80,7 +80,7 @@ export const RecurringBills = () => {
               <span className="text-muted">Total Upcoming</span>
               <span className="text-preset-3">${totalUpComing}</span>
             </div>
-            <div className="d-flex justify-content-between align-items-center text-preset-4 border-bottom text-danger">
+            <div className="d-flex justify-content-between align-items-center text-preset-4 border-bottom text-danger mb-3">
               {" "}
               <span>Due Soon</span>
               <span className="text-preset-3">${totalDue}</span>

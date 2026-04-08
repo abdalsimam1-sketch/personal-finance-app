@@ -11,6 +11,8 @@ export const BudgetCard = ({
   latest3 = [],
   spent = [],
   remaining = [],
+  onEdit,
+  onDelete,
 }) => {
   const path = "/transactions";
   return (
@@ -19,6 +21,8 @@ export const BudgetCard = ({
         label={category}
         color={theme}
         variant="Budget"
+        onEdit={onEdit}
+        onDelete={onDelete}
       ></BudgetsAndPotsLabel>
       <span className="text-preset-5 text muted">Maximum of {maximum}</span>
       <PercantageBar percentage={percentage} color={theme}></PercantageBar>
@@ -53,8 +57,8 @@ export const BudgetCard = ({
           SeeDetail="See More"
           label="Latest Spending"
         ></SeeDetails>
-        {latest3.map((item) => (
-          <div className=" d-flex justify-content-between mb-3">
+        {latest3.map((item, index) => (
+          <div className=" d-flex justify-content-between mb-3" key={index}>
             <div className="d-flex align-items-center gap-3">
               <img
                 src={item.avatar}

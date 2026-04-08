@@ -3,6 +3,10 @@ import { BudgetCard } from "../components/UI/BudgetCard";
 import data from "../data/data.json";
 import { BudgetPieChart } from "../components/UI/BudgetPieChart";
 const budgets = data.budgets;
+import { AddEditBudgetModal } from "../components/UI/AddEditBudgetModal";
+import { useState } from "react";
+import { Button } from "../components/UI/Button";
+import { DeleteBudget } from "../components/UI/DeleteBudget";
 
 export const Budgets = () => {
   const getLatest3 = (category) => {
@@ -28,11 +32,30 @@ export const Budgets = () => {
     color: item.theme,
   }));
   const limit = budgets.reduce((sum, item) => sum + item.maximum, 0);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const toggleModal = () => {
+    setAddModalOpen(!addModalOpen);
+  };
+
+  const usedThemes = budgets.map((item) => item.theme);
+  const [mode, setMode] = useState();
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const toggleDelete = () => {
+    setDeleteModalOpen(!deleteModalOpen);
+  };
+
   return (
-    <div className="container d-flex flex-column gap-3">
+    <div className="container d-flex flex-column gap-3 position-relative">
       <div className="d-flex justify-content-between align-items-center mt-4">
         <Title>Budgets</Title>
-        <button className="btn text-light bg-dark">+ Add New Budget</button>
+        <Button
+          variant="primary"
+          children="+ Add New Budget"
+          onClick={() => {
+            setMode("add");
+            toggleModal();
+          }}
+        ></Button>
       </div>
       <div className="row align-items-start ">
         <section className="col-11 mx-auto col-md-5 card mb-3 p-5">
@@ -46,8 +69,8 @@ export const Budgets = () => {
 
           <div className="">
             <h2 className="text-preset-2">Spending Summary</h2>
-            {budgets.map((item) => (
-              <div className="d-flex justify-content-between mb-2">
+            {budgets.map((item, index) => (
+              <div className="d-flex justify-content-between mb-2" key={index}>
                 <div className="d-flex gap-2 align-items-center">
                   <span
                     style={{
@@ -77,9 +100,14 @@ export const Budgets = () => {
           </div>
         </section>
         <section className="col-12 col-md-7 min-vh-100 flex-grow-1">
-          {budgets.map((item) => (
-            <div className="d-flex flex-column mb-3">
+          {budgets.map((item, index) => (
+            <div className="d-flex flex-column mb-3" key={index}>
               <BudgetCard
+                onDelete={toggleDelete}
+                onEdit={() => {
+                  setMode("edit");
+                  toggleModal();
+                }}
                 maximum={item.maximum}
                 theme={item.theme}
                 category={item.category}
@@ -102,6 +130,21 @@ export const Budgets = () => {
           ))}
         </section>
       </div>
+
+      {addModalOpen && (
+        <AddEditBudgetModal
+          mode={mode}
+          onClose={toggleModal}
+          usedThemes={usedThemes}
+        ></AddEditBudgetModal>
+      )}
+
+      {deleteModalOpen && (
+        <DeleteBudget
+          category="Entertainment"
+          onClose={toggleDelete}
+        ></DeleteBudget>
+      )}
     </div>
   );
 };

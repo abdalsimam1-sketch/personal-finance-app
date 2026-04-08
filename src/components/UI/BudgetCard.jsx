@@ -11,6 +11,8 @@ export const BudgetCard = ({
   latest3 = [],
   spent = [],
   remaining = [],
+  onEdit,
+  onDelete,
 }) => {
   const path = "/transactions";
   return (

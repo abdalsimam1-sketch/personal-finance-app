@@ -22,6 +22,7 @@ export const BudgetCard = ({
         color={theme}
         variant="Budget"
         onEdit={onEdit}
+        onDelete={onDelete}
       ></BudgetsAndPotsLabel>
       <span className="text-preset-5 text muted">Maximum of {maximum}</span>
       <PercantageBar percentage={percentage} color={theme}></PercantageBar>

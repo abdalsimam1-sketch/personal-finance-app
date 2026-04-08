@@ -6,6 +6,7 @@ const budgets = data.budgets;
 import { AddEditBudgetModal } from "../components/UI/AddEditBudgetModal";
 import { useState } from "react";
 import { Button } from "../components/UI/Button";
+import { DeleteBudget } from "../components/UI/DeleteBudget";
 
 export const Budgets = () => {
   const getLatest3 = (category) => {
@@ -132,6 +133,8 @@ export const Budgets = () => {
           usedThemes={usedThemes}
         ></AddEditBudgetModal>
       )}
+
+      <DeleteBudget category="Entertainment"></DeleteBudget>
     </div>
   );
 };

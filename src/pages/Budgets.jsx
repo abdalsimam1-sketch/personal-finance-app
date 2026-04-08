@@ -37,6 +37,7 @@ export const Budgets = () => {
   };
 
   const usedThemes = budgets.map((item) => item.theme);
+  const [mode, setMode] = useState();
 
   return (
     <div className="container d-flex flex-column gap-3 position-relative">
@@ -45,7 +46,10 @@ export const Budgets = () => {
         <Button
           variant="primary"
           children="+ Add New Budget"
-          onClick={toggleModal}
+          onClick={() => {
+            setMode("add");
+            toggleModal();
+          }}
         ></Button>
       </div>
       <div className="row align-items-start ">
@@ -94,7 +98,10 @@ export const Budgets = () => {
           {budgets.map((item, index) => (
             <div className="d-flex flex-column mb-3" key={index}>
               <BudgetCard
-                onEdit={toggleModal}
+                onEdit={() => {
+                  setMode("edit");
+                  toggleModal();
+                }}
                 maximum={item.maximum}
                 theme={item.theme}
                 category={item.category}
@@ -120,7 +127,7 @@ export const Budgets = () => {
 
       {addModalOpen && (
         <AddEditBudgetModal
-          mode=""
+          mode={mode}
           onClose={toggleModal}
           usedThemes={usedThemes}
         ></AddEditBudgetModal>

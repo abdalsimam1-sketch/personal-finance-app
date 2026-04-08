@@ -94,6 +94,7 @@ export const Budgets = () => {
           {budgets.map((item, index) => (
             <div className="d-flex flex-column mb-3" key={index}>
               <BudgetCard
+                onEdit={toggleModal}
                 maximum={item.maximum}
                 theme={item.theme}
                 category={item.category}

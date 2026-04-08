@@ -53,8 +53,8 @@ export const BudgetCard = ({
           SeeDetail="See More"
           label="Latest Spending"
         ></SeeDetails>
-        {latest3.map((item) => (
-          <div className=" d-flex justify-content-between mb-3">
+        {latest3.map((item, index) => (
+          <div className=" d-flex justify-content-between mb-3" key={index}>
             <div className="d-flex align-items-center gap-3">
               <img
                 src={item.avatar}

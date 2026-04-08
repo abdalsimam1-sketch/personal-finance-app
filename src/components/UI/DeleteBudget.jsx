@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "./Button";
-export const DeleteBudget = (category, onClose) => {
+export const DeleteBudget = ({ category, onClose }) => {
   return (
     <div
       className="position-fixed  top-0 start-0 d-flex justify-content-center align-items-center h-100 h-100 "

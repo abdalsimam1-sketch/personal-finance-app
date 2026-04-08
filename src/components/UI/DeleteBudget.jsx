@@ -13,7 +13,7 @@ export const DeleteBudget = ({ category, onClose }) => {
       <main className="card p-4" style={{ maxWidth: "500px", width: "90%" }}>
         <section className="d-flex align-items-center justify-content-between">
           <h1 className="text-preset-1">
-            Delete <span></span>
+            Delete <span>"{category} "</span>
           </h1>
           <i className="bi bi-x-circle fs-2 btn" onClick={onClose}></i>
         </section>

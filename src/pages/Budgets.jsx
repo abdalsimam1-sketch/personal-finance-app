@@ -140,10 +140,10 @@ export const Budgets = () => {
       )}
 
       {deleteModalOpen && (
-        <DeleteBudget
+        <DeleteModal
           category="Entertainment"
           onClose={toggleDelete}
-        ></DeleteBudget>
+        ></DeleteModal>
       )}
     </div>
   );

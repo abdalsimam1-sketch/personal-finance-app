@@ -99,7 +99,7 @@ export const AddEditPotsModal = ({ mode, maximumCharacters, onClose }) => {
             <div className="p-3 rounded d-flex flex-column position-absolute bg-light start-0 end-0">
               {themes.map((item) => (
                 <div
-                  key={item.namecheck}
+                  key={item.name}
                   className="btn "
                   onClick={() =>
                     setPotsFormState((current) => ({

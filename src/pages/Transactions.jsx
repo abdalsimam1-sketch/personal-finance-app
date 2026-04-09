@@ -54,28 +54,34 @@ export const Transactions = () => {
     } else {
       return prev.filter((item) => item.category === selectedCategory);
     }
-    return prev;
   };
   const categoryTransactions = categorize(selectedCategory);
 
-  const sorting = (SelectedSort) => {
-    const prev = [...categoryTransactions];
-    if (SelectedSort === "Oldest") {
-      prev.sort((a, b) => new Date(a.date) - new Date(b.date));
-    } else if (SelectedSort === "Latest") {
-      prev.sort((a, b) => new Date(b.date) - new Date(a.date));
-    } else if (SelectedSort === "A-Z") {
-      prev.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (SelectedSort === "Z-A") {
-      prev.sort((a, b) => b.name.localeCompare(a.name));
-    } else if (SelectedSort === "Highest") {
-      prev.sort((a, b) => b.amount - a.amount);
-    } else if (SelectedSort === "Lowest") {
-      prev.sort((a, b) => a.amount - b.amount);
+  const sortedTransactions = sorting(SelectedSort, categoryTransactions);
+  const transactionsPerPage = 7;
+  const totalPages = Math.ceil(sortedTransactions.length / transactionsPerPage);
+
+  const prev = () => {
+    if (currentPage > 1) {
+      setCurrentPage((page) => (page > 1 ? page - 1 : page));
     }
-    return prev;
   };
-  const sortedTransactions = sorting(SelectedSort);
+
+  const next = () => {
+    setCurrentPage((page) => (page < totalPages ? page + 1 : 1));
+  };
+
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1,
+  );
+
+  const startIndex = (currentPage - 1) * transactionsPerPage;
+  const endIndex = startIndex + transactionsPerPage;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [Search, selectedCategory, SelectedSort]);
   return (
     <div className="px-3 d-flex flex-column gap-3 justify-content-center container h-100">
       <section>

@@ -113,8 +113,8 @@ export const AddEditBudgetModal = ({
             )}
           </div>
           <div className="d-flex flex-column">
-            <label className="m-0 position-absolute">Maximum Spend</label>
             <Input
+              label="Maximum Spend"
               variant="prefix"
               placeholder="e.g 2000"
               value={maxSpend}

@@ -41,10 +41,14 @@ export const AddEditBudgetModal = ({
   const toggleCategories = () => {
     setCategoriesOpen(!categoriesOpen);
   };
-  const [selectedCategory, setSelectedCategory] = useState("Entertainment");
-  const [seletedTheme, setSelectedTheme] = useState(themes[0]);
 
-  const [maxSpend, setMaxSpend] = useState("");
+  const initialFormState = {
+    category: category ?? "Entertainment",
+    maximum: maximum ?? "",
+    theme: theme ?? themes[0],
+  };
+
+  const [formState, setFormState] = useState(initialFormState);
 
   return (
     <div
@@ -90,7 +94,7 @@ export const AddEditBudgetModal = ({
               style={{ cursor: "pointer" }}
             >
               <span className="text-preset-4 text-muted">
-                {selectedCategory}
+                {formState.category}
               </span>
               <i className="bi bi-caret-down-fill"></i>
             </div>
@@ -104,7 +108,12 @@ export const AddEditBudgetModal = ({
                   <div
                     key={index}
                     className="btn text-start"
-                    onClick={() => setSelectedCategory(item.name)}
+                    onClick={() =>
+                      setFormState((current) => ({
+                        ...current,
+                        category: item.name,
+                      }))
+                    }
                   >
                     {item.name}
                   </div>
@@ -117,8 +126,13 @@ export const AddEditBudgetModal = ({
               label="Maximum Spend"
               variant="prefix"
               placeholder="e.g 2000"
-              value={maxSpend}
-              onChange={(e) => setMaxSpend(e.target.value)}
+              value={formState.maximum}
+              onChange={(e) =>
+                setFormState((current) => ({
+                  ...current,
+                  maximum: e.target.value,
+                }))
+              }
             ></Input>
           </div>
           <div
@@ -139,22 +153,27 @@ export const AddEditBudgetModal = ({
                     width: "1.5rem",
                     height: "1.5rem",
                     borderRadius: "50%",
-                    backgroundColor: seletedTheme.theme,
+                    backgroundColor: formState.theme.theme,
                   }}
                 ></span>
-                <span>{seletedTheme.name}</span>
+                <span>{formState.theme.name}</span>
               </div>
               <i className="bi bi-caret-down-fill"></i>
             </div>
             {themesOpen && (
               <div className="position-absolute d-flex flex-column bg-light start-0 end-0  p-3 rounded">
                 {themes.map((item) => {
-                  const isUsed = usedThemes.includes(item.theme);
+                  const isUsed = usedThemes?.includes(item.theme);
                   return (
                     <div
                       key={item.name}
                       className="btn  bg-light"
-                      onClick={() => setSelectedTheme(item)}
+                      onClick={() =>
+                        setFormState((current) => ({
+                          ...current,
+                          theme: item,
+                        }))
+                      }
                     >
                       <div className="d-flex justify-content-between ">
                         <div className="d-flex gap-1 align-items-center">

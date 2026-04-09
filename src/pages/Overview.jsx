@@ -48,7 +48,6 @@ export const Overview = () => {
     name: item.category,
     value: item.maximum,
     color: item.theme,
-    limit: item.spent,
   }));
 
   const RecurringBills = data.transactions.filter(

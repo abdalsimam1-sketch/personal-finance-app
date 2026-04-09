@@ -3,6 +3,8 @@ import { Title } from "../components/UI/Title";
 import { Input } from "../components/UI/Input";
 import data from "../data/data.json";
 import { FormatDate } from "../HelperFunctions/DateFormat";
+import { Sort } from "../data/sortData";
+import { sorting } from "../data/sortData";
 export const Transactions = () => {
   const [SortIsOpen, SetSortIsOpen] = useState(false);
   const [CategoryIsOpen, SetCategoryIsOpen] = useState(false);
@@ -36,27 +38,6 @@ export const Transactions = () => {
       return next;
     });
   };
-
-  const Sort = [
-    {
-      name: "Latest",
-    },
-    {
-      name: "Oldest",
-    },
-    {
-      name: "A-Z",
-    },
-    {
-      name: "Z-A",
-    },
-    {
-      name: "Highest",
-    },
-    {
-      name: "Lowest",
-    },
-  ];
 
   const allCategories = data.transactions.map((item) => item.category);
   const UniqueCategories = [...new Set(allCategories)];
@@ -95,33 +76,6 @@ export const Transactions = () => {
     return prev;
   };
   const sortedTransactions = sorting(SelectedSort);
-
-  const transactionsPerPage = 7;
-  const totalPages = Math.ceil(sortedTransactions.length / transactionsPerPage);
-
-  const prev = () => {
-    if (currentPage > 1) {
-      setCurrentPage((page) => (page > 1 ? page - 1 : page));
-    }
-  };
-
-  const next = () => {
-    setCurrentPage((page) =>
-      page < totalPages ? page + 1 : setCurrentPage(1),
-    );
-  };
-
-  const pageNumbers = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1,
-  );
-
-  const startIndex = (currentPage - 1) * transactionsPerPage;
-  const endIndex = startIndex + transactionsPerPage;
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [Search]);
   return (
     <div className="px-3 d-flex flex-column gap-3 justify-content-center container h-100">
       <section>
@@ -165,6 +119,7 @@ export const Transactions = () => {
                   e.stopPropagation();
                   toggleSortMobile();
                 }}
+                style={{ transform: "translateY(15%)" }}
               ></i>
               {SortIsOpen && (
                 <div
@@ -209,6 +164,7 @@ export const Transactions = () => {
                   e.stopPropagation();
                   toggleCategoryMobile();
                 }}
+                style={{ transform: "translateY(15%)" }}
               ></i>
               {CategoryIsOpen && (
                 <div

@@ -3,7 +3,7 @@ import { Button } from "./Button";
 import { Input } from "./Input";
 import { themes } from "../../data/Themes";
 import { useState } from "react";
-export const AddEditPotsModal = ({ mode, maximumCharacters }) => {
+export const AddEditPotsModal = ({ mode, maximumCharacters, onClose }) => {
   const [seletectedTheme, setSelectedTheme] = useState(themes[0]);
   const [themesOpen, setThemesOpen] = useState(false);
   const toggleThemes = () => {
@@ -13,6 +13,7 @@ export const AddEditPotsModal = ({ mode, maximumCharacters }) => {
     <div
       className="position-fixed start-0 top-0 d-flex justify-content-center align-items-center w-100 h-100"
       style={{ height: "100vh", background: "rgba(0,0,0,0.5)" }}
+      onClick={onClose}
     >
       <main
         className="card p-4  "
@@ -20,12 +21,13 @@ export const AddEditPotsModal = ({ mode, maximumCharacters }) => {
           maxWidth: "500px",
           width: "90%",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="d-flex justify-content-between align-items-center">
           <h1 className="text-preset-1">
             {mode === "add" ? "Add New" : "Edit"} Pot
           </h1>
-          <i className="bi bi-x-circle fs-2 btn"></i>
+          <i className="bi bi-x-circle fs-2 btn" onClick={onClose}></i>
         </div>
         <div>
           <p className="text-preset-4 text-muted">

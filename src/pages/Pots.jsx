@@ -3,6 +3,7 @@ import { Title } from "../components/UI/Title";
 import { PotsCard } from "../components/UI/PotsCard";
 import { Button } from "../components/UI/Button";
 import { AddEditPotsModal } from "../components/UI/AddEditPotsModal";
+import { DeleteModal } from "../components/UI/DeleteModal";
 
 import data from "../data/data.json";
 export const Pots = () => {
@@ -12,6 +13,10 @@ export const Pots = () => {
     setModalOpen(!modalOpen);
   };
   const [mode, setMode] = useState("add");
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const toggleDelete = () => {
+    setDeleteModalOpen(!deleteModalOpen);
+  };
   return (
     <div className="container d-flex flex-column gap-3 ">
       <div className="d-flex justify-content-between align-items-center mt-4">
@@ -30,6 +35,7 @@ export const Pots = () => {
         {pots.map((item) => (
           <div className="col-12 col-lg-6" key={item.name}>
             <PotsCard
+              onDelete={toggleDelete}
               onEdit={() => {
                 toggleModal();
                 setMode("edit");
@@ -49,6 +55,13 @@ export const Pots = () => {
           maximumCharacters={17}
           onClose={toggleModal}
         ></AddEditPotsModal>
+      )}
+      {deleteModalOpen && (
+        <DeleteModal
+          variant="pot"
+          category="Savings"
+          onClose={toggleDelete}
+        ></DeleteModal>
       )}
     </div>
   );

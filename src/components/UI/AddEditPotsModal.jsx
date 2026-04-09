@@ -4,11 +4,17 @@ import { Input } from "./Input";
 import { themes } from "../../data/Themes";
 import { useState } from "react";
 export const AddEditPotsModal = ({ mode, maximumCharacters, onClose }) => {
-  const [seletectedTheme, setSelectedTheme] = useState(themes[0]);
   const [themesOpen, setThemesOpen] = useState(false);
   const toggleThemes = () => {
     setThemesOpen(!themesOpen);
   };
+  const initialState = {
+    potName: "",
+    target: "",
+    theme: themes[0],
+  };
+  const [potsFormState, setPotsFormState] = useState(initialState);
+
   return (
     <div
       className="position-fixed start-0 top-0 d-flex justify-content-center align-items-center w-100 h-100"
@@ -38,7 +44,17 @@ export const AddEditPotsModal = ({ mode, maximumCharacters, onClose }) => {
         </div>
         <section className="mb-3">
           <div className="d-flex flex-column ">
-            <Input placeholder="e.g. Rainy Days" label="  Pot Name"></Input>
+            <Input
+              placeholder="e.g. Rainy Days"
+              label="  Pot Name"
+              value={potsFormState.potName}
+              onChange={(e) =>
+                setPotsFormState((current) => ({
+                  ...current,
+                  potName: e.target.value,
+                }))
+              }
+            ></Input>
             <span className="text-preset-5 text-muted align-self-end">
               {maximumCharacters} characters left
             </span>
@@ -49,6 +65,13 @@ export const AddEditPotsModal = ({ mode, maximumCharacters, onClose }) => {
               placeholder="e.g. 2000"
               variant="prefix"
               label="Target"
+              value={potsFormState.target}
+              onChange={(e) =>
+                setPotsFormState((current) => ({
+                  ...current,
+                  target: e.target.value,
+                }))
+              }
             ></Input>
           </div>
           <div></div>
@@ -65,17 +88,26 @@ export const AddEditPotsModal = ({ mode, maximumCharacters, onClose }) => {
                   width: "1rem",
                   height: "1rem",
                   borderRadius: "50%",
-                  backgroundColor: seletectedTheme.theme,
+                  backgroundColor: potsFormState.theme.theme,
                 }}
               ></span>
-              <span>{seletectedTheme.name}</span>
+              <span>{potsFormState.theme.name}</span>
             </div>
             <i className="bi bi-caret-down-fill"></i>
           </div>
           {themesOpen && (
             <div className="p-3 rounded d-flex flex-column position-absolute bg-light start-0 end-0">
               {themes.map((item) => (
-                <div className="btn " onClick={() => setSelectedTheme(item)}>
+                <div
+                  key={item.namecheck}
+                  className="btn "
+                  onClick={() =>
+                    setPotsFormState((current) => ({
+                      ...current,
+                      theme: item,
+                    }))
+                  }
+                >
                   <div className="d-flex gap-2 align-items-center">
                     <span
                       style={{

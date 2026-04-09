@@ -2,9 +2,12 @@ import React from "react";
 import { Title } from "../components/UI/Title";
 import { PotsCard } from "../components/UI/PotsCard";
 import { Button } from "../components/UI/Button";
+import { AddEditPotsModal } from "../components/UI/AddEditPotsModal";
+
 import data from "../data/data.json";
 export const Pots = () => {
   const pots = data.pots;
+
   return (
     <div className="container d-flex flex-column gap-3 ">
       <div className="d-flex justify-content-between align-items-center mt-4">
@@ -24,6 +27,7 @@ export const Pots = () => {
           </div>
         ))}
       </section>
+      <AddEditPotsModal mode="" maximumCharacters={17}></AddEditPotsModal>
     </div>
   );
 };

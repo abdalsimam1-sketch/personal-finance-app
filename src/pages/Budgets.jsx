@@ -6,7 +6,7 @@ const budgets = data.budgets;
 import { AddEditBudgetModal } from "../components/UI/AddEditBudgetModal";
 import { useState } from "react";
 import { Button } from "../components/UI/Button";
-import { DeleteBudget } from "../components/UI/DeleteBudget";
+import { DeleteModal } from "../components/UI/DeleteModal";
 
 export const Budgets = () => {
   const getLatest3 = (category) => {

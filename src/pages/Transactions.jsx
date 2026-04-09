@@ -82,6 +82,9 @@ export const Transactions = () => {
   useEffect(() => {
     setCurrentPage(1);
   }, [Search, selectedCategory, SelectedSort]);
+  const mobilePages = [1, currentPage, totalPages];
+  const uniqueMobileNumbers = [...new Set(mobilePages)];
+
   return (
     <div className="px-3 d-flex flex-column gap-3 justify-content-center container h-100">
       <section>
@@ -250,11 +253,22 @@ export const Transactions = () => {
               onClick={prev}
             ></i>
           </div>
-          <div className="pages-section d-flex gap-2">
+          <div className="pages-section  gap-2 d-none d-md-flex">
             {pageNumbers.map((button) => (
               <button
                 key={button}
-                className={`btn border ${currentPage === button ? "bg-dark text-light" : ""}`}
+                className={`btn border ${currentPage === button ? "bg-dark text-light" : ""} `}
+                onClick={() => setCurrentPage(button)}
+              >
+                {button}
+              </button>
+            ))}
+          </div>
+          <div className="mobile-pages-section  d-flex gap-5 d-md-none ">
+            {uniqueMobileNumbers.map((button) => (
+              <button
+                key={button}
+                className={`btn border ${currentPage === button ? "bg-dark text-light" : ""} `}
                 onClick={() => setCurrentPage(button)}
               >
                 {button}

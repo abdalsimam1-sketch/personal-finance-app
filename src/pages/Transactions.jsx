@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Title } from "../components/UI/Title";
 import { Input } from "../components/UI/Input";
 import data from "../data/data.json";
@@ -11,6 +11,7 @@ export const Transactions = () => {
   const [Search, SetSearch] = useState("");
   const [SelectedSort, SetSelectedSort] = useState("Latest");
   const [selectedCategory, setSelectedCategory] = useState("All Transactions");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const toggleSort = () => {
     SetSortIsOpen(!SortIsOpen);
@@ -53,22 +54,46 @@ export const Transactions = () => {
     } else {
       return prev.filter((item) => item.category === selectedCategory);
     }
-    return prev;
   };
   const categoryTransactions = categorize(selectedCategory);
 
   const sortedTransactions = sorting(SelectedSort, categoryTransactions);
+  const transactionsPerPage = 7;
+  const totalPages = Math.ceil(sortedTransactions.length / transactionsPerPage);
+
+  const prev = () => {
+    if (currentPage > 1) {
+      setCurrentPage((page) => (page > 1 ? page - 1 : page));
+    }
+  };
+
+  const next = () => {
+    setCurrentPage((page) => (page < totalPages ? page + 1 : 1));
+  };
+
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1,
+  );
+
+  const startIndex = (currentPage - 1) * transactionsPerPage;
+  const endIndex = startIndex + transactionsPerPage;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [Search, selectedCategory, SelectedSort]);
   return (
-    <div className="px-3 d-flex flex-column gap-3 container justify-content-center h-100">
+    <div className="px-3 d-flex flex-column gap-3 justify-content-center container h-100">
       <section>
         <Title>Transactions</Title>
       </section>
       <section
-        className="col-12 card p-4 d-flex flex-column gap-3"
+        className="col-12 card p-4 d-flex flex-column gap-3 "
         onClick={() => {
           SetCategoryIsOpen(false);
           SetSortIsOpen(false);
         }}
+        style={{ minHeight: "85vh" }}
       >
         <div className="filter-section d-flex justify-content-between align-items-center ">
           <div>
@@ -170,7 +195,7 @@ export const Transactions = () => {
           </div>
         </div>
 
-        <div className="transaction-list responsive-table">
+        <div className="transaction-list responsive-table flex-grow-1">
           <table className="table table-striped align-middle ">
             <thead className="text-preset-4 text-muted">
               <tr>
@@ -181,32 +206,78 @@ export const Transactions = () => {
               </tr>
             </thead>
             <tbody>
-              {sortedTransactions.map((item, index) => (
-                <tr key={index}>
-                  <td className="d-flex gap-3 align-items-center ">
-                    <img
-                      src={item.avatar}
-                      alt={item.name + " avatar"}
-                      style={{ width: "3rem", borderRadius: "50%" }}
-                    />
-                    {item.name}
-                  </td>
-                  <td className="d-none d-md-table-cell">{item.category}</td>
-                  <td className="d-none d-md-table-cell">
-                    {FormatDate(item.date)}
-                  </td>
-                  <td
-                    className={`${item.amount > 0 ? "text-success" : "text-danger"} fw-bold`}
-                  >
-                    {item.amount < 0 ? <span>-</span> : <span>+</span>}$
-                    {Math.abs(item.amount).toFixed(2)}
-                  </td>
-                </tr>
-              ))}
+              {sortedTransactions
+                .slice(startIndex, endIndex)
+                .map((item, index) => (
+                  <tr key={index}>
+                    <td className="d-flex gap-3 align-items-center ">
+                      <img
+                        src={item.avatar}
+                        alt={item.name + " avatar"}
+                        style={{ width: "3rem", borderRadius: "50%" }}
+                      />
+                      {item.name}
+                    </td>
+                    <td className="d-none d-md-table-cell">{item.category}</td>
+                    <td className="d-none d-md-table-cell">
+                      {FormatDate(item.date)}
+                    </td>
+                    <td
+                      className={`${item.amount > 0 ? "text-success" : "text-danger"} fw-bold`}
+                    >
+                      {item.amount < 0 ? <span>-</span> : <span>+</span>}$
+                      {Math.abs(item.amount).toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
-        <div className="pagination-section"></div>
+        <div className="pagination-section d-flex justify-content-between align-items-center">
+          <div className="previous-section">
+            <button
+              className="btn prev-button px-2 d-flex gap-5 d-none d-md-flex"
+              style={{
+                border: "1px solid var(--color-beige-500)",
+              }}
+              onClick={prev}
+            >
+              <i className="bi bi-caret-left-fill "></i>
+              Prev
+            </button>
+            <i
+              className="bi bi-caret-left-fill d-md-none btn border"
+              onClick={prev}
+            ></i>
+          </div>
+          <div className="pages-section d-flex gap-2">
+            {pageNumbers.map((button) => (
+              <button
+                key={button}
+                className={`btn border ${currentPage === button ? "bg-dark text-light" : ""}`}
+                onClick={() => setCurrentPage(button)}
+              >
+                {button}
+              </button>
+            ))}
+          </div>
+          <div className="next-section">
+            <button
+              className="btn prev-button px-2 d-flex gap-5 d-none d-md-flex"
+              style={{
+                border: "1px solid var(--color-beige-500)",
+              }}
+              onClick={next}
+            >
+              Next
+              <i className="bi bi-caret-right-fill"></i>
+            </button>
+            <i
+              className="bi bi-caret-right-fill d-md-none btn border"
+              onClick={next}
+            ></i>
+          </div>
+        </div>
       </section>
     </div>
   );

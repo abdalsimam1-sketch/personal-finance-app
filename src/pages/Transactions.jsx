@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Title } from "../components/UI/Title";
 import { Input } from "../components/UI/Input";
 import data from "../data/data.json";
@@ -118,6 +118,10 @@ export const Transactions = () => {
 
   const startIndex = (currentPage - 1) * transactionsPerPage;
   const endIndex = startIndex + transactionsPerPage;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [Search]);
   return (
     <div className="px-3 d-flex flex-column gap-3 justify-content-center container h-100">
       <section>

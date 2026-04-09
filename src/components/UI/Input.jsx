@@ -9,7 +9,7 @@ export const Input = ({
 }) => {
   return (
     <div>
-      <label htmlFor={name} className="form-label fw-bold input-label">
+      <label htmlFor={name} className="form-label fw-bold input-label m-0">
         {label}
       </label>
       <div className="input-wrapper">

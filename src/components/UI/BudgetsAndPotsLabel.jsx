@@ -35,11 +35,23 @@ export const BudgetsAndPotsLabel = ({
             className="d-flex flex-column position-absolute bg-light p-3 text-nowrap rounded end-0"
             style={{ width: "10rem", zIndex: "100" }}
           >
-            <span className="btn" onClick={onEdit}>
+            <span
+              className="btn"
+              onClick={() => {
+                toggleDots();
+                onEdit();
+              }}
+            >
               Edit {variant}
             </span>
 
-            <span className="text-danger btn" onClick={onDelete}>
+            <span
+              className="text-danger btn"
+              onClick={() => {
+                toggleDots();
+                onDelete();
+              }}
+            >
               {" "}
               Delete {variant}
             </span>

@@ -1,7 +1,15 @@
 import React from "react";
 import { Button } from "../UI/Button";
 import { BudgetsAndPotsLabel } from "../UI/BudgetsAndPotsLabel";
-export const PotsCard = ({ total, color, percentage, target, label }) => {
+export const PotsCard = ({
+  total,
+  color,
+  percentage,
+  target,
+  label,
+  onEdit,
+  onDelete,
+}) => {
   return (
     <div className="card p-4 col-12 mx-auto d-flex flex-column gap-3">
       <section>
@@ -9,6 +17,8 @@ export const PotsCard = ({ total, color, percentage, target, label }) => {
           variant="Pot"
           label={label}
           color={color}
+          onDelete={onDelete}
+          onEdit={onEdit}
         ></BudgetsAndPotsLabel>
       </section>
       <section className="d-flex justify-content-between align-items-center ">

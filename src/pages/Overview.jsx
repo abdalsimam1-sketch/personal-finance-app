@@ -34,20 +34,31 @@ export const Overview = () => {
 
   const TotalPots = data.pots.reduce((sum, pot) => sum + pot.total, 0);
 
-  const TotalSpent = data.budgets.reduce(
-    (sum, budget) => sum + budget.spent || 0,
+  const budgets = data.budgets;
+  const spent = budgets.map((budget) => {
+    return data.transactions
+      .filter((transaction) => transaction.category === budget.category)
+      .reduce((sum, transaction) => sum + transaction.amount, 0);
+  });
+
+  const budgetsWithSpentProperty = budgets.map((item, index) => ({
+    ...item,
+    spent: spent[index],
+  }));
+  const TotalSpent = budgetsWithSpentProperty.reduce(
+    (sum, item) => sum + item.spent,
     0,
   );
-
   const TotalLimit = data.budgets.reduce(
     (sum, budget) => sum + budget.maximum || 0,
     0,
   );
 
-  const PieChartData = data.budgets.map((item) => ({
+  const PieChartData = budgetsWithSpentProperty.map((item) => ({
     name: item.category,
     value: item.maximum,
     color: item.theme,
+    spent: Math.abs(item.spent),
   }));
 
   const RecurringBills = data.transactions.filter(
@@ -215,7 +226,7 @@ export const Overview = () => {
                 <BudgetPieChart
                   data={PieChartData}
                   TotalLimit={TotalLimit}
-                  TotalSpent={TotalSpent}
+                  TotalSpent={Math.abs(TotalSpent)}
                 ></BudgetPieChart>
               </div>
 
@@ -239,7 +250,7 @@ export const Overview = () => {
                           {item.name}
                         </span>
                         <span className="text-preset-4 fw-bold">
-                          ${item.value}
+                          ${item.spent}
                         </span>
                       </div>
                     </div>

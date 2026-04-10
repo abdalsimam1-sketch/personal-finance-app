@@ -19,7 +19,7 @@ export const Input = ({
           $
         </span>
         <input
-          type="text"
+          type={variant === "prefix" ? "number" : "text"}
           placeholder={placeholder}
           id={name}
           className="form-control ps-4"

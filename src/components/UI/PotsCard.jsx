@@ -9,6 +9,8 @@ export const PotsCard = ({
   label,
   onEdit,
   onDelete,
+  onAdd,
+  onWithdraw,
 }) => {
   return (
     <div className="card p-4 col-12 mx-auto d-flex flex-column gap-3">
@@ -43,8 +45,12 @@ export const PotsCard = ({
         <span>Target of ${target}</span>
       </section>
       <section className="d-flex justify-content-between">
-        <Button variant="secondary">+ Add Money</Button>
-        <Button variant="secondary">Withdraw</Button>
+        <Button variant="secondary" onClick={onAdd}>
+          + Add Money
+        </Button>
+        <Button variant="secondary" onClick={onWithdraw}>
+          Withdraw
+        </Button>
       </section>
     </div>
   );

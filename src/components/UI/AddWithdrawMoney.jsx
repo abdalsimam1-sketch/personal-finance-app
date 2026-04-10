@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "./Input";
 import { Button } from "./Button";
 export const AddWithdrawMoney = ({
   mode,
   onClose,
   pot,
-  amount,
-  percentage,
+  originalAmount,
   target,
 }) => {
+  const [inputAmount, setInputAmount] = useState("");
+  const amount = Number(inputAmount) || 0;
+  const newAmount =
+    mode === "withdraw" ? originalAmount - amount : originalAmount + amount;
+  const percentage = ((newAmount / target) * 100).toFixed(2);
+  const amountToBeRendered = Math.max(newAmount, 0);
+  const percentageToBerendered = Math.max(percentage, 0);
   return (
     <div
       className="position-fixed d-flex justify-content-center align-items-center h-100 w-100  start-0"
@@ -18,7 +24,7 @@ export const AddWithdrawMoney = ({
         <div className="d-flex align-items-center justify-content-between">
           {mode === "withdraw" ? (
             <h2 className="text-preset-2 md-text-preset-1">
-              Withrdraw from '{pot}'
+              Withdraw from '{pot}'
             </h2>
           ) : (
             <h2 className="text-preset-2  md-text-preset-1">Add to '{pot}'</h2>
@@ -35,7 +41,7 @@ export const AddWithdrawMoney = ({
         <section>
           <div className="d-flex justify-content-between">
             <span className="text-preset-4">New Amount</span>
-            <h1 className="text-preset-1">${amount}</h1>
+            <h1 className="text-preset-1">${amountToBeRendered}</h1>
           </div>
           <div
             className="card w-100  d-flex flex-row gap-1  "
@@ -46,7 +52,7 @@ export const AddWithdrawMoney = ({
               style={{ width: "1rem", flexShrink: 0 }}
             ></div>
             <div
-              className="h-100 rounded-end"
+              className={`h-100 rounded-end  ${percentageToBerendered === 0 ? "d-none" : ""}`}
               style={{
                 width: `${percentage}% `,
                 backgroundColor:
@@ -61,7 +67,7 @@ export const AddWithdrawMoney = ({
             <span
               className={`${mode === "withdraw" ? "text-danger" : "text-success"} text-preset-4 fw-bold`}
             >
-              {percentage}%
+              {percentageToBerendered}%
             </span>
             <span className="text-preset-4 text-muted">
               Target of ${target}
@@ -71,6 +77,8 @@ export const AddWithdrawMoney = ({
         <Input
           label={mode === "withdraw" ? "Amount to withdraw" : "Amount to Add "}
           variant="prefix"
+          value={inputAmount}
+          onChange={(e) => setInputAmount(e.target.value)}
         ></Input>
         <div className="mb-3"></div>
         <Button

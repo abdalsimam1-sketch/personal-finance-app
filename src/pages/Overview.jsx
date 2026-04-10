@@ -241,7 +241,7 @@ export const Overview = () => {
                         className="rounded-pill"
                         style={{
                           width: "4px",
-                          height: "2rem",
+                          height: "2.5rem",
                           backgroundColor: item.color,
                         }}
                       ></div>

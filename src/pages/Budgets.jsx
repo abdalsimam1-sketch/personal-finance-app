@@ -1,23 +1,23 @@
 import { Title } from "../components/UI/Title";
 import { BudgetCard } from "../components/UI/BudgetCard";
-import data from "../data/data.json";
+
 import { BudgetPieChart } from "../components/UI/BudgetPieChart";
-const budgets = data.budgets;
 import { AddEditBudgetModal } from "../components/UI/AddEditBudgetModal";
 import { useState } from "react";
 import { Button } from "../components/UI/Button";
 import { DeleteModal } from "../components/UI/DeleteModal";
-
+import { useFinance } from "../context/FinanceContext";
 export const Budgets = () => {
+  const { budgets, transactions } = useFinance();
   const getLatest3 = (category) => {
-    return data.transactions
+    return transactions
       .filter((item) => item.category === category)
       .sort((a, b) => new Date(b.date) - new Date(a.date))
       .slice(0, 3);
   };
 
   const totalSpentForEachCategory = (category) => {
-    return data.transactions
+    return transactions
       .filter((item) => item.category === category)
       .reduce((sum, item) => sum + item.amount, 0);
   };
@@ -31,7 +31,8 @@ export const Budgets = () => {
     value: Math.abs(totalSpentForEachCategory(item.category)),
     color: item.theme,
   }));
-  const limit = budgets.reduce((sum, item) => sum + item.maximum, 0);
+  const limit = budgets.reduce((sum, item) => sum + Number(item.maximum), 0);
+
   const [addModalOpen, setAddModalOpen] = useState(false);
   const toggleModal = () => {
     setAddModalOpen(!addModalOpen);

@@ -44,6 +44,7 @@ export const Budgets = () => {
   const toggleDelete = () => {
     setDeleteModalOpen(!deleteModalOpen);
   };
+  const [selectedBudget, setSelectedBudget] = useState();
 
   return (
     <div className="container d-flex flex-column gap-3 position-relative">
@@ -104,7 +105,10 @@ export const Budgets = () => {
           {budgets.map((item, index) => (
             <div className="d-flex flex-column mb-3" key={index}>
               <BudgetCard
-                onDelete={toggleDelete}
+                onDelete={() => {
+                  toggleDelete();
+                  setSelectedBudget(item);
+                }}
                 onEdit={() => {
                   setMode("edit");
                   toggleModal();
@@ -142,7 +146,7 @@ export const Budgets = () => {
 
       {deleteModalOpen && (
         <DeleteModal
-          category="Entertainment"
+          category={selectedBudget.category}
           onClose={toggleDelete}
         ></DeleteModal>
       )}

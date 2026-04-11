@@ -5,11 +5,11 @@ export const themes = [
   },
   {
     name: "Yellow",
-    theme: "#82C9D7",
+    theme: "#F2CDAC",
   },
   {
     name: "Cyan",
-    theme: "#F2CDAC",
+    theme: "#82C9D7",
   },
   {
     name: "Navy",

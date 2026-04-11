@@ -3,18 +3,20 @@ import { Button } from "./Button";
 import { Input } from "./Input";
 import { themes } from "../../data/Themes";
 import { useState } from "react";
+import { useFinance } from "../../context/FinanceContext";
 export const AddEditPotsModal = ({ mode, maximumCharacters, onClose }) => {
   const [themesOpen, setThemesOpen] = useState(false);
   const toggleThemes = () => {
     setThemesOpen(!themesOpen);
   };
   const initialState = {
-    potName: "",
+    name: "",
     target: "",
     theme: themes[0],
+    total: 0,
   };
   const [potsFormState, setPotsFormState] = useState(initialState);
-
+  const { addPot } = useFinance();
   return (
     <div
       className="position-fixed start-0 top-0 d-flex justify-content-center align-items-center w-100 h-100"
@@ -47,11 +49,11 @@ export const AddEditPotsModal = ({ mode, maximumCharacters, onClose }) => {
             <Input
               placeholder="e.g. Rainy Days"
               label="  Pot Name"
-              value={potsFormState.potName}
+              value={potsFormState.name}
               onChange={(e) =>
                 setPotsFormState((current) => ({
                   ...current,
-                  potName: e.target.value,
+                  name: e.target.value,
                 }))
               }
             ></Input>
@@ -127,6 +129,10 @@ export const AddEditPotsModal = ({ mode, maximumCharacters, onClose }) => {
         <Button
           variant="primary"
           children={mode === "add" ? "Add Pot" : "Save Changes"}
+          onClick={() => {
+            addPot(potsFormState);
+            onClose();
+          }}
         ></Button>
       </main>
     </div>

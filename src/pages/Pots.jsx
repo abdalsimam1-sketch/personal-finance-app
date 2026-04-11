@@ -6,9 +6,9 @@ import { AddEditPotsModal } from "../components/UI/AddEditPotsModal";
 import { DeleteModal } from "../components/UI/DeleteModal";
 import { AddWithdrawMoney } from "../components/UI/AddWithdrawMoney";
 
-import data from "../data/data.json";
+import { useFinance } from "../context/FinanceContext";
 export const Pots = () => {
-  const pots = data.pots;
+  const { pots } = useFinance();
   const [modalOpen, setModalOpen] = useState(false);
   const toggleModal = () => {
     setModalOpen(!modalOpen);

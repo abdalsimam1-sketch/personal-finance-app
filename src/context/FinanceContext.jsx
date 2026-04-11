@@ -33,7 +33,19 @@ export const FinanceProvider = ({ children }) => {
       return current.filter((item) => item.category !== category);
     });
   };
-  const addPot = () => {};
+  const addPot = ({ name, target, theme }) => {
+    const potExists = pots.findIndex((item) => {
+      return item.name === name;
+    });
+    if (potExists === -1) {
+      setPots((current) => [
+        { name, target: Number(target) || 0, theme: theme.theme, total: 0 },
+        ...current,
+      ]);
+    } else {
+      return;
+    }
+  };
   const editPot = () => {};
   const deletePot = () => {};
   const addMoney = () => {};

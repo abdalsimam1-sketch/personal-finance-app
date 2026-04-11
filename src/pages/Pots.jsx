@@ -53,7 +53,10 @@ export const Pots = () => {
                 toggleAddWithdraw();
                 setSelectedPot(item);
               }}
-              onDelete={toggleDelete}
+              onDelete={() => {
+                toggleDelete();
+                setSelectedPot(item);
+              }}
               onEdit={() => {
                 toggleModal();
                 setMode("edit");
@@ -77,7 +80,7 @@ export const Pots = () => {
       {deleteModalOpen && (
         <DeleteModal
           variant="pot"
-          category="Savings"
+          category={selectedPot.name}
           onClose={toggleDelete}
         ></DeleteModal>
       )}

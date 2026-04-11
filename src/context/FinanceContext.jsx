@@ -47,7 +47,13 @@ export const FinanceProvider = ({ children }) => {
     }
   };
   const editPot = () => {};
-  const deletePot = () => {};
+  const deletePot = (name) => {
+    setPots((current) =>
+      current.filter((item) => {
+        return item.name !== name;
+      }),
+    );
+  };
   const addMoney = () => {};
   const withdrawMoney = () => {};
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "./Button";
 import { useFinance } from "../../context/FinanceContext";
 export const DeleteModal = ({ category, onClose, variant }) => {
-  const { deleteBudget } = useFinance();
+  const { deleteBudget, deletePot } = useFinance();
   return (
     <div
       className="position-fixed  top-0 start-0 d-flex justify-content-center align-items-center h-100 h-100 "
@@ -27,7 +27,11 @@ export const DeleteModal = ({ category, onClose, variant }) => {
           variant="destroy"
           children="Yes,Confirm Deletion"
           onClick={() => {
-            deleteBudget(category);
+            if (variant === "budget") {
+              deleteBudget(category);
+            } else {
+              deletePot(category);
+            }
             onClose();
           }}
         ></Button>

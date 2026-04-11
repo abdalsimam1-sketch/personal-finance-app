@@ -28,7 +28,11 @@ export const FinanceProvider = ({ children }) => {
     }
   };
   const editBudget = () => {};
-  const deleteBudget = () => {};
+  const deleteBudget = (category) => {
+    setBudgets((current) => {
+      return current.filter((item) => item.category !== category);
+    });
+  };
   const addPot = () => {};
   const editPot = () => {};
   const deletePot = () => {};

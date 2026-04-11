@@ -6,11 +6,12 @@ import PotsIcon from "../assets/images/icon-nav-pots.svg";
 import { SeeDetails } from "../components/UI/SeeDetails";
 import { FormatDate } from "../HelperFunctions/DateFormat";
 import { BudgetPieChart } from "../components/UI/BudgetPieChart";
-
+import { useFinance } from "../context/FinanceContext";
 import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
 import { BillsSummary } from "../components/UI/BillsSummary";
 
 export const Overview = () => {
+  const { budgets } = useFinance();
   const balanceData = [
     {
       label: "Current Balance ",
@@ -34,7 +35,6 @@ export const Overview = () => {
 
   const TotalPots = data.pots.reduce((sum, pot) => sum + pot.total, 0);
 
-  const budgets = data.budgets;
   const spent = budgets.map((budget) => {
     return data.transactions
       .filter((transaction) => transaction.category === budget.category)
@@ -49,14 +49,14 @@ export const Overview = () => {
     (sum, item) => sum + item.spent,
     0,
   );
-  const TotalLimit = data.budgets.reduce(
-    (sum, budget) => sum + budget.maximum || 0,
+  const TotalLimit = budgets.reduce(
+    (sum, budget) => sum + Number(budget.maximum || 0),
     0,
   );
 
   const PieChartData = budgetsWithSpentProperty.map((item) => ({
     name: item.category,
-    value: item.maximum,
+    value: Math.abs(item.spent),
     color: item.theme,
     spent: Math.abs(item.spent),
   }));

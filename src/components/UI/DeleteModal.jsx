@@ -1,6 +1,8 @@
 import React from "react";
 import { Button } from "./Button";
+import { useFinance } from "../../context/FinanceContext";
 export const DeleteModal = ({ category, onClose, variant }) => {
+  const { deleteBudget } = useFinance();
   return (
     <div
       className="position-fixed  top-0 start-0 d-flex justify-content-center align-items-center h-100 h-100 "
@@ -21,7 +23,14 @@ export const DeleteModal = ({ category, onClose, variant }) => {
           Are you sure want to delete this <span>{variant}</span> ? This action
           cannot be reversed, and all the data inside it will be removed forever
         </p>
-        <Button variant="destroy" children="Yes,Confirm Deletion"></Button>
+        <Button
+          variant="destroy"
+          children="Yes,Confirm Deletion"
+          onClick={() => {
+            deleteBudget(category);
+            onClose();
+          }}
+        ></Button>
         <span className="align-self-center mt-3 btn " onClick={onClose}>
           No,Go Back
         </span>

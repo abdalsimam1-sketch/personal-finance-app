@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Input } from "./Input";
 import { Button } from "../UI/Button";
 import { themes } from "../../data/Themes";
+import { useFinance } from "../../context/FinanceContext";
 export const AddEditBudgetModal = ({
   theme,
   onClose,
@@ -24,10 +25,10 @@ export const AddEditBudgetModal = ({
       name: "Dining Out",
     },
     {
-      name: "Transaportaion",
+      name: "Transportation",
     },
     {
-      name: "Persoanl Care",
+      name: "Personal Care",
     },
     {
       name: "Education",
@@ -49,6 +50,7 @@ export const AddEditBudgetModal = ({
   };
 
   const [formState, setFormState] = useState(initialFormState);
+  const { addBudget } = useFinance();
 
   return (
     <div
@@ -199,6 +201,10 @@ export const AddEditBudgetModal = ({
         <Button
           variant="primary"
           children={mode === "add" ? "Add New Budget" : "Save Changes"}
+          onClick={() => {
+            addBudget(formState);
+            onClose();
+          }}
         ></Button>
       </div>
     </div>

@@ -8,30 +8,20 @@ import { Button } from "../components/UI/Button";
 import { DeleteModal } from "../components/UI/DeleteModal";
 import { useFinance } from "../context/FinanceContext";
 export const Budgets = () => {
-  const { budgets, transactions } = useFinance();
+  const {
+    budgets,
+    transactions,
+    totalSpent,
+    totalSpentForEachCategory,
+    PieChartData,
+    limit,
+  } = useFinance();
   const getLatest3 = (category) => {
     return transactions
       .filter((item) => item.category === category)
       .sort((a, b) => new Date(b.date) - new Date(a.date))
       .slice(0, 3);
   };
-
-  const totalSpentForEachCategory = (category) => {
-    return transactions
-      .filter((item) => item.category === category)
-      .reduce((sum, item) => sum + item.amount, 0);
-  };
-  const totalSpent = budgets.reduce(
-    (sum, item) => sum + Math.abs(totalSpentForEachCategory(item.category)),
-    0,
-  );
-
-  const PieChartData = budgets.map((item) => ({
-    name: item.category,
-    value: Math.abs(totalSpentForEachCategory(item.category)),
-    color: item.theme,
-  }));
-  const limit = budgets.reduce((sum, item) => sum + Number(item.maximum), 0);
 
   const [addModalOpen, setAddModalOpen] = useState(false);
   const toggleModal = () => {

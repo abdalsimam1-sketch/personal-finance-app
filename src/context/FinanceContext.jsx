@@ -107,11 +107,34 @@ export const FinanceProvider = ({ children }) => {
     }));
   };
 
+  //budget logic
+
+  const totalSpentForEachCategory = (category) => {
+    return transactions
+      .filter((item) => item.category === category)
+      .reduce((sum, item) => sum + item.amount, 0);
+  };
+  const totalSpent = budgets.reduce(
+    (sum, item) => sum + Math.abs(totalSpentForEachCategory(item.category)),
+    0,
+  );
+
+  const PieChartData = budgets.map((item) => ({
+    name: item.category,
+    value: Math.abs(totalSpentForEachCategory(item.category)),
+    color: item.theme,
+  }));
+  const limit = budgets.reduce((sum, item) => sum + Number(item.maximum), 0);
+
   const valuesToBeShared = {
     balance,
     transactions,
     budgets,
     pots,
+    totalSpent,
+    totalSpentForEachCategory,
+    PieChartData,
+    limit,
     addBudget,
     editBudget,
     deleteBudget,

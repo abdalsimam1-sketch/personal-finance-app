@@ -10,7 +10,16 @@ import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
 import { BillsSummary } from "../components/UI/BillsSummary";
 
 export const Overview = () => {
-  const { budgets, balance, transactions, pots } = useFinance();
+  const {
+    budgets,
+    balance,
+    transactions,
+    pots,
+    totalSpent,
+    totalSpentForEachCategory,
+    PieChartData,
+    limit,
+  } = useFinance();
   const balanceData = [
     {
       label: "Current Balance ",
@@ -33,32 +42,6 @@ export const Overview = () => {
   ];
 
   const TotalPots = pots.reduce((sum, pot) => sum + pot.total, 0);
-
-  const spent = budgets.map((budget) => {
-    return transactions
-      .filter((transaction) => transaction.category === budget.category)
-      .reduce((sum, transaction) => sum + transaction.amount, 0);
-  });
-
-  const budgetsWithSpentProperty = budgets.map((item, index) => ({
-    ...item,
-    spent: spent[index],
-  }));
-  const TotalSpent = budgetsWithSpentProperty.reduce(
-    (sum, item) => sum + item.spent,
-    0,
-  );
-  const TotalLimit = budgets.reduce(
-    (sum, budget) => sum + Number(budget.maximum || 0),
-    0,
-  );
-
-  const PieChartData = budgetsWithSpentProperty.map((item) => ({
-    name: item.category,
-    value: Math.abs(item.spent),
-    color: item.theme,
-    spent: Math.abs(item.spent),
-  }));
 
   const RecurringBills = transactions.filter((item) => item.recurring === true);
 
@@ -222,8 +205,8 @@ export const Overview = () => {
               <div className="col-12 col-md-6">
                 <BudgetPieChart
                   data={PieChartData}
-                  TotalLimit={TotalLimit}
-                  TotalSpent={Math.abs(TotalSpent)}
+                  TotalLimit={limit}
+                  TotalSpent={Math.abs(totalSpent)}
                 ></BudgetPieChart>
               </div>
 
@@ -247,7 +230,7 @@ export const Overview = () => {
                           {item.name}
                         </span>
                         <span className="text-preset-4 fw-bold">
-                          ${item.spent}
+                          ${item.value}
                         </span>
                       </div>
                     </div>

@@ -61,7 +61,7 @@ export const FinanceProvider = ({ children }) => {
       });
     });
   };
-  const withdrawMoney = () => {};
+  const withdrawMoney = (name,total) => {setPots((current)=>current.map((pot)=>pot.name===name?{...pot ,total:pot.total-total}:pot))};
 
   const valuesToBeShared = {
     balance,

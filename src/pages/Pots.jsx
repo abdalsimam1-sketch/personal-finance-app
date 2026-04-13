@@ -8,7 +8,7 @@ import { AddWithdrawMoney } from "../components/UI/AddWithdrawMoney";
 
 import { useFinance } from "../context/FinanceContext";
 export const Pots = () => {
-  const { pots,addMoney } = useFinance();
+  const { pots,addMoney,withdrawMoney } = useFinance();
   const [modalOpen, setModalOpen] = useState(false);
   const toggleModal = () => {
     setModalOpen(!modalOpen);
@@ -47,12 +47,13 @@ export const Pots = () => {
                 setAddWithdrawMode("add");
                 toggleAddWithdraw();
                 setSelectedPot(item);
-                addMoney(item.name,item.total)
+               
               }}
               onWithdraw={() => {
                 setAddWithdrawMode("withdraw");
                 toggleAddWithdraw();
                 setSelectedPot(item);
+              
               }}
               onDelete={() => {
                 toggleDelete();

@@ -19,7 +19,7 @@ export const AddWithdrawMoney = ({
   const clampedAmount =
     amountToBeRendered > target ? target : amountToBeRendered;
   const clampedPercentage = Math.min(100, percentageToBerendered);
-  const { addMoney } = useFinance();
+  const { addMoney,withdrawMoney } = useFinance();
   return (
     <div
       className="position-fixed d-flex justify-content-center align-items-center h-100 w-100  start-0"
@@ -100,8 +100,12 @@ export const AddWithdrawMoney = ({
             if (mode === "add") {
               if (amount <= 0) return;
               addMoney(pot, amount);
-              onClose();
+             
             }
+            else if(amount!==0){
+              withdrawMoney(pot,amount)
+            }
+            onClose();  
           }}
         ></Button>
       </div>

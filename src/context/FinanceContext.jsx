@@ -46,7 +46,19 @@ export const FinanceProvider = ({ children }) => {
       return;
     }
   };
-  const editPot = () => {};
+  const editPot = (name, target, theme) => {
+    setPots((current) =>
+      current.map((pot) =>
+        pot.name === name
+          ? {
+              ...pot,
+              target: Number(target) || pot.target,
+              theme: theme.theme,
+            }
+          : pot,
+      ),
+    );
+  };
   const deletePot = (name) => {
     setPots((current) =>
       current.filter((item) => {
@@ -56,12 +68,18 @@ export const FinanceProvider = ({ children }) => {
   };
   const addMoney = (name, amount) => {
     setPots((current) => {
-    return  current.map((pot) => {
+      return current.map((pot) => {
         return pot.name === name ? { ...pot, total: pot.total + amount } : pot;
       });
     });
   };
-  const withdrawMoney = (name,total) => {setPots((current)=>current.map((pot)=>pot.name===name?{...pot ,total:pot.total-total}:pot))};
+  const withdrawMoney = (name, total) => {
+    setPots((current) =>
+      current.map((pot) =>
+        pot.name === name ? { ...pot, total: pot.total - total } : pot,
+      ),
+    );
+  };
 
   const valuesToBeShared = {
     balance,

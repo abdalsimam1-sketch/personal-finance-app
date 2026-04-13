@@ -8,7 +8,7 @@ import { AddWithdrawMoney } from "../components/UI/AddWithdrawMoney";
 
 import { useFinance } from "../context/FinanceContext";
 export const Pots = () => {
-  const { pots,addMoney,withdrawMoney } = useFinance();
+  const { pots } = useFinance();
   const [modalOpen, setModalOpen] = useState(false);
   const toggleModal = () => {
     setModalOpen(!modalOpen);
@@ -47,13 +47,11 @@ export const Pots = () => {
                 setAddWithdrawMode("add");
                 toggleAddWithdraw();
                 setSelectedPot(item);
-               
               }}
               onWithdraw={() => {
                 setAddWithdrawMode("withdraw");
                 toggleAddWithdraw();
                 setSelectedPot(item);
-              
               }}
               onDelete={() => {
                 toggleDelete();
@@ -62,13 +60,13 @@ export const Pots = () => {
               onEdit={() => {
                 toggleModal();
                 setMode("edit");
+                setSelectedPot(item);
               }}
               label={item.name}
               color={item.theme}
               target={item.target}
               total={item.total}
               percentage={((item.total / item.target) * 100).toFixed(2)}
-             
             ></PotsCard>
           </div>
         ))}

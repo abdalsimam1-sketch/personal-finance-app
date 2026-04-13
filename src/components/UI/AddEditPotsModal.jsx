@@ -16,7 +16,7 @@ export const AddEditPotsModal = ({ mode, maximumCharacters, onClose }) => {
     total: 0,
   };
   const [potsFormState, setPotsFormState] = useState(initialState);
-  const { addPot } = useFinance();
+  const { addPot, editPot } = useFinance();
   return (
     <div
       className="position-fixed start-0 top-0 d-flex justify-content-center align-items-center w-100 h-100"
@@ -130,7 +130,15 @@ export const AddEditPotsModal = ({ mode, maximumCharacters, onClose }) => {
           variant="primary"
           children={mode === "add" ? "Add Pot" : "Save Changes"}
           onClick={() => {
-            addPot(potsFormState);
+            if (mode === "add") {
+              addPot(potsFormState);
+            } else {
+              editPot(
+                potsFormState.name,
+                potsFormState.target,
+                potsFormState.theme,
+              );
+            }
             onClose();
           }}
         ></Button>

@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import data from "../data/data.json";
 const FinanceContext = createContext();
-
+import data from "../data/data.json";
 export const FinanceProvider = ({ children }) => {
   //state
   const [balance, setBalance] = useState(data.balance);
@@ -72,6 +71,13 @@ export const FinanceProvider = ({ children }) => {
     );
   };
   const deletePot = (name) => {
+    const potToDelete = pots.find((pot) => pot.name === name);
+    if (potToDelete) {
+      setBalance((current) => ({
+        ...current,
+        current: current.current + potToDelete.total,
+      }));
+    }
     setPots((current) =>
       current.filter((item) => {
         return item.name !== name;
@@ -84,6 +90,10 @@ export const FinanceProvider = ({ children }) => {
         return pot.name === name ? { ...pot, total: pot.total + amount } : pot;
       });
     });
+    setBalance((current) => ({
+      ...current,
+      current: current.current - amount,
+    }));
   };
   const withdrawMoney = (name, total) => {
     setPots((current) =>
@@ -91,6 +101,10 @@ export const FinanceProvider = ({ children }) => {
         pot.name === name ? { ...pot, total: pot.total - total } : pot,
       ),
     );
+    setBalance((current) => ({
+      ...current,
+      current: current.current + total,
+    }));
   };
 
   const valuesToBeShared = {

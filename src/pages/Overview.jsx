@@ -1,6 +1,5 @@
 import React from "react";
 import { Title } from "../components/UI/Title";
-import data from "../data/data.json";
 import { BalanceCard } from "../components/UI/BalanceCard";
 import PotsIcon from "../assets/images/icon-nav-pots.svg";
 import { SeeDetails } from "../components/UI/SeeDetails";
@@ -11,32 +10,32 @@ import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
 import { BillsSummary } from "../components/UI/BillsSummary";
 
 export const Overview = () => {
-  const { budgets } = useFinance();
+  const { budgets, balance, transactions, pots } = useFinance();
   const balanceData = [
     {
       label: "Current Balance ",
-      amount: data.balance.current,
+      amount: balance.current.toFixed(2),
       background: "bg-dark",
       currency: "$",
     },
     {
       label: "Personal Income",
-      amount: data.balance.income,
+      amount: balance.income.toFixed(2),
       background: "",
       currency: "$",
     },
     {
       label: "Expenses",
-      amount: data.balance.expenses,
+      amount: balance.expenses.toFixed(2),
       background: "",
       currency: "$",
     },
   ];
 
-  const TotalPots = data.pots.reduce((sum, pot) => sum + pot.total, 0);
+  const TotalPots = pots.reduce((sum, pot) => sum + pot.total, 0);
 
   const spent = budgets.map((budget) => {
-    return data.transactions
+    return transactions
       .filter((transaction) => transaction.category === budget.category)
       .reduce((sum, transaction) => sum + transaction.amount, 0);
   });
@@ -61,9 +60,7 @@ export const Overview = () => {
     spent: Math.abs(item.spent),
   }));
 
-  const RecurringBills = data.transactions.filter(
-    (item) => item.recurring === true,
-  );
+  const RecurringBills = transactions.filter((item) => item.recurring === true);
 
   const Paid = RecurringBills.filter(
     (item) => CheckIfPaid(item.date) === "paid",
@@ -144,7 +141,7 @@ export const Overview = () => {
               </div>
               <div className="col-12 col-md-7">
                 <div className="row g-3">
-                  {data.pots.slice(0, 4).map((item, index) => (
+                  {pots.slice(0, 4).map((item, index) => (
                     <div className="col-6" key={index}>
                       <div className="d-flex gap-2 ">
                         <div
@@ -181,7 +178,7 @@ export const Overview = () => {
             </div>
 
             <div>
-              {data.transactions.slice(0, 5).map((item, index) => (
+              {transactions.slice(0, 5).map((item, index) => (
                 <div
                   key={index}
                   className="d-flex justify-content-between align-items-center mb-2"

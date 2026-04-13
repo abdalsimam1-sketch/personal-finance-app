@@ -54,7 +54,13 @@ export const FinanceProvider = ({ children }) => {
       }),
     );
   };
-  const addMoney = () => {};
+  const addMoney = (name, amount) => {
+    setPots((current) => {
+    return  current.map((pot) => {
+        return pot.name === name ? { ...pot, total: pot.total + amount } : pot;
+      });
+    });
+  };
   const withdrawMoney = () => {};
 
   const valuesToBeShared = {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Input } from "./Input";
 import { Button } from "./Button";
+import { useFinance } from "../../context/FinanceContext";
 export const AddWithdrawMoney = ({
   mode,
   onClose,
@@ -18,6 +19,7 @@ export const AddWithdrawMoney = ({
   const clampedAmount =
     amountToBeRendered > target ? target : amountToBeRendered;
   const clampedPercentage = Math.min(100, percentageToBerendered);
+  const { addMoney } = useFinance();
   return (
     <div
       className="position-fixed d-flex justify-content-center align-items-center h-100 w-100  start-0"
@@ -62,7 +64,7 @@ export const AddWithdrawMoney = ({
             <div
               className={`h-100 rounded-end  `}
               style={{
-                width: `${clampedPercentage}% `,
+                width: `${clampedPercentage.toFixed(2)}% `,
                 backgroundColor:
                   mode === "withdraw"
                     ? "var(--color-red)"
@@ -94,6 +96,13 @@ export const AddWithdrawMoney = ({
           children={
             mode === "withdraw" ? "Confirm Withdrawal" : "Confirm Addition"
           }
+          onClick={() => {
+            if (mode === "add") {
+              if (amount <= 0) return;
+              addMoney(pot, amount);
+              onClose();
+            }
+          }}
         ></Button>
       </div>
     </div>

@@ -8,7 +8,7 @@ import { AddWithdrawMoney } from "../components/UI/AddWithdrawMoney";
 
 import { useFinance } from "../context/FinanceContext";
 export const Pots = () => {
-  const { pots } = useFinance();
+  const { pots,addMoney } = useFinance();
   const [modalOpen, setModalOpen] = useState(false);
   const toggleModal = () => {
     setModalOpen(!modalOpen);
@@ -23,7 +23,7 @@ export const Pots = () => {
     setAddWithdrawOpen(!addWithdrawOpen);
   };
   const [addWithdrawMode, setAddWithdrawMode] = useState("withdraw");
-  const [selectedPot, setSelectedPot] = useState(pots[0]);
+  const [selectedPot, setSelectedPot] = useState(null);
 
   return (
     <div className="container d-flex flex-column gap-3 ">
@@ -40,13 +40,14 @@ export const Pots = () => {
         </Button>
       </div>
       <section className="row g-3">
-        {pots.map((item) => (
+        {pots?.map((item) => (
           <div className="col-12 col-lg-6" key={item.name}>
             <PotsCard
               onAdd={() => {
                 setAddWithdrawMode("add");
                 toggleAddWithdraw();
                 setSelectedPot(item);
+                addMoney(item.name,item.total)
               }}
               onWithdraw={() => {
                 setAddWithdrawMode("withdraw");
@@ -66,6 +67,7 @@ export const Pots = () => {
               target={item.target}
               total={item.total}
               percentage={((item.total / item.target) * 100).toFixed(2)}
+             
             ></PotsCard>
           </div>
         ))}

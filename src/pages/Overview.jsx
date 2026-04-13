@@ -145,7 +145,7 @@ export const Overview = () => {
               <div className="col-12 col-md-7">
                 <div className="row g-3">
                   {data.pots.slice(0, 4).map((item, index) => (
-                    <div className="col-6">
+                    <div className="col-6" key={index}>
                       <div className="d-flex gap-2 ">
                         <div
                           className="rounded-pill"

@@ -27,7 +27,19 @@ export const FinanceProvider = ({ children }) => {
       ]);
     }
   };
-  const editBudget = () => {};
+  const editBudget = (category, maximum, theme) => {
+    setBudgets((current) =>
+      current.map((budget) =>
+        budget.category === category
+          ? {
+              ...budget,
+              maximum: Number(maximum) || budget.maximum,
+              theme: theme.theme,
+            }
+          : budget,
+      ),
+    );
+  };
   const deleteBudget = (category) => {
     setBudgets((current) => {
       return current.filter((item) => item.category !== category);

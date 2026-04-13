@@ -50,7 +50,7 @@ export const AddEditBudgetModal = ({
   };
 
   const [formState, setFormState] = useState(initialFormState);
-  const { addBudget } = useFinance();
+  const { addBudget, editBudget } = useFinance();
 
   return (
     <div
@@ -202,7 +202,15 @@ export const AddEditBudgetModal = ({
           variant="primary"
           children={mode === "add" ? "Add New Budget" : "Save Changes"}
           onClick={() => {
-            addBudget(formState);
+            if (mode === "add") {
+              addBudget(formState);
+            } else {
+              editBudget(
+                formState.category,
+                formState.maximum,
+                formState.theme,
+              );
+            }
             onClose();
           }}
         ></Button>

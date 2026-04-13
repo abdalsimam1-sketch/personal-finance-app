@@ -112,6 +112,7 @@ export const Budgets = () => {
                 onEdit={() => {
                   setMode("edit");
                   toggleModal();
+                  setSelectedBudget(item);
                 }}
                 maximum={item.maximum}
                 theme={item.theme}

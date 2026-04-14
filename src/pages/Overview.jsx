@@ -1,4 +1,3 @@
-import React from "react";
 import { Title } from "../components/UI/Title";
 import { BalanceCard } from "../components/UI/BalanceCard";
 import PotsIcon from "../assets/images/icon-nav-pots.svg";
@@ -6,12 +5,20 @@ import { SeeDetails } from "../components/UI/SeeDetails";
 import { FormatDate } from "../HelperFunctions/DateFormat";
 import { BudgetPieChart } from "../components/UI/BudgetPieChart";
 import { useFinance } from "../context/FinanceContext";
-import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
 import { BillsSummary } from "../components/UI/BillsSummary";
 
 export const Overview = () => {
-  const { balance, transactions, pots, totalSpent, PieChartData, limit } =
-    useFinance();
+  const {
+    balance,
+    transactions,
+    pots,
+    totalSpent,
+    PieChartData,
+    limit,
+    totalPaid,
+    totalDue,
+    totalUpComing,
+  } = useFinance();
   const balanceData = [
     {
       label: "Current Balance ",
@@ -33,39 +40,16 @@ export const Overview = () => {
     },
   ];
 
-  const TotalPots = pots.reduce((sum, pot) => sum + pot.total, 0);
-
-  const RecurringBills = transactions.filter((item) => item.recurring === true);
-
-  const Paid = RecurringBills.filter(
-    (item) => CheckIfPaid(item.date) === "paid",
-  );
-  const PaidTotal = Paid.reduce((sum, item) => sum + Math.abs(item.amount), 0);
-
-  const Upcoming = RecurringBills.filter(
-    (item) => CheckIfPaid(item.date) === "upcoming",
-  );
-  const UpcomingTotal = Upcoming.reduce(
-    (sum, item) => sum + Math.abs(item.amount),
-    0,
-  );
-
-  const DueSoon = RecurringBills.filter(
-    (item) => CheckIfPaid(item.date) === "soon",
-  );
-  const DueSoonTotal = DueSoon.reduce(
-    (sum, item) => sum + Math.abs(item.amount),
-    0,
-  );
+  const totalPots = pots.reduce((sum, pot) => sum + pot.total, 0);
 
   const bills = [
-    { label: "Paid Bills", color: "var(--color-green)", total: PaidTotal },
+    { label: "Paid Bills", color: "var(--color-green)", total: totalPaid },
     {
       label: "Total Upcoming",
       color: "var(--color-yellow)",
-      total: UpcomingTotal,
+      total: totalUpComing,
     },
-    { label: "Due Soon", color: "var(--color-turquoise)", total: DueSoonTotal },
+    { label: "Due Soon", color: "var(--color-turquoise)", total: totalDue },
   ];
 
   return (
@@ -109,7 +93,7 @@ export const Overview = () => {
                     <span className="text-preset-5">Total Saved</span>
                     <h1 className="text-preset-1">
                       <span>$</span>
-                      {TotalPots}
+                      {totalPots}
                     </h1>
                   </div>
                 </div>

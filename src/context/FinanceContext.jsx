@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext, createContext } from "react";
 const FinanceContext = createContext();
 import data from "../data/data.json";
+import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
 export const FinanceProvider = ({ children }) => {
   //state
   const [balance, setBalance] = useState(data.balance);
@@ -126,7 +127,44 @@ export const FinanceProvider = ({ children }) => {
   }));
   const limit = budgets.reduce((sum, item) => sum + Number(item.maximum), 0);
 
+  // recurring bills logic
+  const recurringBills = data.transactions.filter(
+    (item) => item.recurring === true,
+  );
+  const billsStatus = recurringBills.map((item) => ({
+    ...item,
+    status: CheckIfPaid(item.date),
+  }));
+
+  const paid = billsStatus.filter((item) => item.status === "paid");
+  const upComing = billsStatus.filter((item) => item.status === "upcoming");
+  const dueSoon = billsStatus.filter((item) => item.status === "soon");
+
+  const totalPaid = paid.reduce((sum, item) => sum + Math.abs(item.amount), 0);
+  const totalUpComing = upComing.reduce(
+    (sum, item) => sum + Math.abs(item.amount),
+    0,
+  );
+  const totalDue = dueSoon.reduce(
+    (sum, item) => sum + Math.abs(item.amount),
+    0,
+  );
+
+  const totalBills = recurringBills.reduce(
+    (sum, item) => sum + Math.abs(item.amount),
+    0,
+  );
+
   const valuesToBeShared = {
+    recurringBills,
+    billsStatus,
+    paid,
+    upComing,
+    dueSoon,
+    totalPaid,
+    totalDue,
+    totalUpComing,
+    totalBills,
     balance,
     transactions,
     budgets,

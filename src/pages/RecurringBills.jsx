@@ -10,34 +10,20 @@ import paidIcon from "../assets/images/icon-bill-paid.svg";
 import dueIcon from "../assets/images/icon-bill-due.svg";
 import { Sort } from "../data/sortData";
 import { sorting } from "../data/sortData";
+import { useFinance } from "../context/FinanceContext";
 
 export const RecurringBills = () => {
-  const recurringBills = data.transactions.filter(
-    (item) => item.recurring === true,
-  );
-  const billsStatus = recurringBills.map((item) => ({
-    ...item,
-    status: CheckIfPaid(item.date),
-  }));
-
-  const paid = billsStatus.filter((item) => item.status === "paid");
-  const upComing = billsStatus.filter((item) => item.status === "upcoming");
-  const dueSoon = billsStatus.filter((item) => item.status === "soon");
-
-  const totalPaid = paid.reduce((sum, item) => sum + Math.abs(item.amount), 0);
-  const totalUpComing = upComing.reduce(
-    (sum, item) => sum + Math.abs(item.amount),
-    0,
-  );
-  const totalDue = dueSoon.reduce(
-    (sum, item) => sum + Math.abs(item.amount),
-    0,
-  );
-
-  const totalBills = recurringBills.reduce(
-    (sum, item) => sum + Math.abs(item.amount),
-    0,
-  );
+  const {
+    recurringBills,
+    billsStatus,
+    paid,
+    upComing,
+    dueSoon,
+    totalPaid,
+    totalDue,
+    totalUpComing,
+    totalBills,
+  } = useFinance();
 
   const [searchTerm, setSearchTerm] = useState("");
   const search = billsStatus.filter((item) =>

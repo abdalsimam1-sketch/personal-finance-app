@@ -10,16 +10,8 @@ import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
 import { BillsSummary } from "../components/UI/BillsSummary";
 
 export const Overview = () => {
-  const {
-    budgets,
-    balance,
-    transactions,
-    pots,
-    totalSpent,
-    totalSpentForEachCategory,
-    PieChartData,
-    limit,
-  } = useFinance();
+  const { balance, transactions, pots, totalSpent, PieChartData, limit } =
+    useFinance();
   const balanceData = [
     {
       label: "Current Balance ",

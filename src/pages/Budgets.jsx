@@ -3,7 +3,7 @@ import { BudgetCard } from "../components/UI/BudgetCard";
 
 import { BudgetPieChart } from "../components/UI/BudgetPieChart";
 import { AddEditBudgetModal } from "../components/UI/AddEditBudgetModal";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "../components/UI/Button";
 import { DeleteModal } from "../components/UI/DeleteModal";
 import { useFinance } from "../context/FinanceContext";
@@ -16,12 +16,14 @@ export const Budgets = () => {
     PieChartData,
     limit,
   } = useFinance();
-  const getLatest3 = (category) => {
-    return transactions
-      .filter((item) => item.category === category)
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
-      .slice(0, 3);
-  };
+  const getLatest3 = useMemo(() => {
+    return (category) => {
+      return transactions
+        .filter((item) => item.category === category)
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 3);
+    };
+  }, [transactions]);
 
   const [addModalOpen, setAddModalOpen] = useState(false);
   const toggleModal = () => {

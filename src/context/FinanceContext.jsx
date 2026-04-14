@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, createContext } from "react";
+import { useState, useMemo, useContext, createContext } from "react";
 const FinanceContext = createContext();
 import data from "../data/data.json";
 import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
@@ -115,43 +115,59 @@ export const FinanceProvider = ({ children }) => {
       .filter((item) => item.category === category)
       .reduce((sum, item) => sum + item.amount, 0);
   };
-  const totalSpent = budgets.reduce(
-    (sum, item) => sum + Math.abs(totalSpentForEachCategory(item.category)),
-    0,
-  );
+  const totalSpent = useMemo(() => {
+    return budgets.reduce(
+      (sum, item) => sum + Math.abs(totalSpentForEachCategory(item.category)),
+      0,
+    );
+  }, [budgets, transactions]);
 
-  const PieChartData = budgets.map((item) => ({
-    name: item.category,
-    value: Math.abs(totalSpentForEachCategory(item.category)),
-    color: item.theme,
-  }));
-  const limit = budgets.reduce((sum, item) => sum + Number(item.maximum), 0);
+  const PieChartData = useMemo(() => {
+    return budgets.map((item) => ({
+      name: item.category,
+      value: Math.abs(totalSpentForEachCategory(item.category)),
+      color: item.theme,
+    }));
+  }, [budgets, transactions]);
+  const limit = useMemo(() => {
+    return budgets.reduce((sum, item) => sum + Number(item.maximum), 0);
+  }, [budgets]);
 
   // recurring bills logic
-  const recurringBills = transactions.filter((item) => item.recurring === true);
-  const billsStatus = recurringBills.map((item) => ({
-    ...item,
-    status: CheckIfPaid(item.date),
-  }));
+  const recurringBills = useMemo(() => {
+    return transactions.filter((item) => item.recurring === true);
+  }, [transactions]);
 
-  const paid = billsStatus.filter((item) => item.status === "paid");
-  const upComing = billsStatus.filter((item) => item.status === "upcoming");
-  const dueSoon = billsStatus.filter((item) => item.status === "soon");
+  const billsStatus = useMemo(() => {
+    return recurringBills.map((item) => ({
+      ...item,
+      status: CheckIfPaid(item.date),
+    }));
+  }, [recurringBills]);
+  const paid = useMemo(() => {
+    return billsStatus.filter((item) => item.status === "paid");
+  }, [billsStatus]);
+  const upComing = useMemo(() => {
+    return billsStatus.filter((item) => item.status === "upcoming");
+  }, [billsStatus]);
+  const dueSoon = useMemo(() => {
+    return billsStatus.filter((item) => item.status === "soon");
+  }, [billsStatus]);
 
-  const totalPaid = paid.reduce((sum, item) => sum + Math.abs(item.amount), 0);
-  const totalUpComing = upComing.reduce(
-    (sum, item) => sum + Math.abs(item.amount),
-    0,
+  const totalPaid = useMemo(() => {
+    return paid.reduce((sum, item) => sum + Math.abs(item.amount), 0);
+  }, [paid]);
+  const totalUpComing = useMemo(
+    () => upComing.reduce((sum, item) => sum + Math.abs(item.amount), 0),
+    [upComing],
   );
-  const totalDue = dueSoon.reduce(
-    (sum, item) => sum + Math.abs(item.amount),
-    0,
-  );
+  const totalDue = useMemo(() => {
+    return dueSoon.reduce((sum, item) => sum + Math.abs(item.amount), 0);
+  }, [dueSoon]);
 
-  const totalBills = recurringBills.reduce(
-    (sum, item) => sum + Math.abs(item.amount),
-    0,
-  );
+  const totalBills = useMemo(() => {
+    return recurringBills.reduce((sum, item) => sum + Math.abs(item.amount), 0);
+  }, [recurringBills]);
 
   const valuesToBeShared = {
     recurringBills,

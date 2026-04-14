@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Title } from "../components/UI/Title";
 import { Input } from "../components/UI/Input";
-import data from "../data/data.json";
+
 import { FormatDate } from "../HelperFunctions/DateFormat";
 import { Sort } from "../data/sortData";
 import { sorting } from "../data/sortData";
+import { useFinance } from "../context/FinanceContext";
 export const Transactions = () => {
   const [SortIsOpen, SetSortIsOpen] = useState(false);
   const [CategoryIsOpen, SetCategoryIsOpen] = useState(false);
@@ -12,6 +13,7 @@ export const Transactions = () => {
   const [SelectedSort, SetSelectedSort] = useState("Latest");
   const [selectedCategory, setSelectedCategory] = useState("All Transactions");
   const [currentPage, setCurrentPage] = useState(1);
+  const { transactions } = useFinance();
 
   const toggleSort = () => {
     SetSortIsOpen(!SortIsOpen);
@@ -39,11 +41,11 @@ export const Transactions = () => {
     });
   };
 
-  const allCategories = data.transactions.map((item) => item.category);
+  const allCategories = transactions.map((item) => item.category);
   const UniqueCategories = [...new Set(allCategories)];
   const Categories = ["All Transactions", ...UniqueCategories];
 
-  const filteredTransactions = data.transactions.filter((item) =>
+  const filteredTransactions = transactions.filter((item) =>
     item.name.toLowerCase().includes(Search.trim().toLowerCase()),
   );
 

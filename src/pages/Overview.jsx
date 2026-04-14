@@ -1,99 +1,55 @@
-import React from "react";
 import { Title } from "../components/UI/Title";
-import data from "../data/data.json";
 import { BalanceCard } from "../components/UI/BalanceCard";
 import PotsIcon from "../assets/images/icon-nav-pots.svg";
 import { SeeDetails } from "../components/UI/SeeDetails";
 import { FormatDate } from "../HelperFunctions/DateFormat";
 import { BudgetPieChart } from "../components/UI/BudgetPieChart";
-
-import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
+import { useFinance } from "../context/FinanceContext";
 import { BillsSummary } from "../components/UI/BillsSummary";
 
 export const Overview = () => {
+  const {
+    balance,
+    transactions,
+    pots,
+    totalSpent,
+    PieChartData,
+    limit,
+    totalPaid,
+    totalDue,
+    totalUpComing,
+  } = useFinance();
   const balanceData = [
     {
       label: "Current Balance ",
-      amount: data.balance.current,
+      amount: balance.current.toFixed(2),
       background: "bg-dark",
       currency: "$",
     },
     {
       label: "Personal Income",
-      amount: data.balance.income,
+      amount: balance.income.toFixed(2),
       background: "",
       currency: "$",
     },
     {
       label: "Expenses",
-      amount: data.balance.expenses,
+      amount: balance.expenses.toFixed(2),
       background: "",
       currency: "$",
     },
   ];
 
-  const TotalPots = data.pots.reduce((sum, pot) => sum + pot.total, 0);
-
-  const budgets = data.budgets;
-  const spent = budgets.map((budget) => {
-    return data.transactions
-      .filter((transaction) => transaction.category === budget.category)
-      .reduce((sum, transaction) => sum + transaction.amount, 0);
-  });
-
-  const budgetsWithSpentProperty = budgets.map((item, index) => ({
-    ...item,
-    spent: spent[index],
-  }));
-  const TotalSpent = budgetsWithSpentProperty.reduce(
-    (sum, item) => sum + item.spent,
-    0,
-  );
-  const TotalLimit = data.budgets.reduce(
-    (sum, budget) => sum + budget.maximum || 0,
-    0,
-  );
-
-  const PieChartData = budgetsWithSpentProperty.map((item) => ({
-    name: item.category,
-    value: item.maximum,
-    color: item.theme,
-    spent: Math.abs(item.spent),
-  }));
-
-  const RecurringBills = data.transactions.filter(
-    (item) => item.recurring === true,
-  );
-
-  const Paid = RecurringBills.filter(
-    (item) => CheckIfPaid(item.date) === "paid",
-  );
-  const PaidTotal = Paid.reduce((sum, item) => sum + Math.abs(item.amount), 0);
-
-  const Upcoming = RecurringBills.filter(
-    (item) => CheckIfPaid(item.date) === "upcoming",
-  );
-  const UpcomingTotal = Upcoming.reduce(
-    (sum, item) => sum + Math.abs(item.amount),
-    0,
-  );
-
-  const DueSoon = RecurringBills.filter(
-    (item) => CheckIfPaid(item.date) === "soon",
-  );
-  const DueSoonTotal = DueSoon.reduce(
-    (sum, item) => sum + Math.abs(item.amount),
-    0,
-  );
+  const totalPots = pots.reduce((sum, pot) => sum + pot.total, 0);
 
   const bills = [
-    { label: "Paid Bills", color: "var(--color-green)", total: PaidTotal },
+    { label: "Paid Bills", color: "var(--color-green)", total: totalPaid },
     {
       label: "Total Upcoming",
       color: "var(--color-yellow)",
-      total: UpcomingTotal,
+      total: totalUpComing,
     },
-    { label: "Due Soon", color: "var(--color-turquoise)", total: DueSoonTotal },
+    { label: "Due Soon", color: "var(--color-turquoise)", total: totalDue },
   ];
 
   return (
@@ -137,15 +93,15 @@ export const Overview = () => {
                     <span className="text-preset-5">Total Saved</span>
                     <h1 className="text-preset-1">
                       <span>$</span>
-                      {TotalPots}
+                      {totalPots}
                     </h1>
                   </div>
                 </div>
               </div>
               <div className="col-12 col-md-7">
                 <div className="row g-3">
-                  {data.pots.slice(0, 4).map((item, index) => (
-                    <div className="col-6">
+                  {pots.slice(0, 4).map((item, index) => (
+                    <div className="col-6" key={index}>
                       <div className="d-flex gap-2 ">
                         <div
                           className="rounded-pill"
@@ -181,7 +137,7 @@ export const Overview = () => {
             </div>
 
             <div>
-              {data.transactions.slice(0, 5).map((item, index) => (
+              {transactions.slice(0, 5).map((item, index) => (
                 <div
                   key={index}
                   className="d-flex justify-content-between align-items-center mb-2"
@@ -225,8 +181,8 @@ export const Overview = () => {
               <div className="col-12 col-md-6">
                 <BudgetPieChart
                   data={PieChartData}
-                  TotalLimit={TotalLimit}
-                  TotalSpent={Math.abs(TotalSpent)}
+                  TotalLimit={limit}
+                  TotalSpent={Math.abs(totalSpent)}
                 ></BudgetPieChart>
               </div>
 
@@ -250,7 +206,7 @@ export const Overview = () => {
                           {item.name}
                         </span>
                         <span className="text-preset-4 fw-bold">
-                          ${item.spent}
+                          ${item.value}
                         </span>
                       </div>
                     </div>

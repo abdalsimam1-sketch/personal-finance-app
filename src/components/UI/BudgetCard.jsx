@@ -40,7 +40,11 @@ export const BudgetCard = ({
         <div className="d-flex gap-3">
           <span
             className="rounded"
-            style={{ width: "4px", height: "2.5rem", backgroundColor: theme }}
+            style={{
+              width: "4px",
+              height: "2.5rem",
+              backgroundColor: `${theme}50`,
+            }}
           ></span>
           <div className="d-flex flex-column">
             <span className="text-preset-5 text-muted">Remaining</span>

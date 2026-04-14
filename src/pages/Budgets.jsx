@@ -1,37 +1,30 @@
 import { Title } from "../components/UI/Title";
 import { BudgetCard } from "../components/UI/BudgetCard";
-import data from "../data/data.json";
+
 import { BudgetPieChart } from "../components/UI/BudgetPieChart";
-const budgets = data.budgets;
 import { AddEditBudgetModal } from "../components/UI/AddEditBudgetModal";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "../components/UI/Button";
 import { DeleteModal } from "../components/UI/DeleteModal";
-
+import { useFinance } from "../context/FinanceContext";
 export const Budgets = () => {
-  const getLatest3 = (category) => {
-    return data.transactions
-      .filter((item) => item.category === category)
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
-      .slice(0, 3);
-  };
+  const {
+    budgets,
+    transactions,
+    totalSpent,
+    totalSpentForEachCategory,
+    PieChartData,
+    limit,
+  } = useFinance();
+  const getLatest3 = useMemo(() => {
+    return (category) => {
+      return transactions
+        .filter((item) => item.category === category)
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 3);
+    };
+  }, [transactions]);
 
-  const totalSpentForEachCategory = (category) => {
-    return data.transactions
-      .filter((item) => item.category === category)
-      .reduce((sum, item) => sum + item.amount, 0);
-  };
-  const totalSpent = budgets.reduce(
-    (sum, item) => sum + Math.abs(totalSpentForEachCategory(item.category)),
-    0,
-  );
-
-  const PieChartData = budgets.map((item) => ({
-    name: item.category,
-    value: Math.abs(totalSpentForEachCategory(item.category)),
-    color: item.theme,
-  }));
-  const limit = budgets.reduce((sum, item) => sum + item.maximum, 0);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const toggleModal = () => {
     setAddModalOpen(!addModalOpen);
@@ -43,9 +36,10 @@ export const Budgets = () => {
   const toggleDelete = () => {
     setDeleteModalOpen(!deleteModalOpen);
   };
+  const [selectedBudget, setSelectedBudget] = useState();
 
   return (
-    <div className="container d-flex flex-column gap-3 position-relative">
+    <div className="container px-lg-4 d-flex flex-column gap-3 position-relative">
       <div className="d-flex justify-content-between align-items-center mt-4">
         <Title>Budgets</Title>
         <Button
@@ -103,10 +97,14 @@ export const Budgets = () => {
           {budgets.map((item, index) => (
             <div className="d-flex flex-column mb-3" key={index}>
               <BudgetCard
-                onDelete={toggleDelete}
+                onDelete={() => {
+                  toggleDelete();
+                  setSelectedBudget(item);
+                }}
                 onEdit={() => {
                   setMode("edit");
                   toggleModal();
+                  setSelectedBudget(item);
                 }}
                 maximum={item.maximum}
                 theme={item.theme}
@@ -141,8 +139,9 @@ export const Budgets = () => {
 
       {deleteModalOpen && (
         <DeleteModal
-          category="Entertainment"
+          category={selectedBudget.category}
           onClose={toggleDelete}
+          variant="budget"
         ></DeleteModal>
       )}
     </div>

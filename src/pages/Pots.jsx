@@ -6,9 +6,9 @@ import { AddEditPotsModal } from "../components/UI/AddEditPotsModal";
 import { DeleteModal } from "../components/UI/DeleteModal";
 import { AddWithdrawMoney } from "../components/UI/AddWithdrawMoney";
 
-import data from "../data/data.json";
+import { useFinance } from "../context/FinanceContext";
 export const Pots = () => {
-  const pots = data.pots;
+  const { pots } = useFinance();
   const [modalOpen, setModalOpen] = useState(false);
   const toggleModal = () => {
     setModalOpen(!modalOpen);
@@ -23,7 +23,7 @@ export const Pots = () => {
     setAddWithdrawOpen(!addWithdrawOpen);
   };
   const [addWithdrawMode, setAddWithdrawMode] = useState("withdraw");
-  const [selectedPot, setSelectedPot] = useState(pots[0]);
+  const [selectedPot, setSelectedPot] = useState(null);
 
   return (
     <div className="container d-flex flex-column gap-3 ">
@@ -40,7 +40,7 @@ export const Pots = () => {
         </Button>
       </div>
       <section className="row g-3">
-        {pots.map((item) => (
+        {pots?.map((item) => (
           <div className="col-12 col-lg-6" key={item.name}>
             <PotsCard
               onAdd={() => {
@@ -53,10 +53,14 @@ export const Pots = () => {
                 toggleAddWithdraw();
                 setSelectedPot(item);
               }}
-              onDelete={toggleDelete}
+              onDelete={() => {
+                toggleDelete();
+                setSelectedPot(item);
+              }}
               onEdit={() => {
                 toggleModal();
                 setMode("edit");
+                setSelectedPot(item);
               }}
               label={item.name}
               color={item.theme}
@@ -77,7 +81,7 @@ export const Pots = () => {
       {deleteModalOpen && (
         <DeleteModal
           variant="pot"
-          category="Savings"
+          category={selectedPot.name}
           onClose={toggleDelete}
         ></DeleteModal>
       )}

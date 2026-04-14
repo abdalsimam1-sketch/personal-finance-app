@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { Title } from "../components/UI/Title";
 import billsIcon from "../assets/images/icon-nav-recurring-bills.svg";
 import { Input } from "../components/UI/Input";
-import data from "../data/data.json";
-
-import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
 import { suffix } from "../HelperFunctions/CurrentDate";
 import paidIcon from "../assets/images/icon-bill-paid.svg";
 import dueIcon from "../assets/images/icon-bill-due.svg";
@@ -14,7 +11,6 @@ import { useFinance } from "../context/FinanceContext";
 
 export const RecurringBills = () => {
   const {
-    recurringBills,
     billsStatus,
     paid,
     upComing,

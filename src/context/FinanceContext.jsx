@@ -128,9 +128,7 @@ export const FinanceProvider = ({ children }) => {
   const limit = budgets.reduce((sum, item) => sum + Number(item.maximum), 0);
 
   // recurring bills logic
-  const recurringBills = data.transactions.filter(
-    (item) => item.recurring === true,
-  );
+  const recurringBills = transactions.filter((item) => item.recurring === true);
   const billsStatus = recurringBills.map((item) => ({
     ...item,
     status: CheckIfPaid(item.date),

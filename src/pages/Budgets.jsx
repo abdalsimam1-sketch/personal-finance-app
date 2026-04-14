@@ -37,7 +37,7 @@ export const Budgets = () => {
   const [selectedBudget, setSelectedBudget] = useState();
 
   return (
-    <div className="container d-flex flex-column gap-3 position-relative">
+    <div className="container px-lg-5 d-flex flex-column gap-3 position-relative">
       <div className="d-flex justify-content-between align-items-center mt-4">
         <Title>Budgets</Title>
         <Button

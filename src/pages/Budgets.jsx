@@ -139,6 +139,7 @@ export const Budgets = () => {
         <DeleteModal
           category={selectedBudget.category}
           onClose={toggleDelete}
+          variant="budget"
         ></DeleteModal>
       )}
     </div>

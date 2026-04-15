@@ -14,7 +14,7 @@ export const BudgetCard = ({
   onEdit,
   onDelete,
 }) => {
-  const path = "/transactions";
+  const path = "/app/transactions";
   return (
     <div className="card p-4 d-flex flex-column gap-3">
       <BudgetsAndPotsLabel

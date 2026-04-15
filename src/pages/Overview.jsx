@@ -79,7 +79,7 @@ export const Overview = () => {
             <SeeDetails
               SeeDetail="See Details"
               label="Pots"
-              path="/pots"
+              path="pots"
             ></SeeDetails>
             <div className="row g-3">
               <div className="col-12 col-md-5 card pots-total p-4">
@@ -132,7 +132,7 @@ export const Overview = () => {
               <SeeDetails
                 label="Transactions"
                 SeeDetail="See Details"
-                path="/transactions"
+                path="transactions"
               ></SeeDetails>
             </div>
 
@@ -171,7 +171,7 @@ export const Overview = () => {
           <section className="budgets-section  card p-4 ">
             <div className="w-100" style={{ zIndex: "1000" }}>
               <SeeDetails
-                path="/budgets"
+                path="budgets"
                 label="Budgets"
                 SeeDetail="See Details"
               ></SeeDetails>
@@ -219,7 +219,7 @@ export const Overview = () => {
           <section className="bills-section  card p-4  flex-grow-1">
             <div>
               <SeeDetails
-                path="/bills"
+                path="bills"
                 SeeDetail="See Details"
                 label="Recurring Bills"
               ></SeeDetails>

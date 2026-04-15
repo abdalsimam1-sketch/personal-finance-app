@@ -4,6 +4,46 @@ import { Input } from "../components/UI/Input";
 import { Button } from "../components/UI/Button";
 export const LoginPage = () => {
   const [mode, setMode] = useState("Login");
+  const defaultForm = {
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
+
+  const [loginForm, setLoginForm] = useState(defaultForm);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPassWordError] = useState("");
+  const [confirmPasswordError, setConfirmErrorPassword] = useState("");
+  const handleSubmit = () => {
+    setEmailError("");
+    setPassWordError("");
+    setConfirmErrorPassword("");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+    let hasError = false;
+    if (loginForm.email.length === 0) {
+      setEmailError("Email is required");
+      hasError = true;
+    }
+    if (!emailRegex.test(loginForm.email)) {
+      setEmailError("Please enter a valid email");
+      hasError = true;
+    }
+    if (loginForm.password.length === 0) {
+      setPassWordError("Password is required");
+      hasError = true;
+    }
+    if (!passwordRegex.test(loginForm.password)) {
+      setPassWordError("Please set a valid password");
+      hasError = true;
+    }
+    if (mode === "Signup" && loginForm.password !== loginForm.confirmPassword) {
+      setConfirmErrorPassword("Passwords do no match");
+      hasError = true;
+    }
+
+    if (hasError) return;
+  };
   return (
     <div className="d-flex">
       <section className="d-none d-lg-block col-lg-6 p-3">
@@ -18,19 +58,56 @@ export const LoginPage = () => {
         className="col-12  col-lg-6 d-flex  align-items-center "
         style={{ height: "100vh" }}
       >
-        <form action="" className="w-100">
+        <form
+          key={mode}
+          className="w-100"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
           <div
             className="card p-3 d-flex flex-column gap-3 mx-auto m-lg-0 "
             style={{ maxWidth: "500px", width: "90%" }}
           >
             <h1 className="text-preset-1">{mode}</h1>
-            <Input label="Email" type="email"></Input>
-            <Input label="Password" type="password"></Input>
+            <Input
+              label="Email"
+              type="email"
+              value={loginForm.email}
+              onChange={(e) =>
+                setLoginForm((current) => ({
+                  ...current,
+                  email: e.target.value,
+                }))
+              }
+              error={emailError}
+            ></Input>
+            <Input
+              label="Password"
+              type="password"
+              value={loginForm.password}
+              onChange={(e) =>
+                setLoginForm((current) => ({
+                  ...current,
+                  password: e.target.value,
+                }))
+              }
+              error={passwordError}
+            ></Input>
             {mode !== "Login" && (
               <Input
                 label="Confirm Password"
                 type="password"
                 helper="Password must be at least 8 characters"
+                value={loginForm.confirmPassword}
+                onChange={(e) =>
+                  setLoginForm((current) => ({
+                    ...current,
+                    confirmPassword: e.target.value,
+                  }))
+                }
+                error={confirmPasswordError}
               ></Input>
             )}
             <Button
@@ -47,6 +124,10 @@ export const LoginPage = () => {
                   style={{ border: "black", cursor: "pointer" }}
                   onClick={() => {
                     mode === "Login" ? setMode("Signup") : setMode("Login");
+                    setLoginForm(defaultForm);
+                    setEmailError("");
+                    setPassWordError("");
+                    setConfirmErrorPassword("");
                   }}
                 >
                   {mode === "Login" ? "Signup" : "Login"}

@@ -6,6 +6,7 @@ export const Input = ({
   variant,
   value,
   onChange,
+  type = "text",
 }) => {
   return (
     <div>
@@ -19,7 +20,7 @@ export const Input = ({
           $
         </span>
         <input
-          type={variant === "prefix" ? "number" : "text"}
+          type={variant === "prefix" ? "number" : type}
           placeholder={placeholder}
           id={name}
           className="form-control ps-4"
@@ -30,7 +31,7 @@ export const Input = ({
           className={`bi bi-search icon text-muted ${variant !== "icon" ? "d-none" : ""}`}
         ></i>
       </div>
-      <span className="align-self-end fw-bold text-end d-block helper-text">
+      <span className="align-self-end fw-bold text-end d-block helper-text text-preset-5 text-muted">
         {helper}
       </span>
     </div>

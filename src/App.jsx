@@ -5,28 +5,28 @@ import { RecurringBills } from "./pages/RecurringBills";
 import { Transactions } from "./pages/Transactions";
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "./components/Layout/Layout";
-import { TestingPage } from "./pages/TestingPage";
 import { LoginPage } from "./pages/LoginPage";
-
+import { Navigate } from "react-router-dom";
 function App() {
   return (
     <>
       <Routes>
         <Route path="/login" element={<LoginPage></LoginPage>}></Route>
-        <Route path="/" element={<Layout></Layout>}>
+        <Route path="/" element={<Navigate to="/login"></Navigate>}></Route>
+        <Route path="/app" element={<Layout></Layout>}>
           <Route index element={<Overview></Overview>}></Route>
-          <Route path="/budgets" element={<Budgets></Budgets>}></Route>
-          <Route path="/pots" element={<Pots></Pots>}></Route>
+          <Route path="budgets" element={<Budgets></Budgets>}></Route>
+          <Route path="pots" element={<Pots></Pots>}></Route>
           <Route
-            path="/bills"
+            path="bills"
             element={<RecurringBills></RecurringBills>}
           ></Route>
           <Route
-            path="/transactions"
+            path="transactions"
             element={<Transactions></Transactions>}
           ></Route>
         </Route>
-        <Route path="/test" element={<TestingPage></TestingPage>}></Route>
+        <Route path="*" element={<Navigate to="/"></Navigate>}></Route>
       </Routes>
     </>
   );

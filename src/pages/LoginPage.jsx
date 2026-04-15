@@ -3,7 +3,9 @@ import authImage from "../assets/images/illustration-authentication.svg";
 import { Input } from "../components/UI/Input";
 import { Button } from "../components/UI/Button";
 import { supabase } from "../HelperFunctions/supabaseClient";
+import { useNavigate } from "react-router-dom";
 export const LoginPage = () => {
+  const Navigate = useNavigate();
   const [mode, setMode] = useState("Login");
   const defaultForm = {
     email: "",
@@ -55,7 +57,8 @@ export const LoginPage = () => {
       if (error) {
         setEmailError(error.message);
       } else {
-        console.log("Logged in", data.user);
+        console.log("Logged In", data.user);
+        Navigate("/app");
       }
     } else {
       const { data, error } = await supabase.auth.signUp({
@@ -66,6 +69,7 @@ export const LoginPage = () => {
         setEmailError(error.message);
       } else {
         console.log("Signed up", data.user);
+        Navigate("/app");
       }
     }
   };

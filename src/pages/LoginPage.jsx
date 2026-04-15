@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import authImage from "../assets/images/illustration-authentication.svg";
 import { Input } from "../components/UI/Input";
 import { Button } from "../components/UI/Button";
+import { supabase } from "../HelperFunctions/supabaseClient";
 export const LoginPage = () => {
   const [mode, setMode] = useState("Login");
   const defaultForm = {
@@ -14,10 +15,12 @@ export const LoginPage = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPassWordError] = useState("");
   const [confirmPasswordError, setConfirmErrorPassword] = useState("");
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    //clearing error states after every submssion
     setEmailError("");
     setPassWordError("");
     setConfirmErrorPassword("");
+    //validation conditionals
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
     let hasError = false;
@@ -43,6 +46,28 @@ export const LoginPage = () => {
     }
 
     if (hasError) return;
+    //supabase conditionals
+    if (mode === "Login") {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: loginForm.email,
+        password: loginForm.password,
+      });
+      if (error) {
+        setEmailError(error.message);
+      } else {
+        console.log("Logged in", data.user);
+      }
+    } else {
+      const { data, error } = await supabase.auth.signUp({
+        email: loginForm.email,
+        password: loginForm.password,
+      });
+      if (error) {
+        setEmailError(error.message);
+      } else {
+        console.log("Signed up", data.user);
+      }
+    }
   };
   return (
     <div className="d-flex">

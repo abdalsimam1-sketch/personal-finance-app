@@ -6,11 +6,13 @@ import { Transactions } from "./pages/Transactions";
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "./components/Layout/Layout";
 import { TestingPage } from "./pages/TestingPage";
+import { LoginPage } from "./pages/LoginPage";
 
 function App() {
   return (
     <>
       <Routes>
+        <Route path="/login" element={<LoginPage></LoginPage>}></Route>
         <Route path="/" element={<Layout></Layout>}>
           <Route index element={<Overview></Overview>}></Route>
           <Route path="/budgets" element={<Budgets></Budgets>}></Route>

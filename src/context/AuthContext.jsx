@@ -14,7 +14,16 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     };
     getInitialSession();
+    const authListener = supabase.auth.onAuthStateChange(
+      (event, currentSession) => {
+        setSession(currentSession);
+      },
+    );
+    return () => {
+      authListener.data.subscription.unsubscribe();
+    };
   }, []);
+  const user = session ? session.user : null;
   const valuesToBeShared = { session, user, loading };
   return (
     <AuthContext.Provider value={valuesToBeShared}>

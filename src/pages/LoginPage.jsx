@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 export const LoginPage = () => {
   const Navigate = useNavigate();
   const [mode, setMode] = useState("Login");
+  const [isLoading, setIsLoading] = useState(false);
   const defaultForm = {
     email: "",
     password: "",
@@ -48,6 +49,9 @@ export const LoginPage = () => {
     }
 
     if (hasError) return;
+
+    setIsLoading(true);
+
     //supabase conditionals
     if (mode === "Login") {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -72,9 +76,10 @@ export const LoginPage = () => {
         Navigate("/app");
       }
     }
+    setIsLoading(false);
   };
   return (
-    <div className="d-flex">
+    <div className="d-flex" style={{ overflow: "hidden" }}>
       <section className="d-none d-lg-block col-lg-6 p-3">
         <img
           src={authImage}
@@ -84,87 +89,98 @@ export const LoginPage = () => {
         />
       </section>
       <section
-        className="col-12  col-lg-6 d-flex  align-items-center "
+        className="col-12 col-lg-6 d-flex  align-items-center justify-content-center container"
         style={{ height: "100vh" }}
       >
-        <form
-          key={mode}
-          className="w-100"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
-          <div
-            className="card p-3 d-flex flex-column gap-3 mx-auto m-lg-0 "
-            style={{ maxWidth: "500px", width: "90%" }}
+        {!isLoading ? (
+          <form
+            key={mode}
+            className="w-100"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
           >
-            <h1 className="text-preset-1">{mode}</h1>
-            <Input
-              label="Email"
-              type="email"
-              value={loginForm.email}
-              onChange={(e) =>
-                setLoginForm((current) => ({
-                  ...current,
-                  email: e.target.value,
-                }))
-              }
-              error={emailError}
-            ></Input>
-            <Input
-              label="Password"
-              type="password"
-              value={loginForm.password}
-              onChange={(e) =>
-                setLoginForm((current) => ({
-                  ...current,
-                  password: e.target.value,
-                }))
-              }
-              error={passwordError}
-            ></Input>
-            {mode !== "Login" && (
+            <div
+              className="card p-3 d-flex flex-column gap-3 mx-auto m-lg-0 "
+              style={{ maxWidth: "500px", width: "90%" }}
+            >
+              <h1 className="text-preset-1">{mode}</h1>
               <Input
-                label="Confirm Password"
-                type="password"
-                helper="Password must be at least 8 characters"
-                value={loginForm.confirmPassword}
+                label="Email"
+                type="email"
+                value={loginForm.email}
                 onChange={(e) =>
                   setLoginForm((current) => ({
                     ...current,
-                    confirmPassword: e.target.value,
+                    email: e.target.value,
                   }))
                 }
-                error={confirmPasswordError}
+                error={emailError}
               ></Input>
-            )}
-            <Button
-              children={mode === "Login" ? "Login" : "Signup"}
-              variant="primary"
-            ></Button>
-            <div className="mx-auto">
-              <span>
-                {mode === "Login"
-                  ? "Need to create an account ? "
-                  : "Already have an account ? "}
-                <span
-                  className="border-bottom border-dark"
-                  style={{ border: "black", cursor: "pointer" }}
-                  onClick={() => {
-                    mode === "Login" ? setMode("Signup") : setMode("Login");
-                    setLoginForm(defaultForm);
-                    setEmailError("");
-                    setPassWordError("");
-                    setConfirmErrorPassword("");
-                  }}
-                >
-                  {mode === "Login" ? "Signup" : "Login"}
+              <Input
+                label="Password"
+                type="password"
+                value={loginForm.password}
+                onChange={(e) =>
+                  setLoginForm((current) => ({
+                    ...current,
+                    password: e.target.value,
+                  }))
+                }
+                error={passwordError}
+              ></Input>
+              {mode !== "Login" && (
+                <Input
+                  label="Confirm Password"
+                  type="password"
+                  helper="Password must be at least 8 characters"
+                  value={loginForm.confirmPassword}
+                  onChange={(e) =>
+                    setLoginForm((current) => ({
+                      ...current,
+                      confirmPassword: e.target.value,
+                    }))
+                  }
+                  error={confirmPasswordError}
+                ></Input>
+              )}
+              <Button
+                children={mode === "Login" ? "Login" : "Signup"}
+                variant="primary"
+              ></Button>
+              <div className="mx-auto">
+                <span>
+                  {mode === "Login"
+                    ? "Need to create an account ? "
+                    : "Already have an account ? "}
+                  <span
+                    className="border-bottom border-dark"
+                    style={{ border: "black", cursor: "pointer" }}
+                    onClick={() => {
+                      mode === "Login" ? setMode("Signup") : setMode("Login");
+                      setLoginForm(defaultForm);
+                      setEmailError("");
+                      setPassWordError("");
+                      setConfirmErrorPassword("");
+                    }}
+                  >
+                    {mode === "Login" ? "Signup" : "Login"}
+                  </span>
                 </span>
-              </span>
+              </div>
             </div>
+          </form>
+        ) : (
+          <div className="col-12">
+            {" "}
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              style={{ width: "7rem", height: "7rem" }}
+            />
           </div>
-        </form>
+        )}
       </section>
     </div>
   );

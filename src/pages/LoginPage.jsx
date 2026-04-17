@@ -172,7 +172,7 @@ export const LoginPage = () => {
             </div>
           </form>
         ) : (
-          <div className="col-12">
+          <div className="col-12 d-flex justify-content-center">
             {" "}
             <span
               className="spinner-border spinner-border-sm"

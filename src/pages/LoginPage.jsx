@@ -80,14 +80,29 @@ export const LoginPage = () => {
     setIsLoading(false);
   };
   return (
-    <div className="d-flex position-relative" style={{ overflow: "hidden" }}>
-      <section className="d-none d-lg-block col-lg-6 p-3">
-        <img
-          src={authImage}
-          alt="auth image"
-          style={{ maxHeight: "95vh" }}
-          className="rounded"
-        />
+    <div
+      className="d-flex position-relative p-lg-3"
+      style={{ overflow: "hidden", maxHeight: "100vh" }}
+    >
+      <section
+        className="d-none d-lg-flex col-lg-4 rounded align-items-end p-4 shadow"
+        style={{
+          backgroundImage: `url(${authImage})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          overflow: "hidden",
+        }}
+      >
+        <div className="text-light">
+          <h1 className="text-preset-1">
+            Keep track of your money and save for your future
+          </h1>
+          <h3 className="text-preset-3">
+            Personal finance app puts you in control of your spending. Track
+            transactions, set budgets, and add to savings pots easily
+          </h3>
+        </div>
       </section>
       <section
         className="col-12 col-lg-6 d-flex  align-items-center justify-content-center container"
@@ -176,7 +191,7 @@ export const LoginPage = () => {
           <div className="col-12 d-flex justify-content-center">
             {" "}
             <span
-              className="spinner-border spinner-border-sm"
+              className="spinner-border"
               role="status"
               style={{ width: "7rem", height: "7rem" }}
             />

@@ -82,7 +82,11 @@ export const LoginPage = () => {
   return (
     <div
       className="d-flex position-relative p-lg-3"
-      style={{ overflow: "hidden", maxHeight: "100vh" }}
+      style={{
+        overflow: "hidden",
+        maxHeight: "100vh",
+        backgroundColor: "var(--color-beige-100)",
+      }}
     >
       <section
         className="d-none d-lg-flex col-lg-4 rounded align-items-end p-4 shadow"
@@ -189,7 +193,6 @@ export const LoginPage = () => {
           </form>
         ) : (
           <div className="col-12 d-flex justify-content-center">
-            {" "}
             <span
               className="spinner-border"
               role="status"

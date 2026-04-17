@@ -4,6 +4,7 @@ import { Input } from "../components/UI/Input";
 import { Button } from "../components/UI/Button";
 import { supabase } from "../HelperFunctions/supabaseClient";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/images/logo-large.svg";
 export const LoginPage = () => {
   const Navigate = useNavigate();
   const [mode, setMode] = useState("Login");
@@ -79,7 +80,7 @@ export const LoginPage = () => {
     setIsLoading(false);
   };
   return (
-    <div className="d-flex" style={{ overflow: "hidden" }}>
+    <div className="d-flex position-relative" style={{ overflow: "hidden" }}>
       <section className="d-none d-lg-block col-lg-6 p-3">
         <img
           src={authImage}
@@ -182,6 +183,9 @@ export const LoginPage = () => {
           </div>
         )}
       </section>
+      <div className="w-100 d-lg-none d-flex justify-content-center p-3 position-absolute top-0 bg-dark rounded-bottom">
+        <img src={logo} alt="login logo" />
+      </div>
     </div>
   );
 };

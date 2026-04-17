@@ -8,27 +8,27 @@ export const sidebar = [
   {
     icon: overview,
     name: "Overview",
-    path: "/",
+    path: "/app",
   },
   {
     icon: transactions,
     name: "Transactions",
-    path: "/transactions",
+    path: "transactions",
   },
   {
     icon: budgets,
     name: "Budgets",
-    path: "/budgets",
+    path: "budgets",
   },
 
   {
     icon: pots,
     name: "Pots",
-    path: "/pots",
+    path: "pots",
   },
   {
     icon: bills,
     name: "Recurring Bills",
-    path: "/bills",
+    path: "bills",
   },
 ];

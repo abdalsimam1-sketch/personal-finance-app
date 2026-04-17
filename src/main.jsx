@@ -7,12 +7,15 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { FinanceProvider } from "./context/FinanceContext.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <FinanceProvider>
-      <Router>
-        <App />
-      </Router>
-    </FinanceProvider>
+    <AuthProvider>
+      <FinanceProvider>
+        <Router>
+          <App />
+        </Router>
+      </FinanceProvider>
+    </AuthProvider>
   </StrictMode>,
 );

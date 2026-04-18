@@ -59,7 +59,15 @@ export const FinanceProvider = ({ children }) => {
       ...current,
     ]);
   };
-  const editBudget = (category, maximum, theme) => {
+  const editBudget = async (category, maximum, theme) => {
+    const { error } = await supabase
+      .from("Budgets")
+      .update({ maximum: Number(maximum), theme: theme.theme })
+      .eq("category", category);
+    if (error) {
+      console.log(error);
+      return;
+    }
     setBudgets((current) =>
       current.map((budget) =>
         budget.category === category
@@ -72,7 +80,15 @@ export const FinanceProvider = ({ children }) => {
       ),
     );
   };
-  const deleteBudget = (category) => {
+  const deleteBudget = async (category) => {
+    const { error } = await supabase
+      .from("Budgets")
+      .delete()
+      .eq("category", category);
+    if (error) {
+      console.log(error);
+      return;
+    }
     setBudgets((current) => {
       return current.filter((item) => item.category !== category);
     });

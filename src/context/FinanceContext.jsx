@@ -96,8 +96,12 @@ export const FinanceProvider = ({ children }) => {
       ),
     );
   };
-  const deletePot = (name) => {
+  const deletePot = async (name) => {
     const potToDelete = pots.find((pot) => pot.name === name);
+    const { error } = await supabase.from("Pots").delete().eq("name", name);
+    if (error) {
+      console.log(error);
+    }
     if (potToDelete) {
       setBalance((current) => ({
         ...current,

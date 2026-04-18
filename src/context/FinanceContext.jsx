@@ -83,7 +83,15 @@ export const FinanceProvider = ({ children }) => {
       setPots((current) => [data[0], ...current]);
     }
   };
-  const editPot = (name, target, theme) => {
+  const editPot = async (name, target, theme) => {
+    const { error } = await supabase
+      .from("Pots")
+      .update({ target: Number(target), theme: theme.theme })
+      .eq("name", name);
+    if (error) {
+      console.log(error);
+      return;
+    }
     setPots((current) =>
       current.map((pot) =>
         pot.name === name

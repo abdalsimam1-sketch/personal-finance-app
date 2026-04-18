@@ -1,14 +1,25 @@
-import { useState, useMemo, useContext, createContext } from "react";
+import { useState, useMemo, useContext, createContext, useEffect } from "react";
 const FinanceContext = createContext();
 import data from "../data/data.json";
 import { CheckIfPaid } from "../HelperFunctions/CurrentDate";
+import { supabase } from "../HelperFunctions/supabaseClient";
 export const FinanceProvider = ({ children }) => {
   //state
   const [balance, setBalance] = useState(data.balance);
   const [transactions, setTransactions] = useState(data.transactions);
   const [budgets, setBudgets] = useState(data.budgets);
-  const [pots, setPots] = useState(data.pots);
-
+  const [pots, setPots] = useState([]);
+  useEffect(() => {
+    const fetchPots = async () => {
+      const { data, error } = await supabase.from("Pots").select("*");
+      if (error) {
+        console.log(error);
+      } else {
+        setPots(data);
+      }
+    };
+    fetchPots();
+  }, []);
   //actions
   const addBudget = ({ category, maximum, theme }) => {
     const budgetExists = budgets.find((item) => {
@@ -45,17 +56,31 @@ export const FinanceProvider = ({ children }) => {
       return current.filter((item) => item.category !== category);
     });
   };
-  const addPot = ({ name, target, theme }) => {
+  const addPot = async ({ name, target, theme }) => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     const potExists = pots.findIndex((item) => {
       return item.name === name;
     });
-    if (potExists === -1) {
-      setPots((current) => [
-        { name, target: Number(target) || 0, theme: theme.theme, total: 0 },
-        ...current,
-      ]);
-    } else {
+    if (potExists !== -1) {
       return;
+    }
+    const { data, error } = await supabase
+      .from("Pots")
+      .insert({
+        name,
+        target: Number(target),
+        theme: theme.theme,
+        total: 0,
+        user_id: user.id,
+      })
+      .select();
+    if (error) {
+      console.log(error);
+      return;
+    } else {
+      setPots((current) => [data[0], ...current]);
     }
   };
   const editPot = (name, target, theme) => {

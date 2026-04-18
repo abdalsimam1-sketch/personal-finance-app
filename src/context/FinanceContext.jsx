@@ -7,7 +7,7 @@ export const FinanceProvider = ({ children }) => {
   //state
   const [balance, setBalance] = useState(data.balance);
   const [transactions, setTransactions] = useState(data.transactions);
-  const [budgets, setBudgets] = useState(data.budgets);
+  const [budgets, setBudgets] = useState([]);
   const [pots, setPots] = useState([]);
   useEffect(() => {
     const fetchPots = async () => {
@@ -18,25 +18,46 @@ export const FinanceProvider = ({ children }) => {
         setPots(data);
       }
     };
+    const fetchBudgets = async () => {
+      const { data, error } = await supabase.from("Budgets").select("*");
+      if (error) {
+        console.log(error);
+      } else {
+        setBudgets(data);
+      }
+    };
+    fetchBudgets();
     fetchPots();
   }, []);
   //actions
-  const addBudget = ({ category, maximum, theme }) => {
+  const addBudget = async ({ category, maximum, theme }) => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     const budgetExists = budgets.find((item) => {
       return item.category === category;
     });
     if (budgetExists) {
       return;
-    } else {
-      setBudgets((current) => [
-        {
-          category,
-          maximum: Number(maximum) || 0,
-          theme: theme.theme,
-        },
-        ...current,
-      ]);
     }
+    const { error } = await supabase.from("Budgets").insert({
+      category,
+      maximum: Number(maximum),
+      theme: theme.theme,
+      user_id: user.id,
+    });
+    if (error) {
+      console.log(error);
+      return;
+    }
+    setBudgets((current) => [
+      {
+        category,
+        maximum: Number(maximum) || 0,
+        theme: theme.theme,
+      },
+      ...current,
+    ]);
   };
   const editBudget = (category, maximum, theme) => {
     setBudgets((current) =>

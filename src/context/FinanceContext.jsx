@@ -122,7 +122,17 @@ export const FinanceProvider = ({ children }) => {
       }),
     );
   };
-  const addMoney = (name, amount) => {
+  const addMoney = async (name, amount) => {
+    const pot = pots.find((pot) => pot.name === name);
+    const { error } = await supabase
+      .from("Pots")
+      .update({ total: pot.total + amount })
+      .eq("name", name);
+    if (error) {
+      console.log(error);
+      return;
+    }
+
     setPots((current) => {
       return current.map((pot) => {
         return pot.name === name ? { ...pot, total: pot.total + amount } : pot;
@@ -133,7 +143,16 @@ export const FinanceProvider = ({ children }) => {
       current: current.current - amount,
     }));
   };
-  const withdrawMoney = (name, total) => {
+  const withdrawMoney = async (name, total) => {
+    const pot = pots.find((pot) => pot.name === name);
+    const { error } = await supabase
+      .from("Pots")
+      .update({ total: pot.total - total })
+      .eq("name", name);
+    if (error) {
+      console.log(error);
+      return;
+    }
     setPots((current) =>
       current.map((pot) =>
         pot.name === name ? { ...pot, total: pot.total - total } : pot,

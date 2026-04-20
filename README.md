@@ -1,6 +1,6 @@
 # Frontend Mentor - Personal finance app solution
 
-This is a solution to the [Personal finance app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/personal-finance-app-JfjtZgyMt1). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
+This is a solution to the [Personal finance app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/personal-finance-app-JfjtZgyMt1). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
 ## Table of contents
 
@@ -16,8 +16,6 @@ This is a solution to the [Personal finance app challenge on Frontend Mentor](ht
   - [AI Collaboration](#ai-collaboration)
 - [Author](#author)
 - [Acknowledgments](#acknowledgments)
-
-**Note: Delete this note and update the table of contents based on what sections you keep.**
 
 ## Overview
 
@@ -41,13 +39,18 @@ Users should be able to:
 - **Bonus**: Save details to a database (build the project as a full-stack app)
 - **Bonus**: Create an account and log in (add user authentication to the full-stack app)
 
-### Screenshot
+### Screenshots
 
-![](./screenshot.jpg)
+![login page]({E30335EA-37F4-4AE7-B9FD-9631356A05E5}.png)
+![overview page]({206984EE-90F4-41B2-936D-FC9F77172906}.png)
+![transactions page]({BCFBFB2D-E62C-493D-9187-353EED088C15}.png)
+![budgets page]({EA403C12-6A6B-430F-BC53-719F27300FFA}.png)
+![pots page]({DB414D2A-EF18-40D0-8664-9445B70449D4}.png)
+![recurring bills page]({C031AA6D-EA2F-4BAB-948F-2C9DF2948D16}.png)
 
 Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
 
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
+Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it.
 
 Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
 
@@ -82,15 +85,17 @@ To see how you can add code snippets, see below:
 ```html
 <h1>Some HTML code I'm proud of</h1>
 ```
+
 ```css
 .proud-of-this-css {
   color: papayawhip;
 }
 ```
+
 ```js
 const proudOfThisFunc = () => {
-  console.log('🎉')
-}
+  console.log("🎉");
+};
 ```
 
 If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.

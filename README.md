@@ -63,34 +63,23 @@ Users should be able to:
 - Bootstrap-icons
 - Mobile-first workflow
 - [React](https://reactjs.org/) - JS library
-- Supabase (auth and database)
-- Context API
+- Supabase (Backend as a service for authentication and database)
+- Context API(Global state management )
 - React-router-dom
--
+- Vercel
+- PostgresSQL
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
-
-To see how you can add code snippets, see below:
-
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
-
-```css
-.proud-of-this-css {
-  color: papayawhip;
-}
-```
-
-```js
-const proudOfThisFunc = () => {
-  console.log("🎉");
-};
-```
-
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
+- Learnt how to write good PR descriptions
+- Learnt more about array methods while working with the static JSON file
+- Learnt how to use supabase auth
+- Learnt how to add env file to gitignore so it won't be pushed to github
+- Learnt how to add my env varibales to my vercel deployment
+- Learnt how to connect and make supabase database queries
+- Learnt to work with formstate and also form submissions better that
+- Leanrt how to manage error and loading states for async functions
+- Learnt to use hooks like useMemo to boost performance and reduce heavy re-calculations
 
 **Note: Delete this note and the content within this section and replace with your own learnings.**
 

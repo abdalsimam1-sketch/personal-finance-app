@@ -81,13 +81,12 @@ Users should be able to:
 - Leanrt how to manage error and loading states for async functions
 - Learnt to use hooks like useMemo to boost performance and reduce heavy re-calculations
 
-**Note: Delete this note and the content within this section and replace with your own learnings.**
-
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+- Deepen understanding of API fetching and integration
+- Learn more about database table relationships
+- Learn how to improve app performance for better user experience
+- Learn to use real life data
 
 ### Useful resources
 

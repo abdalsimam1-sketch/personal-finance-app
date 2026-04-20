@@ -15,7 +15,6 @@ This is a solution to the [Personal finance app challenge on Frontend Mentor](ht
   - [Useful resources](#useful-resources)
   - [AI Collaboration](#ai-collaboration)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
 
 ## Overview
 
@@ -50,8 +49,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL:(https://github.com/abdalsimam1-sketch/personal-finance-app.git)
-- Live Site URL:(https://personal-finance-app-neon-beta.vercel.app/)
+- Solution URL: (https://github.com/abdalsimam1-sketch/personal-finance-app.git)
+- Live Site URL: (https://personal-finance-app-neon-beta.vercel.app/)
 
 ## My process
 
@@ -108,14 +107,4 @@ Users should be able to:
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
-
-## Acknowledgments
-
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
+- Frontend Mentor - [@abdalsimam1-sketch](https://www.frontendmentor.io/profile/abdalsimam1-sketch)

@@ -88,22 +88,23 @@ Users should be able to:
 - Learn how to improve app performance for better user experience
 - Learn to use real life data
 
-### Useful resources
-
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
-
 ### AI Collaboration
 
-Describe how you used AI tools (if any) during this project. This helps demonstrate your ability to work effectively with AI assistants.
+- Used AI tools like Codex, ChatGPT, CLaude, Gemini and Github Copilot
+- Used them for debugging issues when stuck
+- Used AI to learn professional workflows and also brainstrom new patterns
+- Used AI for explanations of new concepts
+- Used AI to to significantly reduce development time by doing letting it do thigns like the color definitions and fonts and spacing and other design system varible definitions
 
-- What tools did you use (e.g., ChatGPT, Claude, GitHub Copilot)?
-- How did you use them (e.g., debugging, generating boilerplate, brainstorming solutions)?
-- What worked well? What didn't?
+**What worked well**
 
-**Note: Delete this note and the content above if you didn't use AI, or replace with your own experience.**
+- Faster debugging and proeblem solving
+- Leanring new concepts faster and in more efficient ways
+
+**What didn't work well**
+
+- Some answers were very genric and were not really answering the asked question
+- Needed to verify AI genrated solutions across mulitple AI tools to make sure of the correct solution
 
 ## Author
 

@@ -4,7 +4,6 @@
   "description": "",
   "type": "module",
   "main": "index.js",
-  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec tsx src/server.ts",
@@ -22,11 +21,13 @@
     "prisma": "^7.10.0",
     "supertest": "^7.2.2",
     "tsx": "^4.23.13",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "@types/cors": "^2.8.19"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
+    
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",

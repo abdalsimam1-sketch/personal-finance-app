@@ -95,3 +95,25 @@ export const loginService = async (loginForm: {
 
   return { accessToken, refreshToken, user };
 };
+
+export const logoutService = async (id: string) => {
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+  });
+  if (!existingUser) {
+    throw new UnauthorizedError("Invalid or expired tokens");
+  }
+
+  const user = await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      refreshTokenHash: null,
+      refreshTokenHashExpiresAt: null,
+    },
+  });
+  return user;
+};

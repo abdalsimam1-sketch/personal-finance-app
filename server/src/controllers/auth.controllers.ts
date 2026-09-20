@@ -47,3 +47,18 @@ export const login = async (req: Request, res: Response) => {
     },
   });
 };
+
+export const logout = async (req: any, res: Response) => {
+  const { accessToken, refreshToken } = req.cookies;
+  if (!accessToken || !refreshToken) {
+    throw new BadRequestError("Invalid or expired token");
+  }
+  await authServices.logoutService(req.user.id);
+  res.clearCookie("accessToken", cookieOptions);
+  res.clearCookie("refreshToken", cookieOptions);
+  res.status(200).json({
+    success: true,
+    message: "User logged out",
+    data: {},
+  });
+};

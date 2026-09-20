@@ -1,6 +1,7 @@
 import { Router } from "express";
 import * as authControllers from "../controllers/auth.controllers.js";
 export const authRouter = Router();
+import { auth } from "../middleware/auth.middleware.js";
 
 //signup
 authRouter.post("/signup", authControllers.signup);
@@ -9,6 +10,7 @@ authRouter.post("/signup", authControllers.signup);
 authRouter.post("/login", authControllers.login);
 //get me
 //logout
+authRouter.post("/logout", auth, authControllers.logout);
 //rotate tokens
 //verify email
 //resend verification email

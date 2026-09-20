@@ -6,6 +6,7 @@ export const authRouter = Router();
 authRouter.post("/signup", authControllers.signup);
 
 //login
+authRouter.post("/login", authControllers.login);
 //get me
 //logout
 //rotate tokens

@@ -9,6 +9,7 @@ authRouter.post("/signup", authControllers.signup);
 //login
 authRouter.post("/login", authControllers.login);
 //get me
+authRouter.get("/me", auth, authControllers.getMe);
 //logout
 authRouter.post("/logout", auth, authControllers.logout);
 //rotate tokens

@@ -117,3 +117,20 @@ export const logoutService = async (id: string) => {
   });
   return user;
 };
+
+export const getMeService = async (id: string) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      email: true,
+      id: true,
+      name: true,
+    },
+  });
+  if (!user) {
+    throw new UnauthorizedError("Invalid or expired tokens");
+  }
+  return user;
+};

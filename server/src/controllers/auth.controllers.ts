@@ -62,3 +62,17 @@ export const logout = async (req: any, res: Response) => {
     data: {},
   });
 };
+
+export const getMe = async (req: any, res: Response) => {
+  const id = req.user.id;
+
+  const user = await authServices.getMeService(id);
+
+  res.status(200).json({
+    success: true,
+    message: "User found",
+    data: {
+      user,
+    },
+  });
+};

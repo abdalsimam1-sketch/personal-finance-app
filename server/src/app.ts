@@ -6,6 +6,7 @@ import rateLimit from "express-rate-limit";
 import morgan from "morgan";
 import { notFound } from "./middleware/notFound.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+import cookieParser from "cookie-parser";
 
 //routes import
 import { authRouter } from "./routes/auth.routes.js";
@@ -15,6 +16,7 @@ export const app: Express = express();
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
+app.use(cookieParser());
 app.use(
   cors({
     origin: process.env.CLIENT_URL,

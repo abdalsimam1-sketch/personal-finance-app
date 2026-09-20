@@ -6,9 +6,13 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest run",
-    "dev": "nodemon --exec tsx src/server.ts",
+    "dev": "tsx watch src/server.ts",
     "start": "node dist/server.js",
-    "build": "tsc"
+    "build": "tsc",
+    "studio": "prisma studio",
+    "studio:test": "dotenv -e .env.test -- prisma studio",
+    "migrate": "prisma migrate dev",
+    "migrate:test": "dotenv -e .env.test -- prisma migrate deploy"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +23,8 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
     "@types/node": "^22.20.2",
-    "nodemon": "^3.1.14",
+    "@types/supertest": "^7.2.1",
+    "dotenv-cli": "^11.0.0",
     "prisma": "^7.10.0",
     "supertest": "^7.2.2",
     "tsx": "^4.23.13",

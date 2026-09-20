@@ -134,3 +134,44 @@ export const getMeService = async (id: string) => {
   }
   return user;
 };
+
+export const rotateTokensService = async ({
+  id,
+  email,
+}: {
+  id: string;
+  email: string;
+}) => {
+  const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+    generateTokens({
+      id,
+      email,
+    });
+  const refreshTokenHash = hashString(newRefreshToken);
+
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+  if (!existingUser) {
+    throw new UnauthorizedError("Invalid or expired tokens");
+  }
+
+  const user = await prisma.user.update({
+    where: {
+      email,
+    },
+    data: {
+      refreshTokenHash,
+      refreshTokenHashExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+    },
+  });
+
+  return { user, newAccessToken, newRefreshToken };
+};

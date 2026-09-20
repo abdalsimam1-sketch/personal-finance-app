@@ -13,6 +13,7 @@ authRouter.get("/me", auth, authControllers.getMe);
 //logout
 authRouter.post("/logout", auth, authControllers.logout);
 //rotate tokens
+authRouter.post("/rotate-tokens", auth, authControllers.rotateTokens);
 //verify email
 //resend verification email
 //forgot password

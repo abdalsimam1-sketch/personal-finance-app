@@ -76,3 +76,24 @@ export const getMe = async (req: any, res: Response) => {
     },
   });
 };
+
+export const rotateTokens = async (req: any, res: Response) => {
+  const { newAccessToken, newRefreshToken, user } =
+    await authServices.rotateTokensService(req.user);
+
+  res.cookie("accessToken", newAccessToken, {
+    ...cookieOptions,
+    maxAge: 15 * 60 * 1000,
+  });
+  res.cookie("refreshToken", newRefreshToken, {
+    ...cookieOptions,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+  res.status(200).json({
+    success: true,
+    message: "Tokens rotated",
+    data: {
+      user,
+    },
+  });
+};

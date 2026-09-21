@@ -210,3 +210,32 @@ export const verifyEmailService = async (token: string) => {
   });
   return user;
 };
+
+export const resendVerificationEmailService = async (email: string) => {
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+  if (!existingUser || existingUser.isVerified) {
+    return;
+  }
+
+  const { cryptoToken, cryptoTokenHash } = generateCryptoTokenHash();
+  const user = await prisma.user.update({
+    where: {
+      email,
+    },
+    data: {
+      verificationTokenHash: cryptoTokenHash,
+      verificationTokenHashExpiresAt: new Date(Date.now() + 10 * 60 * 1000),
+    },
+    select: { id: true, name: true, email: true, isVerified: true },
+  });
+
+  try {
+    await sendVerificationEmail(user.email, cryptoToken);
+  } catch (resendVerificationEmailError) {
+    console.error("Resend verification error : ", resendVerificationEmailError);
+  }
+};

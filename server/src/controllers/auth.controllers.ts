@@ -113,3 +113,17 @@ export const verifyEmail = async (req: any, res: Response) => {
     },
   });
 };
+
+export const resendVerificationEmail = async (req: any, res: Response) => {
+  const { email } = req.body;
+  if (!email) {
+    throw new BadRequestError("Email is required");
+  }
+  await authServices.resendVerificationEmailService(email);
+
+  res.status(200).json({
+    success: true,
+    message: "If email exists, a verification email will be sent",
+    data: {},
+  });
+};

@@ -11,6 +11,7 @@ import { generateCryptoTokenHash } from "../utils/generateCrytoToken.js";
 import bcrypt from "bcryptjs";
 import { generateTokens } from "../utils/generateTokens.js";
 import { hashString } from "../utils/sha256.js";
+import { sendPasswordResetEmail } from "../utils/resetPasswordEmail.js";
 
 export const signupService = async (signupForm: SignupForm) => {
   let userExists = await prisma.user.findUnique({
@@ -237,5 +238,34 @@ export const resendVerificationEmailService = async (email: string) => {
     await sendVerificationEmail(user.email, cryptoToken);
   } catch (resendVerificationEmailError) {
     console.error("Resend verification error : ", resendVerificationEmailError);
+  }
+};
+
+export const forgotPasswordService = async (email: string) => {
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+  if (!existingUser) {
+    return;
+  }
+  const { cryptoToken, cryptoTokenHash } = generateCryptoTokenHash();
+  const user = await prisma.user.update({
+    where: {
+      email,
+    },
+    data: {
+      resetPasswordTokenHash: cryptoTokenHash,
+      resetPasswordTokenHashExpiresAt: new Date(Date.now() + 10 * 60 * 1000),
+    },
+    select: {
+      email: true,
+    },
+  });
+  try {
+    await sendPasswordResetEmail(user.email, cryptoToken);
+  } catch (resetPasswordError) {
+    console.error("Resend verification error : ", resetPasswordError);
   }
 };

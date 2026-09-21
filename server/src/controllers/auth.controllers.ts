@@ -127,3 +127,16 @@ export const resendVerificationEmail = async (req: any, res: Response) => {
     data: {},
   });
 };
+
+export const forgotPassword = async (req: any, res: Response) => {
+  const { email } = req.body;
+  if (!email) {
+    throw new BadRequestError("Email is required");
+  }
+  await authServices.forgotPasswordService(email);
+  res.status(200).json({
+    success: true,
+    message: "If email exists, a reset email will  be sent",
+    data: {},
+  });
+};

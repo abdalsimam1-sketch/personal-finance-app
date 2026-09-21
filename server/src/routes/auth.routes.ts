@@ -3,6 +3,8 @@ import * as authControllers from "../controllers/auth.controllers.js";
 export const authRouter = Router();
 import { auth } from "../middleware/auth.middleware.js";
 
+//google
+//google callback
 //signup
 authRouter.post("/signup", authControllers.signup);
 
@@ -19,9 +21,9 @@ authRouter.post(
   "/resend-verification-email",
   authControllers.resendVerificationEmail,
 );
+//forgot password
+authRouter.post("/forgot-password", authControllers.forgotPassword);
 //verify email
 authRouter.post("/verify-email/:token", authControllers.verifyEmail);
-//forgot password
+
 //reset password
-//google
-//google callback

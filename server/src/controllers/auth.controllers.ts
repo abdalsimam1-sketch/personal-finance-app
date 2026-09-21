@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import * as authServices from "../services/auth.services.js";
 import { signupSchema, loginSchema } from "../validation/auth.validations.js";
-import { BadRequestError } from "../errors/errors.js";
+import { BadRequestError, UnauthorizedError } from "../errors/errors.js";
 import { cookieOptions } from "../utils/cookieOptions.js";
 
 export const signup = async (req: Request, res: Response) => {
@@ -92,6 +92,22 @@ export const rotateTokens = async (req: any, res: Response) => {
   res.status(200).json({
     success: true,
     message: "Tokens rotated",
+    data: {
+      user,
+    },
+  });
+};
+
+export const verifyEmail = async (req: any, res: Response) => {
+  const { token } = req.params;
+  if (!token) {
+    throw new UnauthorizedError("Invalid or expired tokens");
+  }
+
+  const user = await authServices.verifyEmailService(token);
+  res.status(200).json({
+    success: true,
+    message: "Email verified",
     data: {
       user,
     },

@@ -25,5 +25,5 @@ authRouter.post(
 authRouter.post("/forgot-password", authControllers.forgotPassword);
 //verify email
 authRouter.post("/verify-email/:token", authControllers.verifyEmail);
-
 //reset password
+authRouter.post("/reset-password/:token", authControllers.resetPassword);

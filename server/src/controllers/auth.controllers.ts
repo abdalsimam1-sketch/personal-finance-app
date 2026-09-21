@@ -1,6 +1,10 @@
 import type { Request, Response } from "express";
 import * as authServices from "../services/auth.services.js";
-import { signupSchema, loginSchema } from "../validation/auth.validations.js";
+import {
+  signupSchema,
+  loginSchema,
+  resetPasswordSchema,
+} from "../validation/auth.validations.js";
 import { BadRequestError, UnauthorizedError } from "../errors/errors.js";
 import { cookieOptions } from "../utils/cookieOptions.js";
 
@@ -137,6 +141,23 @@ export const forgotPassword = async (req: any, res: Response) => {
   res.status(200).json({
     success: true,
     message: "If email exists, a reset email will  be sent",
+    data: {},
+  });
+};
+
+export const resetPassword = async (req: any, res: Response) => {
+  const { token } = req.params;
+  if (!token) {
+    throw new BadRequestError("Invalid or expired token");
+  }
+  const { data, success, error } = resetPasswordSchema.safeParse(req.body);
+  if (!success) {
+    throw new BadRequestError(error.issues[0]?.message);
+  }
+  await authServices.resetPasswordService(token, data);
+  res.status(200).json({
+    success: true,
+    message: "Password reset successfully",
     data: {},
   });
 };

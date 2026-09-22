@@ -2,9 +2,19 @@ import { Router } from "express";
 import * as authControllers from "../controllers/auth.controllers.js";
 export const authRouter = Router();
 import { auth } from "../middleware/auth.middleware.js";
+import passport from "passport";
 
 //google
+authRouter.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] }),
+);
 //google callback
+authRouter.get(
+  "/google/callback",
+  passport.authenticate("google", { session: false }),
+  authControllers.googleCallback,
+);
 //signup
 authRouter.post("/signup", authControllers.signup);
 

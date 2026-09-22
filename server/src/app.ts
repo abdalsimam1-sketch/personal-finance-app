@@ -7,6 +7,8 @@ import morgan from "morgan";
 import { notFound } from "./middleware/notFound.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import cookieParser from "cookie-parser";
+import passport from "passport";
+import "./lib/passport.js";
 
 //routes import
 import { authRouter } from "./routes/auth.routes.js";
@@ -14,6 +16,7 @@ import { authRouter } from "./routes/auth.routes.js";
 export const app: Express = express();
 
 app.use(express.json());
+app.use(passport.initialize());
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(cookieParser());

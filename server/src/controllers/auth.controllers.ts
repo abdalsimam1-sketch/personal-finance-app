@@ -7,6 +7,9 @@ import {
 } from "../validation/auth.validations.js";
 import { BadRequestError, UnauthorizedError } from "../errors/errors.js";
 import { cookieOptions } from "../utils/cookieOptions.js";
+import { generateTokens } from "../utils/generateTokens.js";
+import { hashString } from "../utils/sha256.js";
+import { prisma } from "../lib/prisma.js";
 
 export const signup = async (req: Request, res: Response) => {
   const { data, error, success } = signupSchema.safeParse(req.body);
@@ -160,4 +163,32 @@ export const resetPassword = async (req: any, res: Response) => {
     message: "Password reset successfully",
     data: {},
   });
+};
+
+export const googleCallback = async (req: any, res: Response) => {
+  const { accessToken, refreshToken } = generateTokens({
+    id: req.user.id,
+    email: req.user.email,
+  });
+  const refreshTokenHash = hashString(refreshToken);
+  const user = await prisma.user.update({
+    where: {
+      email: req.user.email,
+    },
+    data: {
+      refreshTokenHash,
+      refreshTokenHashExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    },
+  });
+
+  res.cookie("accessToken", accessToken, {
+    ...cookieOptions,
+    maxAge: 15 * 60 * 1000,
+  });
+  res.cookie("refreshToken", refreshToken, {
+    ...cookieOptions,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+
+  res.redirect(`${process.env.CLIENT_URL}`);
 };

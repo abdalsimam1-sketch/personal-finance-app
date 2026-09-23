@@ -24,8 +24,6 @@ export const signupService = async (signupForm: SignupForm) => {
   }
   const passwordHash = await hashPassword(signupForm.password);
   const { cryptoToken, cryptoTokenHash } = generateCryptoTokenHash();
-  console.log("token", cryptoToken);
-  console.log("token hash", cryptoTokenHash);
 
   const user = await prisma.user.create({
     data: {

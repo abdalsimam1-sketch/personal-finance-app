@@ -50,6 +50,25 @@ export const useAuth = () => {
     string
   >({
     mutationFn: (token: string) => authServices.verifyEmail(token),
+    onSuccess: () => {
+      toast.success("Email verified");
+    },
   });
-  return { loginMutation, signupMutation, verifyEmailMutation };
+
+  const resendVerificationEmailMutation = useMutation<
+    unknown,
+    AxiosError<AuthErrorResponse>,
+    string
+  >({
+    mutationFn: (email: string) => authServices.resendVerificationEmail(email),
+    onSuccess: () => {
+      toast.success("If email exists, a verification email will be sent");
+    },
+  });
+  return {
+    loginMutation,
+    signupMutation,
+    verifyEmailMutation,
+    resendVerificationEmailMutation,
+  };
 };

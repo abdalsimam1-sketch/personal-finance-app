@@ -16,7 +16,8 @@ const AUTH_MODES = {
 
 export const Auth = () => {
   const navigate = useNavigate();
-  const { loginMutation, signupMutation } = useAuth();
+  const { loginMutation, signupMutation, resendVerificationEmailMutation } =
+    useAuth();
   const isloading = loginMutation.isPending || signupMutation.isPending;
   const {
     register,
@@ -104,6 +105,11 @@ export const Auth = () => {
                 </span>
                 {loginError === "User not verified" && (
                   <button
+                    onClick={() => {
+                      resendVerificationEmailMutation.mutate(
+                        getValues("email"),
+                      );
+                    }}
                     className="p-2 border border-red-400 text-red-600 bg-white  rounded text-captions cursor-pointer font-bold"
                     type="button"
                   >

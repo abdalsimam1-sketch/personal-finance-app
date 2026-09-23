@@ -1,5 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config({ path: ".env.test" });
 import jwt from "jsonwebtoken";
 
 export const generateTokens = ({

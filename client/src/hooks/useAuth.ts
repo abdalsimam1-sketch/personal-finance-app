@@ -40,5 +40,16 @@ export const useAuth = () => {
       toast.error("Signup Failed");
     },
   });
-  return { loginMutation, signupMutation };
+  type VerifyEmailResponse = {
+    message: string;
+  };
+
+  const verifyEmailMutation = useMutation<
+    VerifyEmailResponse,
+    AxiosError<AuthErrorResponse>,
+    string
+  >({
+    mutationFn: (token: string) => authServices.verifyEmail(token),
+  });
+  return { loginMutation, signupMutation, verifyEmailMutation };
 };

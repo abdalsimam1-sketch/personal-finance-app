@@ -14,3 +14,8 @@ export const signup = async (payload: {
   const response = await api.post("/auth/signup", payload);
   return response.data;
 };
+
+export const verifyEmail = async (token: string) => {
+  const response = await api.post(`/auth/verify-email/${token}`);
+  return response.data;
+};

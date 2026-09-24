@@ -65,10 +65,22 @@ export const useAuth = () => {
       toast.success("If email exists, a verification email will be sent");
     },
   });
+
+  const forgotPasswordMutation = useMutation<
+    unknown,
+    AxiosError<AuthErrorResponse>,
+    string
+  >({
+    mutationFn: (email: string) => authServices.forgotPassword(email),
+    onSuccess: () => {
+      toast.success("If email exists, a password reset email will be sent");
+    },
+  });
   return {
     loginMutation,
     signupMutation,
     verifyEmailMutation,
     resendVerificationEmailMutation,
+    forgotPasswordMutation,
   };
 };

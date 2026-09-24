@@ -2,6 +2,7 @@ import { Auth } from "./pages/Auth";
 import { Dashboard } from "./pages/Dashboard";
 import { VerifyEmail } from "./pages/VerifyEmail";
 import { ForgotPassword } from "./pages/ForgotPassword";
+import { ResetPassword } from "./pages/ResetPassword";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -12,6 +13,10 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/verify-email/:token" element={<VerifyEmail />}></Route>
         <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+        <Route
+          path="/reset-password/:token"
+          element={<ResetPassword />}
+        ></Route>
       </Routes>
     </>
   );

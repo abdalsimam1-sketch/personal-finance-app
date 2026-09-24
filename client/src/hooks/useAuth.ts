@@ -76,11 +76,32 @@ export const useAuth = () => {
       toast.success("If email exists, a password reset email will be sent");
     },
   });
+
+  const resetPasswordMutation = useMutation<
+    unknown,
+    AxiosError<AuthErrorResponse>,
+    {
+      token: string;
+      newPassword: string;
+      confirmNewPassword: string;
+    }
+  >({
+    mutationFn: ({ token, newPassword, confirmNewPassword }) =>
+      authServices.resetPassword(token, { newPassword, confirmNewPassword }),
+    onSuccess: () => {
+      toast.success("Password Reset");
+    },
+    onError: () => {
+      toast.error("Password Reset Failed");
+    },
+  });
+
   return {
     loginMutation,
     signupMutation,
     verifyEmailMutation,
     resendVerificationEmailMutation,
     forgotPasswordMutation,
+    resetPasswordMutation,
   };
 };

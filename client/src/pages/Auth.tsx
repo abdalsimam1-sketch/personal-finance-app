@@ -26,7 +26,7 @@ export const Auth = () => {
     formState: { errors },
     handleSubmit,
   } = useForm<authTypes.SignupFormType>();
-  const [authMode, setAuthMode] = useState(AUTH_MODES.signup);
+  const [authMode, setAuthMode] = useState(AUTH_MODES.login);
   const toggelAuthMode = () => {
     setAuthMode((prev) =>
       prev === AUTH_MODES.login ? AUTH_MODES.signup : AUTH_MODES.login,
@@ -154,7 +154,10 @@ export const Auth = () => {
                 })}
               />
               {authMode === AUTH_MODES.login && (
-                <span className="text-captions underline text-gray-500 absolute right-0 cursor-pointer">
+                <span
+                  className="text-captions underline text-gray-500 absolute right-0 cursor-pointer"
+                  onClick={() => navigate("/forgot-password")}
+                >
                   Forgot password?
                 </span>
               )}
@@ -191,6 +194,7 @@ export const Auth = () => {
               />
             )}
             <button
+              disabled={isloading}
               className={`py-2 text-white  rounded cursor-pointer min-h-50: ${isloading ? "bg-gray-400" : "bg-grey-900 "}`}
             >
               {isloading ? (
@@ -202,9 +206,9 @@ export const Auth = () => {
               )}
             </button>
             <button
+              disabled={isloading}
               onClick={() =>
-                (window.location.href =
-                  "http://localhost:5000/api/v1/auth/google")
+                (window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`)
               }
               type="button"
               className="bg-gray-100 flex justify-center rounded py-0.5 items-center cursor-pointer"

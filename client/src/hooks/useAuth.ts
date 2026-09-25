@@ -1,0 +1,126 @@
+import { useMutation, useQuery } from "@tanstack/react-query";
+import * as authServices from "../services/auth.service";
+import type * as authTypes from "../types/auth.types";
+import toast from "react-hot-toast";
+import type { AxiosError } from "axios";
+
+type AuthErrorResponse = {
+  success: boolean;
+  message: string;
+  statusCode: number;
+};
+
+export const useAuth = () => {
+  const loginMutation = useMutation<
+    unknown,
+    AxiosError<AuthErrorResponse>,
+    authTypes.LoginFormType
+  >({
+    mutationFn: (payload: authTypes.LoginFormType) =>
+      authServices.login(payload),
+    onSuccess: () => {
+      toast.success("Login Successful");
+    },
+    onError: () => {
+      toast.error("Login Failed");
+    },
+  });
+
+  const signupMutation = useMutation<
+    unknown,
+    AxiosError<AuthErrorResponse>,
+    authTypes.SignupFormType
+  >({
+    mutationFn: (payload: authTypes.SignupFormType) =>
+      authServices.signup(payload),
+    onSuccess: () => {
+      toast.success("Signup Successful");
+    },
+    onError: () => {
+      toast.error("Signup Failed");
+    },
+  });
+  type VerifyEmailResponse = {
+    message: string;
+  };
+
+  const verifyEmailMutation = useMutation<
+    VerifyEmailResponse,
+    AxiosError<AuthErrorResponse>,
+    string
+  >({
+    mutationFn: (token: string) => authServices.verifyEmail(token),
+    onSuccess: () => {
+      toast.success("Email verified");
+    },
+  });
+
+  const resendVerificationEmailMutation = useMutation<
+    unknown,
+    AxiosError<AuthErrorResponse>,
+    string
+  >({
+    mutationFn: (email: string) => authServices.resendVerificationEmail(email),
+    onSuccess: () => {
+      toast.success("If email exists, a verification email will be sent");
+    },
+  });
+
+  const forgotPasswordMutation = useMutation<
+    unknown,
+    AxiosError<AuthErrorResponse>,
+    string
+  >({
+    mutationFn: (email: string) => authServices.forgotPassword(email),
+    onSuccess: () => {
+      toast.success("If email exists, a password reset email will be sent");
+    },
+  });
+
+  const resetPasswordMutation = useMutation<
+    unknown,
+    AxiosError<AuthErrorResponse>,
+    {
+      token: string;
+      newPassword: string;
+      confirmNewPassword: string;
+    }
+  >({
+    mutationFn: ({ token, newPassword, confirmNewPassword }) =>
+      authServices.resetPassword(token, { newPassword, confirmNewPassword }),
+    onSuccess: () => {
+      toast.success("Password Reset");
+    },
+    onError: () => {
+      toast.error("Password Reset Failed");
+    },
+  });
+
+  const getMeQuery = useQuery({
+    queryKey: ["me"],
+    queryFn: authServices.getMe,
+    retry: false,
+  });
+
+  const logoutMutation = useMutation({
+    mutationFn: authServices.logout,
+    onSuccess: () => {
+      toast.success("Logged out");
+    },
+
+    onError: () => {
+      toast.error("Log out failed");
+    },
+  });
+
+  return {
+    loginMutation,
+    signupMutation,
+    verifyEmailMutation,
+    resendVerificationEmailMutation,
+    forgotPasswordMutation,
+    resetPasswordMutation,
+    getMeQuery,
+    logoutMutation,
+  };
+};

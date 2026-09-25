@@ -250,8 +250,6 @@ export const forgotPasswordService = async (email: string) => {
   }
   const { cryptoToken, cryptoTokenHash } = generateCryptoTokenHash();
 
-  console.log("token", cryptoToken);
-
   const user = await prisma.user.update({
     where: {
       email,

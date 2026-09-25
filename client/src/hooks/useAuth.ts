@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import * as authServices from "../services/auth.service";
 import type * as authTypes from "../types/auth.types";
 import toast from "react-hot-toast";
@@ -96,6 +96,23 @@ export const useAuth = () => {
     },
   });
 
+  const getMeQuery = useQuery({
+    queryKey: ["me"],
+    queryFn: authServices.getMe,
+    retry: false,
+  });
+
+  const logoutMutation = useMutation({
+    mutationFn: authServices.logout,
+    onSuccess: () => {
+      toast.success("Logged out");
+    },
+
+    onError: () => {
+      toast.error("Log out failed");
+    },
+  });
+
   return {
     loginMutation,
     signupMutation,
@@ -103,5 +120,7 @@ export const useAuth = () => {
     resendVerificationEmailMutation,
     forgotPasswordMutation,
     resetPasswordMutation,
+    getMeQuery,
+    logoutMutation,
   };
 };

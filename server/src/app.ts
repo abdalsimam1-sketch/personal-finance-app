@@ -1,6 +1,6 @@
 import express from "express";
 
-import cookierParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
@@ -12,19 +12,25 @@ import { errorHandler } from "./middleware/errorHandler.js";
 import { authRouter } from "./routes/auth.routes.js";
 
 export const app = express();
+app.set("trust proxy", 1);
 
 app.use(express.json());
-app.use(cookierParser());
+app.use(cookieParser());
 
 app.use(morgan("dev"));
 
 //security
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  }),
+);
 app.use(helmet());
 app.use(
   rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 100,
+    limit: 100,
   }),
 );
 

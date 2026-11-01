@@ -9,6 +9,8 @@ import morgan from "morgan";
 import { notFound } from "./middleware/notFound.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
+import { authRouter } from "./routes/auth.routes.js";
+
 export const app = express();
 
 app.use(express.json());
@@ -34,6 +36,8 @@ app.use("/health", (req, res) => {
     data: {},
   });
 });
+
+app.use("/api/v1/auth", authRouter);
 
 app.all("*splat", notFound);
 

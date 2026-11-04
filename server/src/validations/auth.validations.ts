@@ -20,3 +20,8 @@ export const signupSchema = z
     },
     { message: "Passwords do not match", path: ["confirmPassword"] },
   );
+
+export const loginSchema = z.object({
+  email: z.email().trim().lowercase(),
+  password: z.string(),
+});

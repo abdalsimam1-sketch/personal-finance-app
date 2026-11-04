@@ -1,10 +1,13 @@
-import { Conflict } from "../errors/errors.js";
+import { BadRequest, Conflict, Unauthorized } from "../errors/errors.js";
 import { prisma } from "../lib/prisma.js";
+import bcrypt from "bcryptjs";
 
 //utils
 import { hashPassword } from "../utils/hashPassword.js";
 import { generateCryptoToken } from "../utils/generateCryptoToken.js";
 import { sendVerificationEmail } from "../utils/verificationEmail.js";
+import { generateJWT } from "../utils/generateJWT.js";
+import { hashToken } from "../utils/hashCryptoToken.js";
 
 export const signupService = async ({
   name,
@@ -45,4 +48,52 @@ export const signupService = async ({
   await sendVerificationEmail(cryptoToken, user.email);
 
   return user;
+};
+
+export const loginService = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  const userExists = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+  if (!userExists) {
+    throw new Unauthorized("Invalid credentials");
+  }
+  if (!userExists.password) {
+    throw new Unauthorized("Invalid credentials");
+  }
+  const comparePassword = await bcrypt.compare(password, userExists.password);
+  if (!comparePassword) {
+    throw new Unauthorized("Invalid credentials");
+  }
+  if (!userExists.isVerified) {
+    throw new Unauthorized("Verify Account");
+  }
+
+  const { accessToken, refreshToken } = generateJWT({
+    id: userExists.id,
+    email: userExists.email,
+  });
+  const hashedRefreshToken = hashToken(refreshToken);
+
+  const user = await prisma.user.update({
+    where: { email },
+    data: {
+      refreshTokenHash: hashedRefreshToken,
+      refreshTokenHashExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+    },
+  });
+
+  return { user, accessToken, refreshToken };
 };

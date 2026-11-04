@@ -2,8 +2,10 @@ import type { Request, Response } from "express";
 import * as authServices from "../services/auth.services.js";
 
 //validations
-import { signupSchema } from "../validations/auth.validations.js";
+import { signupSchema, loginSchema } from "../validations/auth.validations.js";
 import { BadRequest } from "../errors/errors.js";
+
+import { cookieOptions } from "../utils/cookieOptions.js";
 
 export const signup = async (req: Request, res: Response) => {
   const { success, data, error } = signupSchema.safeParse(req.body);
@@ -18,5 +20,30 @@ export const signup = async (req: Request, res: Response) => {
     data: {
       user,
     },
+  });
+};
+
+export const login = async (req: Request, res: Response) => {
+  const { success, error, data } = loginSchema.safeParse(req.body);
+  if (!success) {
+    throw new BadRequest(error.issues[0]?.message);
+  }
+  const { user, accessToken, refreshToken } =
+    await authServices.loginService(data);
+
+  res.cookie("accessToken", accessToken, {
+    ...cookieOptions,
+    maxAge: 15 * 60 * 1000,
+  });
+
+  res.cookie("refreshToken", refreshToken, {
+    ...cookieOptions,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Login successful",
+    data: { user },
   });
 };

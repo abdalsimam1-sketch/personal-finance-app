@@ -97,3 +97,5 @@ export const loginService = async ({
 
   return { user, accessToken, refreshToken };
 };
+
+export const googleCallbackService = async () => {};

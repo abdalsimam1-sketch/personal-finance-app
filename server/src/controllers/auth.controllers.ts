@@ -1,11 +1,14 @@
 import type { Request, Response } from "express";
 import * as authServices from "../services/auth.services.js";
+import { generateJWT } from "../utils/generateJWT.js";
+import { hashToken } from "../utils/hashCryptoToken.js";
 
 //validations
 import { signupSchema, loginSchema } from "../validations/auth.validations.js";
 import { BadRequest } from "../errors/errors.js";
 
 import { cookieOptions } from "../utils/cookieOptions.js";
+import { prisma } from "../lib/prisma.js";
 
 export const signup = async (req: Request, res: Response) => {
   const { success, data, error } = signupSchema.safeParse(req.body);
@@ -46,4 +49,33 @@ export const login = async (req: Request, res: Response) => {
     message: "Login successful",
     data: { user },
   });
+};
+
+export const googleCallback = async (req: any, res: Response) => {
+  const user = req.user;
+
+  const { accessToken, refreshToken } = generateJWT({
+    id: user.id,
+    email: user.email,
+  });
+
+  await prisma.user.update({
+    where: {
+      email: user.email,
+    },
+    data: {
+      refreshTokenHash: hashToken(refreshToken),
+      refreshTokenHashExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    },
+  });
+  res.cookie("accessToken", accessToken, {
+    ...cookieOptions,
+    maxAge: 15 * 60 * 1000,
+  });
+  res.cookie("refreshToken", refreshToken, {
+    ...cookieOptions,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+
+  res.redirect(process.env.CLIENT_URL! as string);
 };

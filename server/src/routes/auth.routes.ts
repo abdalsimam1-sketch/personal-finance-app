@@ -2,6 +2,7 @@ import { Router } from "express";
 import * as authControllers from "../controllers/auth.controllers.js";
 export const authRouter = Router();
 import passport from "passport";
+import { auth } from "../middleware/auth.middleware.js";
 
 //signup
 authRouter.post("/signup", authControllers.signup);
@@ -13,6 +14,7 @@ authRouter.post("/login", authControllers.login);
 authRouter.post("/rotate-tokens", authControllers.rotateTokens);
 
 //getMe
+authRouter.get("/me", auth);
 
 //google
 authRouter.get(

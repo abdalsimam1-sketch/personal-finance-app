@@ -257,3 +257,19 @@ export const resetPasswordService = async ({
     },
   });
 };
+
+export const getMeService = async (userId: string) => {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      id: true,
+      isVerified: true,
+      email: true,
+      name: true,
+    },
+  });
+  if (!user) {
+    throw new Unauthorized("Invalid or expired tokens");
+  }
+  return user;
+};

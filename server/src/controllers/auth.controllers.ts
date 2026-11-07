@@ -182,3 +182,16 @@ export const resetPassword = async (req: Request, res: Response) => {
     data: {},
   });
 };
+
+export const getMe = async (req: Request, res: Response) => {
+  const id = (req.user as any).id;
+  const user = await authServices.getMeService(id);
+
+  res.status(200).json({
+    success: true,
+    message: "User found",
+    data: {
+      user,
+    },
+  });
+};

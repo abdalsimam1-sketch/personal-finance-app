@@ -22,6 +22,10 @@ export const signupSchema = z
   );
 
 export const loginSchema = z.object({
-  email: z.email().trim().lowercase(),
+  email: z.email().trim().toLowerCase(),
   password: z.string(),
+});
+
+export const resendSchema = z.object({
+  email: z.email().trim().toLowerCase(),
 });

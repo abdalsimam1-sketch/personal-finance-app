@@ -4,12 +4,15 @@ import { generateJWT } from "../utils/generateJWT.js";
 import { hashToken } from "../utils/hashCryptoToken.js";
 
 //validations
-import { signupSchema, loginSchema } from "../validations/auth.validations.js";
+import {
+  signupSchema,
+  loginSchema,
+  resendSchema,
+} from "../validations/auth.validations.js";
 import { BadRequest, Unauthorized } from "../errors/errors.js";
 
 import { cookieOptions } from "../utils/cookieOptions.js";
 import { prisma } from "../lib/prisma.js";
-import { success } from "zod";
 
 export const signup = async (req: Request, res: Response) => {
   const { success, data, error } = signupSchema.safeParse(req.body);
@@ -127,6 +130,20 @@ export const logout = async (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     message: "Logged out",
+    data: {},
+  });
+};
+
+export const resendVerificationEmail = async (req: Request, res: Response) => {
+  const { error, data, success } = resendSchema.safeParse(req.body);
+  if (!success) {
+    throw new BadRequest(error.issues[0]?.message);
+  }
+  await authServices.resendVerificationEmailService(data.email);
+
+  res.status(200).json({
+    success: true,
+    message: "If email exists a new verification email will be sent",
     data: {},
   });
 };

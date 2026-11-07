@@ -184,3 +184,25 @@ export const logoutService = async (refreshToken: string) => {
     },
   });
 };
+
+export const resendVerificationEmailService = async (email: string) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+  if (!user || user.isVerified) {
+    return;
+  }
+  const { cryptoToken, cryptoTokenHash } = generateCryptoToken();
+  await prisma.user.update({
+    where: {
+      email,
+    },
+    data: {
+      verificationTokenHash: cryptoTokenHash,
+      verificationTokenHashExpiresAt: new Date(Date.now() + 10 * 60 * 1000),
+    },
+  });
+  await sendVerificationEmail(cryptoToken, email);
+};

@@ -38,8 +38,10 @@ authRouter.post(
   authControllers.resendVerificationEmail,
 );
 
+//forgot password
+authRouter.post("/forgot-password", authControllers.forgotPassword);
+
 //verify-account
 authRouter.post("/verify-account/:token", authControllers.verifyAccount);
 
-//forgot password
 //reset password

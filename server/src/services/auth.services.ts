@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import { hashPassword } from "../utils/hashPassword.js";
 import { generateCryptoToken } from "../utils/generateCryptoToken.js";
 import { sendVerificationEmail } from "../utils/verificationEmail.js";
+import { resetPasswordEmail } from "../utils/resetPasswordEmail.js";
 import { generateJWT } from "../utils/generateJWT.js";
 import { hashToken } from "../utils/hashCryptoToken.js";
 
@@ -205,4 +206,22 @@ export const resendVerificationEmailService = async (email: string) => {
     },
   });
   await sendVerificationEmail(cryptoToken, email);
+};
+
+export const forgotPasswordService = async (email: string) => {
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user || !user.password) {
+    return;
+  }
+  const { cryptoToken, cryptoTokenHash } = generateCryptoToken();
+  await prisma.user.update({
+    where: {
+      email,
+    },
+    data: {
+      resetTokenHash: cryptoTokenHash,
+      resetTokenHashExpiresAt: new Date(Date.now() + 10 * 60 * 1000),
+    },
+  });
+  await resetPasswordEmail(cryptoToken, email);
 };

@@ -8,6 +8,7 @@ authRouter.post("/signup", authControllers.signup);
 //login
 authRouter.post("/login", authControllers.login);
 //rotate-tokens
+authRouter.post("/rotate-tokens", authControllers.rotateTokens);
 //getMe
 //google
 authRouter.get(

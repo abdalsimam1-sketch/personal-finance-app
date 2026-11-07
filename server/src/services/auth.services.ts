@@ -99,3 +99,41 @@ export const loginService = async ({
 };
 
 export const googleCallbackService = async () => {};
+
+export const rotateTokensService = async (refreshToken: string) => {
+  const refreshTokenHash = hashToken(refreshToken);
+
+  const userExists = await prisma.user.findFirst({
+    where: {
+      refreshTokenHash,
+      refreshTokenHashExpiresAt: { gt: new Date() },
+    },
+  });
+  if (!userExists) {
+    throw new Unauthorized("Invalid or expired tokens");
+  }
+  const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+    generateJWT({
+      id: userExists.id,
+      email: userExists.email,
+    });
+
+  const newRefreshTokenHash = hashToken(newRefreshToken);
+
+  const user = await prisma.user.update({
+    where: {
+      email: userExists.email,
+    },
+    data: {
+      refreshTokenHash: newRefreshTokenHash,
+      refreshTokenHashExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    },
+    select: {
+      id: true,
+      email: true,
+      isVerified: true,
+    },
+  });
+
+  return { user, newAccessToken, newRefreshToken };
+};

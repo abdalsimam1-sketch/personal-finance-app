@@ -5,7 +5,7 @@ import { hashToken } from "../utils/hashCryptoToken.js";
 
 //validations
 import { signupSchema, loginSchema } from "../validations/auth.validations.js";
-import { BadRequest } from "../errors/errors.js";
+import { BadRequest, Unauthorized } from "../errors/errors.js";
 
 import { cookieOptions } from "../utils/cookieOptions.js";
 import { prisma } from "../lib/prisma.js";
@@ -78,4 +78,30 @@ export const googleCallback = async (req: any, res: Response) => {
   });
 
   res.redirect(process.env.CLIENT_URL! as string);
+};
+
+export const rotateTokens = async (req: Request, res: Response) => {
+  const refreshToken = req.cookies.refreshToken;
+
+  if (!refreshToken) {
+    throw new Unauthorized("Invalid or expired tokens");
+  }
+
+  const { user, newAccessToken, newRefreshToken } =
+    await authServices.rotateTokensService(refreshToken);
+
+  res.cookie("accessToken", newAccessToken, {
+    ...cookieOptions,
+    maxAge: 15 * 60 * 1000,
+  });
+  res.cookie("refreshToken", newRefreshToken, {
+    ...cookieOptions,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Tokens rotated",
+    data: { user },
+  });
 };

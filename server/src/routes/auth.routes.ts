@@ -45,3 +45,4 @@ authRouter.post("/forgot-password", authControllers.forgotPassword);
 authRouter.post("/verify-account/:token", authControllers.verifyAccount);
 
 //reset password
+authRouter.post("/reset-password/:token", authControllers.resetPassword);

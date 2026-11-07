@@ -214,6 +214,7 @@ export const forgotPasswordService = async (email: string) => {
     return;
   }
   const { cryptoToken, cryptoTokenHash } = generateCryptoToken();
+
   await prisma.user.update({
     where: {
       email,
@@ -224,4 +225,35 @@ export const forgotPasswordService = async (email: string) => {
     },
   });
   await resetPasswordEmail(cryptoToken, email);
+};
+
+export const resetPasswordService = async ({
+  newPassword,
+  token,
+}: {
+  newPassword: string;
+  token: string;
+}) => {
+  const hashedToken = hashToken(token);
+  const user = await prisma.user.findFirst({
+    where: {
+      resetTokenHash: hashedToken,
+      resetTokenHashExpiresAt: { gt: new Date() },
+    },
+  });
+  if (!user) {
+    throw new BadRequest("Invalid or expired tokens");
+  }
+  await prisma.user.update({
+    where: {
+      email: user.email,
+    },
+    data: {
+      password: await hashPassword(newPassword),
+      refreshTokenHash: null,
+      refreshTokenHashExpiresAt: null,
+      resetTokenHash: null,
+      resetTokenHashExpiresAt: null,
+    },
+  });
 };

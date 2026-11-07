@@ -8,6 +8,7 @@ import {
   signupSchema,
   loginSchema,
   resendSchema,
+  resetPasswordSchema,
 } from "../validations/auth.validations.js";
 import { BadRequest, Unauthorized } from "../errors/errors.js";
 
@@ -154,11 +155,30 @@ export const forgotPassword = async (req: Request, res: Response) => {
     throw new BadRequest(error.issues[0]?.message);
   }
   await authServices.forgotPasswordService(data.email);
-  res
-    .status(200)
-    .json({
-      success: true,
-      message: "If email exists a reset email will be sent",
-      data: {},
-    });
+  res.status(200).json({
+    success: true,
+    message: "If email exists a reset email will be sent",
+    data: {},
+  });
+};
+
+export const resetPassword = async (req: Request, res: Response) => {
+  const token = req.params.token as string;
+  const { data, error } = resetPasswordSchema.safeParse(req.body);
+  if (error) {
+    throw new BadRequest(error.issues[0]?.message);
+  }
+  await authServices.resetPasswordService({
+    newPassword: data.newPassword,
+    token,
+  });
+
+  res.clearCookie("accessToken", cookieOptions);
+  res.clearCookie("refreshToken", cookieOptions);
+
+  res.status(200).json({
+    success: true,
+    message: "Password reset",
+    data: {},
+  });
 };

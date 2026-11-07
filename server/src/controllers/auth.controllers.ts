@@ -105,3 +105,15 @@ export const rotateTokens = async (req: Request, res: Response) => {
     data: { user },
   });
 };
+
+export const verifyAccount = async (req: Request, res: Response) => {
+  const token = req.params.token as string;
+
+  await authServices.verifyAccountService(token);
+
+  res.status(200).json({
+    success: true,
+    message: "Account verified",
+    data: {},
+  });
+};

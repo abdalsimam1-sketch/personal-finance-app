@@ -27,6 +27,7 @@ authRouter.get(
 );
 //logout
 //verify-account
+authRouter.post("/verify-account/:token", authControllers.verifyAccount);
 //resend verification email
 //forgot password
 //reset password

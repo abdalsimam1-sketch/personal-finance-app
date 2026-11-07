@@ -30,8 +30,6 @@ export const signupService = async ({
 
   const { cryptoToken, cryptoTokenHash } = generateCryptoToken();
 
-  console.log("token", cryptoToken);
-
   const user = await prisma.user.create({
     data: {
       name,
@@ -160,6 +158,29 @@ export const verifyAccountService = async (token: string) => {
       isVerified: true,
       verificationTokenHash: null,
       verificationTokenHashExpiresAt: null,
+    },
+  });
+};
+
+export const logoutService = async (refreshToken: string) => {
+  const hashedToken = hashToken(refreshToken);
+  const user = await prisma.user.findFirst({
+    where: {
+      refreshTokenHash: hashedToken,
+      refreshTokenHashExpiresAt: { gt: new Date() },
+    },
+  });
+  if (!user) {
+    throw new BadRequest("Invalid or expired tokens");
+  }
+
+  await prisma.user.update({
+    where: {
+      email: user.email,
+    },
+    data: {
+      refreshTokenHash: null,
+      refreshTokenHashExpiresAt: null,
     },
   });
 };

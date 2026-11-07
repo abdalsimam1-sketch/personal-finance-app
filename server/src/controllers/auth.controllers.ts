@@ -9,6 +9,7 @@ import { BadRequest, Unauthorized } from "../errors/errors.js";
 
 import { cookieOptions } from "../utils/cookieOptions.js";
 import { prisma } from "../lib/prisma.js";
+import { success } from "zod";
 
 export const signup = async (req: Request, res: Response) => {
   const { success, data, error } = signupSchema.safeParse(req.body);
@@ -114,6 +115,18 @@ export const verifyAccount = async (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     message: "Account verified",
+    data: {},
+  });
+};
+
+export const logout = async (req: Request, res: Response) => {
+  const refreshToken = req.cookies.refreshToken;
+  await authServices.logoutService(refreshToken);
+  res.clearCookie("accessToken", cookieOptions);
+  res.clearCookie("refreshToken", cookieOptions);
+  res.status(200).json({
+    success: true,
+    message: "Logged out",
     data: {},
   });
 };

@@ -26,6 +26,7 @@ authRouter.get(
   authControllers.googleCallback,
 );
 //logout
+authRouter.post("/logout", authControllers.logout);
 //verify-account
 authRouter.post("/verify-account/:token", authControllers.verifyAccount);
 //resend verification email

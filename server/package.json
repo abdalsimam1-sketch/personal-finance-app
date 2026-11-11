@@ -7,10 +7,11 @@
   "scripts": {
     "test": "vitest",
     "dev": "tsx watch src/server.ts",
-    "build": "tsc",
+    "build": "prisma generate && tsc",
     "start": "node dist/server.js",
     "generate": "prisma generate",
-    "db:deploy": "dotenv -e .env.test -- prisma migrate deploy",
+    "db:deploy:test": "dotenv -e .env.test -- prisma migrate deploy",
+    "db:migrate:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
     "db:studio-test": "dotenv -e .env.test -- prisma studio"
   },

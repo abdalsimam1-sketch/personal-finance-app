@@ -32,6 +32,7 @@
     --text-heading: clamp(1.5rem, 1.324rem + 0.751vw, 2rem);       
     --text-subheading: clamp(1.125rem, 1.081rem + 0.188vw, 1.25rem); 
     --text-body: 1rem;
+    --text-captions:0.75rem;
     
     --font-sans: "Public Sans",sans-serif;
 

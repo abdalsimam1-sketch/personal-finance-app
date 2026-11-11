@@ -1,0 +1,50 @@
+import { Router } from "express";
+import * as authControllers from "../controllers/auth.controllers.js";
+export const authRouter = Router();
+import passport from "passport";
+import { auth } from "../middleware/auth.middleware.js";
+
+//signup
+authRouter.post("/signup", authControllers.signup);
+
+//login
+authRouter.post("/login", authControllers.login);
+
+//rotate-tokens
+authRouter.post("/rotate-tokens", authControllers.rotateTokens);
+
+//getMe
+authRouter.get("/me", auth, authControllers.getMe);
+
+//google
+authRouter.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    session: false,
+  }),
+);
+//google callback
+authRouter.get(
+  "/google/callback",
+  passport.authenticate("google", { session: false }),
+  authControllers.googleCallback,
+);
+
+//logout
+authRouter.post("/logout", authControllers.logout);
+
+//resend verification email
+authRouter.post(
+  "/resend-verification-email",
+  authControllers.resendVerificationEmail,
+);
+
+//forgot password
+authRouter.post("/forgot-password", authControllers.forgotPassword);
+
+//verify-account
+authRouter.post("/verify-account/:token", authControllers.verifyAccount);
+
+//reset password
+authRouter.post("/reset-password/:token", authControllers.resetPassword);

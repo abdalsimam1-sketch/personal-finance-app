@@ -11,3 +11,25 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model User {
+  id                             String    @id @default(uuid())
+  name                           String
+  email                          String    @unique
+  password                       String?
+  provider                       PROVIDER  @default(email)
+  isVerified                     Boolean   @default(false)
+  verificationTokenHash          String?
+  verificationTokenHashExpiresAt DateTime?
+  refreshTokenHash               String?
+  refreshTokenHashExpiresAt      DateTime?
+  resetTokenHash                 String?
+  resetTokenHashExpiresAt        DateTime?
+  createdAt                      DateTime  @default(now())
+  updatedAt                      DateTime  @updatedAt
+}
+
+enum PROVIDER {
+  google
+  email
+}

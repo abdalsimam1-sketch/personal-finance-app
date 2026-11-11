@@ -14,7 +14,7 @@ authRouter.post("/login", authControllers.login);
 authRouter.post("/rotate-tokens", authControllers.rotateTokens);
 
 //getMe
-authRouter.get("/me", auth);
+authRouter.get("/me", auth, authControllers.getMe);
 
 //google
 authRouter.get(

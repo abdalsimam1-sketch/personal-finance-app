@@ -10,10 +10,10 @@
     "build": "prisma generate && tsc",
     "start": "node dist/server.js",
     "generate": "prisma generate",
-    "db:deploy:test": "dotenv -e .env.test -- prisma migrate deploy",
+    "db:deploy:test": "dotenv run -f .env.test -- prisma migrate deploy",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
-    "db:studio-test": "dotenv -e .env.test -- prisma studio"
+    "db:studio-test": "dotenv run -f .env.test -- prisma studio"
   },
   "keywords": [],
   "author": "",

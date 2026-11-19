@@ -6,6 +6,7 @@ import * as transactionsControllers from "../controllers/transactions.controller
 transactionsRouter.use(auth);
 
 //get all transactions
+transactionsRouter.get("/", transactionsControllers.getTransactions);
 //add new transaction
 transactionsRouter.post("/", transactionsControllers.addTransaction);
 //edit transaction

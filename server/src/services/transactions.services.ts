@@ -38,3 +38,52 @@ export const addTransactionService = async (
   });
   return transaction;
 };
+
+export const getTransactionsService = async (
+  userId: string,
+  page: number,
+  limit: number,
+  search?: string,
+  filter?: string,
+  category?: string,
+) => {
+  const skip = (page - 1) * limit;
+  const take = limit;
+  const where: any = {
+    userId,
+  };
+  if (search) {
+    where.name = {
+      contains: search,
+      mode: "insensitive",
+    };
+  }
+  if (category) {
+    where.category = category;
+  }
+
+  let orderBy: any = { date: "desc" };
+
+  if (filter === "oldest") {
+    orderBy = { date: "asc" };
+  } else if (filter === "a-z") {
+    orderBy = { name: "asc" };
+  } else if (filter === "z-a") {
+    orderBy = { name: "desc" };
+  } else if (filter === "highest") {
+    orderBy = { amount: "desc" };
+  } else if (filter === "lowest") {
+    orderBy = { amount: "asc" };
+  }
+
+  const transactions = await prisma.transaction.findMany({
+    where,
+    orderBy,
+    skip,
+    take,
+  });
+  const count = await prisma.transaction.count({ where });
+  const totalPages = Math.ceil(count / take);
+
+  return { transactions, count, totalPages };
+};

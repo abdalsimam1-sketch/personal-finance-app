@@ -8,6 +8,8 @@ import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
 import { PageNotFound } from "./pages/PageNotFound";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
+import { SharedLayout } from "./components/SharedLayout";
+import { Transactions } from "./pages/Transactions";
 
 function App() {
   return (
@@ -30,10 +32,17 @@ function App() {
             element={<ResetPassword />}
           ></Route>
         </Route>
-        <Route
-          path="/overview"
-          element={<ProtectedRoutes children={<Overview />} />}
-        ></Route>
+        <Route element={<SharedLayout />}>
+          <Route
+            path="/overview"
+            element={<ProtectedRoutes children={<Overview />} />}
+          ></Route>
+          <Route
+            path="/transactions"
+            element={<ProtectedRoutes children={<Transactions />} />}
+          ></Route>
+        </Route>
+
         <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
     </>

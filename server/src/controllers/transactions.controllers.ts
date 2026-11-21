@@ -83,3 +83,21 @@ export const editTransaction = async (req: Request, res: Response) => {
     },
   });
 };
+
+export const deleteTransaction = async (req: Request, res: Response) => {
+  const userId = req.user!.id;
+  const transactionId = req.params.id as string;
+
+  const transaction = await transactionsServices.deleteTransactionService(
+    userId,
+    transactionId,
+  );
+
+  res.status(200).json({
+    success: true,
+    message: "Transaction deleted",
+    data: {
+      transaction,
+    },
+  });
+};

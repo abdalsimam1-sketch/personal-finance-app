@@ -12,3 +12,4 @@ transactionsRouter.post("/", transactionsControllers.addTransaction);
 //edit transaction
 transactionsRouter.patch("/:id", transactionsControllers.editTransaction);
 //delete transaction
+transactionsRouter.delete("/:id", transactionsControllers.deleteTransaction);

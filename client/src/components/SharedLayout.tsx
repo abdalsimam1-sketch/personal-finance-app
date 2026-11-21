@@ -54,7 +54,7 @@ export const SharedLayout = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-col">
       <div
         className={`desktop-sidebar hidden lg:flex flex-col justify-between bg-grey-900 ${sideBarOpen ? "w-70" : "w-20"} h-screen rounded-r py-5 mr-10`}
       >
@@ -107,7 +107,23 @@ export const SharedLayout = () => {
         </div>
       </div>
 
-      <div className="mobile-navbar"></div>
+      <div className="mobile-navbar lg:hidden bg-grey-900 p-5 fixed inset-x-0 bottom-0  rounded-t-xl flex gap-3 justify-around items-center">
+        {navlinks.map((item) => (
+          <Link
+            to={item.link}
+            className={`flex flex-col flex-1 bg-white rounded p-1 border-3 ${activeLink(item.link) ? "bg-white text-green  border-green" : "text-black border-white"}`}
+          >
+            <img
+              src={item.icon}
+              alt={(item.name, "image")}
+              className="self-center"
+            />
+            <p className="text-nowrap hidden md:inline-block lg:hidden text-captions text-center">
+              {item.name}
+            </p>
+          </Link>
+        ))}
+      </div>
       <div>
         <Outlet />
       </div>

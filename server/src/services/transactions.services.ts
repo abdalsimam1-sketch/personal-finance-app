@@ -1,3 +1,4 @@
+import { NotFound } from "../errors/errors.js";
 import { prisma } from "../lib/prisma.js";
 
 export const addTransactionService = async (
@@ -86,4 +87,57 @@ export const getTransactionsService = async (
   const totalPages = Math.ceil(count / take);
 
   return { transactions, count, totalPages };
+};
+
+export const editTransactionService = async (
+  transactionId: string,
+  userId: string,
+  {
+    name,
+    amount,
+    date,
+    category,
+    type,
+  }: {
+    name: string;
+    amount: number;
+    date: Date;
+    category:
+      | "entertainment"
+      | "bills"
+      | "groceries"
+      | "dining_out"
+      | "transportation"
+      | "personal_care"
+      | "education"
+      | "lifestyle"
+      | "shopping"
+      | "general";
+    type: "addition" | "withdrawal";
+  },
+) => {
+  let transaction = await prisma.transaction.findFirst({
+    where: {
+      userId,
+      id: transactionId,
+    },
+  });
+  if (!transaction) {
+    throw new NotFound();
+  }
+
+  transaction = await prisma.transaction.update({
+    where: {
+      id: transactionId,
+    },
+    data: {
+      name,
+      amount,
+      date,
+      category,
+      type,
+    },
+  });
+
+  return transaction;
 };

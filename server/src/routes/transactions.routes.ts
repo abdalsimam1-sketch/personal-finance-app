@@ -10,4 +10,5 @@ transactionsRouter.get("/", transactionsControllers.getTransactions);
 //add new transaction
 transactionsRouter.post("/", transactionsControllers.addTransaction);
 //edit transaction
+transactionsRouter.patch("/:id", transactionsControllers.editTransaction);
 //delete transaction

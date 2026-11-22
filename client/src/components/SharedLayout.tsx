@@ -54,7 +54,7 @@ export const SharedLayout = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col lg:flex-row">
       <div
         className={`desktop-sidebar hidden lg:flex flex-col justify-between bg-grey-900 ${sideBarOpen ? "w-70" : "w-20"} h-screen rounded-r py-5 mr-10`}
       >
@@ -67,9 +67,9 @@ export const SharedLayout = () => {
           <section
             className={`nav-links flex flex-col gap-5  ${sideBarOpen ? "w-[11rem]" : "h-[2rem]"} text-nowrap`}
           >
-            {navlinks.map((item) => (
+            {navlinks.map((item, index) => (
               <Link
-                key={item.name}
+                key={index}
                 to={item.link}
                 className={`flex items-start gap-5 bg-white rounded cursor-pointer ${sideBarOpen ? "pl-5 p-2" : "p-1"} border-l-5  ${activeLink(item.link) ? " border-green  text-green-800" : "border-white"}  `}
               >
@@ -95,7 +95,7 @@ export const SharedLayout = () => {
           </section>
 
           <button
-            className={`bg-white border-red border-2 text-red rounded p-2  ${sideBarOpen ? "w-[11rem]" : "h-[2rem]"} self-center cursor-pointer flex items-center gap-3 pl-3`}
+            className={`bg-white border-red border-2 text-red rounded p-2  ${sideBarOpen ? "w-[11rem]" : "h-[2rem]"} self-center cursor-pointer flex items-center justify-center gap-3 pl-3`}
           >
             <img
               src={logout}
@@ -110,13 +110,14 @@ export const SharedLayout = () => {
       <div className="mobile-navbar lg:hidden bg-grey-900 p-5 fixed inset-x-0 bottom-0  rounded-t-xl flex gap-3 justify-around items-center">
         {navlinks.map((item) => (
           <Link
+            key={item.name}
             to={item.link}
             className={`flex flex-col flex-1 bg-white rounded p-1 border-3 ${activeLink(item.link) ? "bg-white text-green  border-green" : "text-black border-white"}`}
           >
             <img
               src={item.icon}
               alt={(item.name, "image")}
-              className="self-center"
+              className="self-center h-[1rem]"
             />
             <p className="text-nowrap hidden md:inline-block lg:hidden text-captions text-center">
               {item.name}
@@ -124,7 +125,7 @@ export const SharedLayout = () => {
           </Link>
         ))}
       </div>
-      <div>
+      <div className="flex-1">
         <Outlet />
       </div>
     </div>

@@ -63,10 +63,10 @@ export const getTransactionsService = async (
     where.category = category;
   }
 
-  let orderBy: any = { date: "desc" };
+  let orderBy: any = { createdAt: "desc" };
 
   if (filter === "oldest") {
-    orderBy = { date: "asc" };
+    orderBy = { createdAt: "asc" };
   } else if (filter === "a-z") {
     orderBy = { name: "asc" };
   } else if (filter === "z-a") {

@@ -31,3 +31,10 @@ export const editTransaction = async (
   );
   return response.data;
 };
+
+export const deleteTransaction = async (transactionId: string) => {
+  const response = await api.delete<ApiResponse>(
+    `/transactions/${transactionId}`,
+  );
+  return response.data;
+};

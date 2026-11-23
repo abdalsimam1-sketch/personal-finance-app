@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "./Input";
 import close from "../assets/icon-close-modal.svg";
 import { categoryOptions } from "../data/categories";
@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import type { TransactionType } from "../types/TransactionType";
 import { useAddTransaction } from "../hooks/transactions/useAddTransaction";
 import { useEditTransaction } from "../hooks/transactions/useEditTransaction";
+import { useDeleteTransactions } from "../hooks/transactions/useDeleteTransactions";
+import { DeleteModal } from "./DeleteModal";
 
 export const AddEditTransactionModal = ({
   modalOpen,
@@ -18,6 +20,7 @@ export const AddEditTransactionModal = ({
   mode: "edit" | "add";
   selectedTransaction?: any;
 }) => {
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const defaultValues =
     mode === "edit"
       ? {
@@ -43,6 +46,7 @@ export const AddEditTransactionModal = ({
 
   const { addTransactionMutation } = useAddTransaction();
   const { editTransactionMutation } = useEditTransaction();
+  const { deleteTransactionMutation } = useDeleteTransactions();
 
   const onSubmit = (transactionForm: TransactionType) => {
     if (mode === "add") {
@@ -191,10 +195,12 @@ export const AddEditTransactionModal = ({
           {mode === "edit" && (
             <div>
               <button
-                className="border border-red p-1 px-4 text-red rounded cursor-pointer"
+                disabled={deleteTransactionMutation.isPending}
+                onClick={() => setDeleteModalOpen(true)}
+                className={`border border-red p-1 px-4 text-red rounded cursor-pointer `}
                 type="button"
               >
-                Delete transaction
+                Delete
               </button>
             </div>
           )}
@@ -226,6 +232,22 @@ export const AddEditTransactionModal = ({
           </div>
         </div>
       </form>
+      {deleteModalOpen && (
+        <DeleteModal
+          deleteModalOpen={deleteModalOpen}
+          closeDeleteModal={() => setDeleteModalOpen(false)}
+          feature="transaction"
+          deleteFunction={() =>
+            deleteTransactionMutation.mutate(selectedTransaction.id, {
+              onSuccess: () => {
+                setDeleteModalOpen(false);
+                closeModal();
+              },
+            })
+          }
+          buttonDisabled={deleteTransactionMutation.isPending}
+        />
+      )}
     </dialog>
   );
 };

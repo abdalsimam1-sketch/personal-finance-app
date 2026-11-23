@@ -6,6 +6,9 @@ import searchIcon from "../assets/icon-search.svg";
 import rigth from "../assets/icon-caret-right.svg";
 import left from "../assets/icon-caret-left.svg";
 import { formatDate } from "../utils/formatDate";
+import { AddEditTransactionModal } from "../components/AddEditTransactionModal";
+import { categoryOptions } from "../data/categories";
+import { sortByOptions } from "../data/sortBy";
 
 export const Transactions = () => {
   const [search, setSearch] = useState<string>("");
@@ -13,6 +16,7 @@ export const Transactions = () => {
   const [category, setCategory] = useState<string>();
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(10);
+  const [addEditModalOpen, setAddEditModalOpen] = useState<boolean>(false);
 
   const { getTransactionsQuery } = useGetTransactions({
     page,
@@ -34,32 +38,17 @@ export const Transactions = () => {
     setPage((current) => (current > 1 ? current - 1 : current));
   };
 
-  const sortByOptions = [
-    { label: "Newest", value: "newest" },
-    { label: "Oldest", value: "oldest" },
-    { label: "A to Z", value: "a-z" },
-    { label: "Z to A", value: "z-a" },
-    { label: "Highest", value: "highest" },
-    { label: "Lowest", value: "lowest" },
-  ];
-
-  const categoryOptions = [
-    { label: "All Transactions", value: "" },
-    { label: "Entertainment", value: "entertainment" },
-    { label: "Bills", value: "bills" },
-    { label: "Groceries", value: "groceries" },
-    { label: "Dining Out", value: "dining_out" },
-    { label: "Transportation", value: "transportation" },
-    { label: "Personal Care", value: "personal_care" },
-    { label: "Education", value: "education" },
-    { label: "Lifestyle", value: "lifestyle" },
-    { label: "Shopping", value: "shopping" },
-    { label: "General", value: "general" },
-  ];
-
   return (
     <div className="p-5 w-full">
-      <h1 className="text-heading">Transactions</h1>
+      <div className="flex justify-between items-center mb-5">
+        <h1 className="text-heading">Transactions</h1>
+        <button
+          className="bg-grey-900 p-1 px-3 text-white rounded cursor-pointer"
+          onClick={() => setAddEditModalOpen(true)}
+        >
+          + Add transaction
+        </button>
+      </div>
       <div className="bg-white  p-5 rounded flex flex-col gap-5 md:min-h-[50rem] mb-20">
         <div className="flex gap-5 items-center">
           <div className="relative flex-1 max-w-80">
@@ -241,6 +230,12 @@ export const Transactions = () => {
           </div>
         )}
       </div>
+      {addEditModalOpen && (
+        <AddEditTransactionModal
+          modalOpen={addEditModalOpen}
+          closeModal={() => setAddEditModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

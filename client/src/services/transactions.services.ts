@@ -20,3 +20,14 @@ export const addTransaction = async (payload: TransactionType) => {
   const response = await api.post<ApiResponse>("/transactions", payload);
   return response.data;
 };
+
+export const editTransaction = async (
+  payload: TransactionType,
+  transactionId: string,
+) => {
+  const response = await api.patch<ApiResponse>(
+    `/transactions/${transactionId}`,
+    payload,
+  );
+  return response.data;
+};

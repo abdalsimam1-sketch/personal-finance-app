@@ -17,6 +17,9 @@ export const Transactions = () => {
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(10);
   const [addEditModalOpen, setAddEditModalOpen] = useState<boolean>(false);
+  const [mode, setMode] = useState<"add" | "edit">("add");
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  console.log("selected transaction", selectedTransaction);
 
   const { getTransactionsQuery } = useGetTransactions({
     page,
@@ -44,7 +47,11 @@ export const Transactions = () => {
         <h1 className="text-heading">Transactions</h1>
         <button
           className="bg-grey-900 p-1 px-3 text-white rounded cursor-pointer"
-          onClick={() => setAddEditModalOpen(true)}
+          onClick={() => {
+            setAddEditModalOpen(true);
+            setMode("add");
+            setSelectedTransaction(null);
+          }}
         >
           + Add transaction
         </button>
@@ -161,8 +168,13 @@ export const Transactions = () => {
             <div>
               {transactions?.map((item: any) => (
                 <div
+                  onClick={() => {
+                    setAddEditModalOpen(true);
+                    setMode("edit");
+                    setSelectedTransaction(item);
+                  }}
                   key={item.id}
-                  className="grid grid-cols-[3fr_1.5fr_1.5fr_auto] gap-4 border-b border-gray-200 py-4"
+                  className="grid grid-cols-[3fr_1.5fr_1.5fr_auto] gap-4 border-b border-gray-200 py-4 cursor-pointer"
                 >
                   <p className="font-bold">{item.name}</p>
                   <p className="capitalize text-gray-500">{item.category}</p>
@@ -191,6 +203,11 @@ export const Transactions = () => {
           <div className="transactions-mobile md:hidden">
             {transactions?.map((item: any) => (
               <div
+                onClick={() => {
+                  setAddEditModalOpen(true);
+                  setMode("edit");
+                  setSelectedTransaction(item);
+                }}
                 key={item.id}
                 className="flex  justify-between border-b border-gray-200 py-1"
               >
@@ -234,6 +251,8 @@ export const Transactions = () => {
         <AddEditTransactionModal
           modalOpen={addEditModalOpen}
           closeModal={() => setAddEditModalOpen(false)}
+          mode={mode}
+          selectedTransaction={selectedTransaction}
         />
       )}
     </div>

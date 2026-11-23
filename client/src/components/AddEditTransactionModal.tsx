@@ -5,30 +5,67 @@ import { categoryOptions } from "../data/categories";
 import { useForm } from "react-hook-form";
 import type { TransactionType } from "../types/TransactionType";
 import { useAddTransaction } from "../hooks/transactions/useAddTransaction";
+import { useEditTransaction } from "../hooks/transactions/useEditTransaction";
 
 export const AddEditTransactionModal = ({
   modalOpen,
   closeModal,
+  mode,
+  selectedTransaction,
 }: {
   modalOpen: boolean;
   closeModal: any;
+  mode: "edit" | "add";
+  selectedTransaction?: any;
 }) => {
+  const defaultValues =
+    mode === "edit"
+      ? {
+          name: selectedTransaction.name,
+          category: selectedTransaction.category,
+          type: selectedTransaction.type,
+          date: selectedTransaction.date.slice(0, 10),
+          amount: selectedTransaction.amount,
+        }
+      : {
+          name: "",
+          category: "",
+          type: "",
+          date: new Date().toLocaleDateString("en-CA"),
+        };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<TransactionType>();
+  } = useForm<TransactionType>({ defaultValues });
 
   const { addTransactionMutation } = useAddTransaction();
+  const { editTransactionMutation } = useEditTransaction();
 
   const onSubmit = (transactionForm: TransactionType) => {
-    addTransactionMutation.mutate(transactionForm, {
-      onSuccess: () => {
-        reset();
-        closeModal();
-      },
-    });
+    if (mode === "add") {
+      addTransactionMutation.mutate(transactionForm, {
+        onSuccess: () => {
+          reset();
+          closeModal();
+        },
+      });
+    } else {
+      editTransactionMutation.mutate(
+        {
+          payload: transactionForm,
+          transactionId: selectedTransaction.id,
+        },
+        {
+          onSuccess: () => {
+            reset();
+            closeModal();
+          },
+        },
+      );
+    }
   };
 
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -42,11 +79,14 @@ export const AddEditTransactionModal = ({
   }, [modalOpen]);
   return (
     <dialog
+      onClose={closeModal}
       ref={dialogRef}
       className="m-auto flex flex-col p-5 w-[min(95vw,500px)] rounded"
     >
       <div className="flex justify-between items-center cursor-pointer">
-        <h1 className="text-heading">Add New Transaction</h1>
+        <h1 className="text-heading">
+          {mode === "add" ? "Add New Transaction" : "Edit transaction"}
+        </h1>
         <img
           src={close}
           alt="close icon"
@@ -77,7 +117,7 @@ export const AddEditTransactionModal = ({
               required: "Category is required",
             })}
             id="categories"
-            className={`border  p-1.5 outline-0 rounded ${errors.type ? " border-red" : "border-gray-300"}`}
+            className={`border  p-1.5 outline-0 rounded ${errors.category ? " border-red" : "border-gray-300"}`}
           >
             {categoryOptions.map((item) => (
               <div key={item.label}>
@@ -104,7 +144,7 @@ export const AddEditTransactionModal = ({
           >
             <option value="">Choose type</option>
             <option value="addition">Addition</option>
-            <option value="withdrwal">Withdrawal</option>
+            <option value="withdrawal">Withdrawal</option>
           </select>
         </div>
         <div className="grid grid-cols-2 gap-3">
@@ -124,7 +164,7 @@ export const AddEditTransactionModal = ({
               id="date"
               type="date"
               defaultValue={new Date().toLocaleDateString("en-CA")}
-              className={`border py-0.8 pl-1 outline-0 h-[2rem] rounded ${errors.type ? " border-red" : "border-gray-300"} w-full`}
+              className={`border py-0.8 pl-1 outline-0 h-[2rem] rounded ${errors.date ? " border-red" : "border-gray-300"} w-full`}
             />
           </div>
           <div>
@@ -147,22 +187,43 @@ export const AddEditTransactionModal = ({
             />
           </div>
         </div>
-        <div className="flex gap-3 justify-end">
-          <button
-            className="border border-grey-300 p-1 px-3 rounded cursor-pointer"
-            onClick={closeModal}
-            type="button"
-            disabled={addTransactionMutation.isPending}
-          >
-            Cancel
-          </button>
-          <button
-            disabled={addTransactionMutation.isPending}
-            className={`bg-grey-900 p-1 px-5 text-white rounded cursor-pointer ${addTransactionMutation.isPending ? "opacity-60 disabled:cursor-not-allowed" : ""}`}
-            type="submit"
-          >
-            {addTransactionMutation.isPending ? "Adding..." : "Add"}
-          </button>
+        <div className="flex items-center justify-between">
+          {mode === "edit" && (
+            <div>
+              <button
+                className="border border-red p-1 px-4 text-red rounded cursor-pointer"
+                type="button"
+              >
+                Delete transaction
+              </button>
+            </div>
+          )}
+          <div className="flex gap-3 justify-end ml-auto">
+            <button
+              className="border border-grey-300 p-1 px-3 rounded cursor-pointer"
+              onClick={closeModal}
+              type="button"
+              disabled={addTransactionMutation.isPending}
+            >
+              Cancel
+            </button>
+            <button
+              disabled={
+                addTransactionMutation.isPending ||
+                editTransactionMutation.isPending
+              }
+              className={`bg-grey-900 p-1 px-5 text-white rounded cursor-pointer ${addTransactionMutation.isPending || editTransactionMutation.isPending ? "opacity-60 disabled:cursor-not-allowed" : ""}`}
+              type="submit"
+            >
+              {mode === "add"
+                ? addTransactionMutation.isPending
+                  ? "Adding..."
+                  : "Add"
+                : editTransactionMutation.isPending
+                  ? "Editing..."
+                  : "Edit"}
+            </button>
+          </div>
         </div>
       </form>
     </dialog>

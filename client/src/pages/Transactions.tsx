@@ -9,6 +9,8 @@ import { formatDate } from "../utils/formatDate";
 import { AddEditTransactionModal } from "../components/AddEditTransactionModal";
 import { categoryOptions } from "../data/categories";
 import { sortByOptions } from "../data/sortBy";
+import { TransactionSkeletonDesktop } from "../components/TransactionSkeletonDesktop";
+import { TransactionSkeletonMobile } from "../components/TransactionSkeletonMobile";
 
 export const Transactions = () => {
   const [search, setSearch] = useState<string>("");
@@ -43,7 +45,7 @@ export const Transactions = () => {
 
   return (
     <div className="p-5 w-full">
-      <div className="flex justify-between items-center mb-5">
+      <div className="flex justify-between items-center mb-5 ">
         <h1 className="text-heading">Transactions</h1>
         <button
           className="bg-grey-900 p-1 px-3 text-white rounded cursor-pointer"
@@ -56,7 +58,7 @@ export const Transactions = () => {
           + Add transaction
         </button>
       </div>
-      <div className="bg-white  p-5 rounded flex flex-col gap-5 md:min-h-[50rem] mb-20">
+      <div className="bg-white  p-5 rounded flex flex-col gap-5 md:min-h-[50rem] mb-20 md:mb-0">
         <div className="flex gap-5 items-center">
           <div className="relative flex-1 max-w-80">
             <input
@@ -163,8 +165,16 @@ export const Transactions = () => {
             <p>Date</p>
             <p>Amount</p>
           </div>
+
           <div className="border-b border-gray-200"></div>
-          {transactions?.length > 0 ? (
+
+          {getTransactionsQuery.isLoading ? (
+            Array.from({ length: 15 }).map((_, index) => (
+              <div key={index} className="">
+                <TransactionSkeletonDesktop />
+              </div>
+            ))
+          ) : transactions?.length > 0 ? (
             <div>
               {transactions?.map((item: any) => (
                 <div
@@ -195,7 +205,13 @@ export const Transactions = () => {
           )}
         </div>
 
-        {transactions?.length < 1 ? (
+        {getTransactionsQuery.isLoading ? (
+          Array.from({ length: 8 }).map((_, index) => (
+            <div key={index}>
+              <TransactionSkeletonMobile />
+            </div>
+          ))
+        ) : transactions?.length < 1 ? (
           <div className="flex items-center justify-center min-h-[10rem] md:hidden">
             <p className="text-gray-500">No transactions found</p>
           </div>

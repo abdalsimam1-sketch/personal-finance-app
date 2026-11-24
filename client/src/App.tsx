@@ -10,6 +10,7 @@ import { PageNotFound } from "./pages/PageNotFound";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
 import { AppLayout } from "./components/layouts/AppLayout";
 import { Transactions } from "./pages/Transactions";
+import { Account } from "./pages/Account";
 
 function App() {
   return (
@@ -23,8 +24,13 @@ function App() {
           path="/verify-account/:token"
           element={<VerifyAccount />}
         ></Route>
+
         <Route element={<AuthLayout />}>
           <Route path="/signup" element={<Signup />}></Route>
+          <Route
+            path="/account"
+            element={<ProtectedRoutes children={<Account />} />}
+          ></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/forgot-password" element={<ForgotPassword />}></Route>
           <Route

@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 import logout from "../../assets/logout1.png";
 import { useAuth } from "../../hooks/useAuth";
 import { LogoutAssuranceModal } from "../modals/LogoutAssuranceModal";
+import chevronRight from "../../assets/icon-caret-right.svg";
 
 export const AppLayout = () => {
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -22,7 +23,6 @@ export const AppLayout = () => {
   const toggleSideBar = () => {
     setSideBarOpen((current) => (current === true ? false : true));
   };
-
   const navlinks = [
     {
       name: "Overview",
@@ -59,6 +59,13 @@ export const AppLayout = () => {
 
   return (
     <div className="flex flex-col lg:flex-row">
+      <Link
+        className=" flex gap-2 items-center lg:hidden self-end italic underline mr-5 mb-0 mt-3 py-2"
+        to="/account"
+      >
+        <p className="text-captions">Account</p>{" "}
+        <img src={chevronRight} alt="" />
+      </Link>
       <div
         className={`desktop-sidebar hidden lg:flex flex-col justify-between bg-grey-900 ${sideBarOpen ? "w-70" : "w-20"} h-screen rounded-r py-5 mr-10`}
       >

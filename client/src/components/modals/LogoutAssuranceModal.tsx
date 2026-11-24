@@ -41,9 +41,9 @@ export const LogoutAssuranceModal = ({
         <button
           onClick={closeLogoutModal}
           disabled={buttonDisabled}
-          className={`border border-gray-300 text-black p-1 px-4 rounded cursor-pointer  disabled:cursor-not-allowed disabled:opacity-60`}
+          className={`border border-gray-300 text-black p-1 px-5 rounded cursor-pointer  disabled:cursor-not-allowed disabled:opacity-60`}
         >
-          No, go back
+          No
         </button>
       </div>
     </dialog>

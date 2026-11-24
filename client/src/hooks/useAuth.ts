@@ -101,6 +101,7 @@ export const useAuth = () => {
     onSuccess: () => {
       toast.success("Logged out");
       queryClient.setQueryData(["me"], null);
+      queryClient.clear();
     },
     onError: () => {
       toast.error("Logout failed");

@@ -1,49 +1,47 @@
 @import "tailwindcss";
 
-@theme{
-    /* colors */
-    --color-beige-500: #98908b;
-    --color-beige-100: #f8f4f0;
-    --color-grey-900: #201f24;
-    --color-grey-500: #696868;
-    --color-grey-300: #b3b3b3;
-    --color-grey-100: #f2f2f2;
+@theme {
+  /* colors */
+  --color-beige-500: #98908b;
+  --color-beige-100: #f8f4f0;
+  --color-grey-900: #201f24;
+  --color-grey-500: #696868;
+  --color-grey-300: #b3b3b3;
+  --color-grey-100: #f2f2f2;
 
-    --color-green: #277c78;
-    --color-yellow: #f2cdac;
-    --color-cyan: #82c9d7;
-    --color-navy: #626070;
-    --color-red: #c94736;
-    --color-purple-dark: #826cb0;
+  --color-green: #277c78;
+  --color-yellow: #f2cdac;
+  --color-cyan: #82c9d7;
+  --color-navy: #626070;
+  --color-red: #c94736;
+  --color-purple-dark: #826cb0;
 
-    --color-purple-light: #af81ba;
-    --color-turquoise: #597c7c;
-    --color-brown: #936747;
-    --color-magenta: #934f6f;
-    --color-blue: #3f82b2;
-    --color-navy-grey: #97a0ac;
-    --color-army-green: #7f9161;
-    --color-gold: #cab361;
-    --color-orange: #be6c49;
+  --color-purple-light: #af81ba;
+  --color-turquoise: #597c7c;
+  --color-brown: #936747;
+  --color-magenta: #934f6f;
+  --color-blue: #3f82b2;
+  --color-navy-grey: #97a0ac;
+  --color-army-green: #7f9161;
+  --color-gold: #cab361;
+  --color-orange: #be6c49;
 
-    --color-white: #ffffff;
+  --color-white: #ffffff;
 
-    /* typography */
-    --text-heading: clamp(1.5rem, 1.324rem + 0.751vw, 2rem);       
-    --text-subheading: clamp(1.125rem, 1.081rem + 0.188vw, 1.25rem); 
-    --text-body: 1rem;
-    --text-captions:0.75rem;
-    
-    --font-sans: "Public Sans",sans-serif;
+  /* typography */
+  --text-heading: clamp(1.5rem, 1.324rem + 0.751vw, 2rem);
+  --text-subheading: clamp(1.125rem, 1.081rem + 0.188vw, 1.25rem);
+  --text-body: 1rem;
+  --text-captions: 0.75rem;
 
-
-
+  --font-sans: "Public Sans", sans-serif;
 }
-#root{
- min-height: 100dvh;
+#root {
+  min-height: 100dvh;
 }
 
-body,html{
-    background-color: var(--color-beige-100);
-    font-family: var(--font-sans);
+body,
+html {
+  background-color: var(--color-beige-100);
+  font-family: var(--font-sans);
 }

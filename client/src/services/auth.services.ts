@@ -56,3 +56,8 @@ export const rotateTokens = async () => {
   const response = await api.post("/auth/rotate-tokens");
   return response.data;
 };
+
+export const logout = async () => {
+  const response = await api.post("/auth/logout");
+  return response.data;
+};

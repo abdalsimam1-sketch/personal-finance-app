@@ -1,13 +1,16 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
-import { AuthLayout } from "./components/AuthLayout";
+import { AuthLayout } from "./components/layouts/AuthLayout";
 import { Overview } from "./pages/Overview";
 import { VerifyAccount } from "./pages/VerifyAccount";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
 import { PageNotFound } from "./pages/PageNotFound";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
+import { AppLayout } from "./components/layouts/AppLayout";
+import { Transactions } from "./pages/Transactions";
+import { Account } from "./pages/Account";
 
 function App() {
   return (
@@ -23,6 +26,10 @@ function App() {
         ></Route>
         <Route element={<AuthLayout />}>
           <Route path="/signup" element={<Signup />}></Route>
+          <Route
+            path="/account"
+            element={<ProtectedRoutes children={<Account />} />}
+          ></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/forgot-password" element={<ForgotPassword />}></Route>
           <Route
@@ -30,10 +37,17 @@ function App() {
             element={<ResetPassword />}
           ></Route>
         </Route>
-        <Route
-          path="/overview"
-          element={<ProtectedRoutes children={<Overview />} />}
-        ></Route>
+        <Route element={<AppLayout />}>
+          <Route
+            path="/overview"
+            element={<ProtectedRoutes children={<Overview />} />}
+          ></Route>
+          <Route
+            path="/transactions"
+            element={<ProtectedRoutes children={<Transactions />} />}
+          ></Route>
+        </Route>
+
         <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
     </>

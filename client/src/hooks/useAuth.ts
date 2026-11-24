@@ -1,5 +1,5 @@
 import * as authServices from "../services/auth.services";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { LoginForm, SignupForm } from "../types/auth.types";
 import type { ApiResponse } from "../types/ApiResponse";
 import type { AxiosError } from "axios";
@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import type { ResetPasswordForm } from "../types/auth.types";
 
 export const useAuth = () => {
+  const queryClient = useQueryClient();
   const signupMutation = useMutation<
     ApiResponse,
     AxiosError<ApiResponse>,
@@ -95,6 +96,18 @@ export const useAuth = () => {
     staleTime: 5 * 60 * 1000,
   });
 
+  const logoutMutation = useMutation({
+    mutationFn: authServices.logout,
+    onSuccess: () => {
+      toast.success("Logged out");
+      queryClient.setQueryData(["me"], null);
+      queryClient.clear();
+    },
+    onError: () => {
+      toast.error("Logout failed");
+    },
+  });
+
   return {
     signupMutation,
     loginMutation,
@@ -103,5 +116,6 @@ export const useAuth = () => {
     forgotPasswordMutation,
     resetPasswordMutation,
     getMeQuery,
+    logoutMutation,
   };
 };

@@ -56,8 +56,8 @@ export const login = async (req: Request, res: Response) => {
   });
 };
 
-export const googleCallback = async (req: any, res: Response) => {
-  const user = req.user;
+export const googleCallback = async (req: Request, res: Response) => {
+  const user = req.user!;
 
   const { accessToken, refreshToken } = generateJWT({
     id: user.id,

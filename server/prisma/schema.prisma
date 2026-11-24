@@ -13,20 +13,52 @@ datasource db {
 }
 
 model User {
-  id                             String    @id @default(uuid())
+  id                             String        @id @default(uuid())
   name                           String
-  email                          String    @unique
+  email                          String        @unique
   password                       String?
-  provider                       PROVIDER  @default(email)
-  isVerified                     Boolean   @default(false)
+  provider                       PROVIDER      @default(email)
+  isVerified                     Boolean       @default(false)
   verificationTokenHash          String?
   verificationTokenHashExpiresAt DateTime?
   refreshTokenHash               String?
   refreshTokenHashExpiresAt      DateTime?
   resetTokenHash                 String?
   resetTokenHashExpiresAt        DateTime?
-  createdAt                      DateTime  @default(now())
-  updatedAt                      DateTime  @updatedAt
+  createdAt                      DateTime      @default(now())
+  updatedAt                      DateTime      @updatedAt
+  transactions                   Transaction[]
+}
+
+model Transaction {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  amount    Decimal  @db.Decimal(12, 2)
+  date      DateTime
+  category  CATEGORY
+  type      TYPE
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum TYPE {
+  addition
+  withdrawal
+}
+
+enum CATEGORY {
+  entertainment
+  bills
+  groceries
+  dining_out
+  transportation
+  personal_care
+  education
+  lifestyle
+  shopping
+  general
 }
 
 enum PROVIDER {

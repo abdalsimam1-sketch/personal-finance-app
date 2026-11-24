@@ -1,19 +1,23 @@
 import { Outlet } from "react-router-dom";
-import bigLogo from "../assets/logo-large.svg";
-import smallLogo from "../assets/logo-small.svg";
-import overview from "../assets/icon-nav-overview.svg";
-import transactions from "../assets/icon-nav-transactions.svg";
-import pots from "../assets/icon-nav-pots.svg";
-import budgets from "../assets/icon-nav-budgets.svg";
-import recurring from "../assets/icon-nav-recurring-bills.svg";
+import bigLogo from "../../assets/logo-large.svg";
+import smallLogo from "../../assets/logo-small.svg";
+import overview from "../../assets/icon-nav-overview.svg";
+import transactions from "../../assets/icon-nav-transactions.svg";
+import pots from "../../assets/icon-nav-pots.svg";
+import budgets from "../../assets/icon-nav-budgets.svg";
+import recurring from "../../assets/icon-nav-recurring-bills.svg";
 import { useState } from "react";
-import close from "../assets/icon-minimize-menu.svg";
+import close from "../../assets/icon-minimize-menu.svg";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import logout from "../assets/logout1.png";
+import logout from "../../assets/logout1.png";
+import { useAuth } from "../../hooks/useAuth";
+import { LogoutAssuranceModal } from "../modals/LogoutAssuranceModal";
 
-export const SharedLayout = () => {
+export const AppLayout = () => {
   const [sideBarOpen, setSideBarOpen] = useState(true);
+  const { logoutMutation } = useAuth();
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const toggleSideBar = () => {
     setSideBarOpen((current) => (current === true ? false : true));
@@ -96,6 +100,7 @@ export const SharedLayout = () => {
 
           <button
             className={`bg-white border-red border-2 text-red rounded p-2  ${sideBarOpen ? "w-[11rem]" : "h-[2rem]"} self-center cursor-pointer flex items-center justify-center gap-3 pl-3`}
+            onClick={() => setLogoutModalOpen(true)}
           >
             <img
               src={logout}
@@ -128,6 +133,16 @@ export const SharedLayout = () => {
       <div className="flex-1">
         <Outlet />
       </div>
+      {logoutModalOpen && (
+        <LogoutAssuranceModal
+          logoutModalOpen={logoutModalOpen}
+          closeLogoutModal={() => setLogoutModalOpen(false)}
+          logoutFunction={() => {
+            logoutMutation.mutate();
+          }}
+          buttonDisabled={logoutMutation.isPending}
+        />
+      )}
     </div>
   );
 };

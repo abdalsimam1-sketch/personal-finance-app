@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Input } from "./Input";
-import close from "../assets/icon-close-modal.svg";
-import { categoryOptions } from "../data/categories";
+import { Input } from "../Input";
+import close from "../../assets/icon-close-modal.svg";
+import { categoryOptions } from "../../data/categories";
 import { useForm } from "react-hook-form";
-import type { TransactionType } from "../types/TransactionType";
-import { useAddTransaction } from "../hooks/transactions/useAddTransaction";
-import { useEditTransaction } from "../hooks/transactions/useEditTransaction";
-import { useDeleteTransactions } from "../hooks/transactions/useDeleteTransactions";
+import type { TransactionType } from "../../types/TransactionType";
+import { useAddTransaction } from "../../hooks/transactions/useAddTransaction";
+import { useEditTransaction } from "../../hooks/transactions/useEditTransaction";
+import { useDeleteTransactions } from "../../hooks/transactions/useDeleteTransactions";
 import { DeleteModal } from "./DeleteModal";
 
 export const AddEditTransactionModal = ({

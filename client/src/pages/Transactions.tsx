@@ -6,7 +6,7 @@ import searchIcon from "../assets/icon-search.svg";
 import rigth from "../assets/icon-caret-right.svg";
 import left from "../assets/icon-caret-left.svg";
 import { formatDate } from "../utils/formatDate";
-import { AddEditTransactionModal } from "../components/AddEditTransactionModal";
+import { AddEditTransactionModal } from "../components/modals/AddEditTransactionModal";
 import { categoryOptions } from "../data/categories";
 import { sortByOptions } from "../data/sortBy";
 import { TransactionSkeletonDesktop } from "../components/TransactionSkeletonDesktop";

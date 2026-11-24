@@ -1,14 +1,14 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
-import { AuthLayout } from "./components/AuthLayout";
+import { AuthLayout } from "./components/layouts/AuthLayout";
 import { Overview } from "./pages/Overview";
 import { VerifyAccount } from "./pages/VerifyAccount";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
 import { PageNotFound } from "./pages/PageNotFound";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
-import { SharedLayout } from "./components/SharedLayout";
+import { AppLayout } from "./components/layouts/AppLayout";
 import { Transactions } from "./pages/Transactions";
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
             element={<ResetPassword />}
           ></Route>
         </Route>
-        <Route element={<SharedLayout />}>
+        <Route element={<AppLayout />}>
           <Route
             path="/overview"
             element={<ProtectedRoutes children={<Overview />} />}

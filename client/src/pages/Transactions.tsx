@@ -12,6 +12,7 @@ import { TransactionSkeletonDesktop } from "../components/TransactionSkeletonDes
 import { TransactionSkeletonMobile } from "../components/TransactionSkeletonMobile";
 import { DesktopTransactionsTable } from "../components/DesktopTransactionsTable";
 import { MobileTransactionsTable } from "../components/MobileTransactionsTable";
+import { ErrorMessage } from "../components/ErrorMessage";
 
 export const Transactions = () => {
   const [search, setSearch] = useState<string>("");
@@ -22,7 +23,6 @@ export const Transactions = () => {
   const [addEditModalOpen, setAddEditModalOpen] = useState<boolean>(false);
   const [mode, setMode] = useState<"add" | "edit">("add");
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-  console.log("selected transaction", selectedTransaction);
 
   const { getTransactionsQuery } = useGetTransactions({
     page,
@@ -175,6 +175,14 @@ export const Transactions = () => {
                 <TransactionSkeletonDesktop />
               </div>
             ))
+          ) : getTransactionsQuery.isError ? (
+            <div className="hidden lg:block">
+              <ErrorMessage
+                error={
+                  getTransactionsQuery.error.message || "Something went wrong"
+                }
+              />
+            </div>
           ) : transactions?.length > 0 ? (
             <div>
               {transactions?.map((item: any) => (
@@ -201,6 +209,15 @@ export const Transactions = () => {
               <TransactionSkeletonMobile />
             </div>
           ))
+        ) : getTransactionsQuery.isError ? (
+          <div className="md:hidden">
+            <ErrorMessage
+              error={
+                getTransactionsQuery.error.message ||
+                "Somthing went wrong, please refresh"
+              }
+            />
+          </div>
         ) : transactions?.length < 1 ? (
           <div className="flex items-center justify-center min-h-[10rem] md:hidden">
             <p className="text-gray-500">No transactions found</p>

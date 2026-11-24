@@ -24,7 +24,6 @@ function App() {
           path="/verify-account/:token"
           element={<VerifyAccount />}
         ></Route>
-
         <Route element={<AuthLayout />}>
           <Route path="/signup" element={<Signup />}></Route>
           <Route

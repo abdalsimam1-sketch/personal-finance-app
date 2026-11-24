@@ -5,12 +5,13 @@ import sort from "../assets/icon-sort-mobile.svg";
 import searchIcon from "../assets/icon-search.svg";
 import rigth from "../assets/icon-caret-right.svg";
 import left from "../assets/icon-caret-left.svg";
-import { formatDate } from "../utils/formatDate";
 import { AddEditTransactionModal } from "../components/modals/AddEditTransactionModal";
 import { categoryOptions } from "../data/categories";
 import { sortByOptions } from "../data/sortBy";
 import { TransactionSkeletonDesktop } from "../components/TransactionSkeletonDesktop";
 import { TransactionSkeletonMobile } from "../components/TransactionSkeletonMobile";
+import { DesktopTransactionsTable } from "../components/DesktopTransactionsTable";
+import { MobileTransactionsTable } from "../components/MobileTransactionsTable";
 
 export const Transactions = () => {
   const [search, setSearch] = useState<string>("");
@@ -177,24 +178,13 @@ export const Transactions = () => {
           ) : transactions?.length > 0 ? (
             <div>
               {transactions?.map((item: any) => (
-                <div
-                  onClick={() => {
-                    setAddEditModalOpen(true);
-                    setMode("edit");
-                    setSelectedTransaction(item);
-                  }}
-                  key={item.id}
-                  className="grid grid-cols-[3fr_1.5fr_1.5fr_auto] gap-4 border-b border-gray-200 py-4 cursor-pointer"
-                >
-                  <p className="font-bold">{item.name}</p>
-                  <p className="capitalize text-gray-500">{item.category}</p>
-                  <p className="text-gray-500">{formatDate(item.date)}</p>
-                  <p
-                    className={`${item.type === "addition" ? "text-green" : "text-red"} font-bold`}
-                  >
-                    {item.type === "addition" ? "+" : "-"} ₦
-                    {Number(item.amount).toLocaleString()}
-                  </p>
+                <div key={item.id}>
+                  <DesktopTransactionsTable
+                    setMode={() => setMode("edit")}
+                    openEditModal={() => setAddEditModalOpen(true)}
+                    transaction={item}
+                    setSelectedTransaction={() => setSelectedTransaction(item)}
+                  />
                 </div>
               ))}
             </div>
@@ -218,32 +208,13 @@ export const Transactions = () => {
         ) : (
           <div className="transactions-mobile md:hidden">
             {transactions?.map((item: any) => (
-              <div
-                onClick={() => {
-                  setAddEditModalOpen(true);
-                  setMode("edit");
-                  setSelectedTransaction(item);
-                }}
-                key={item.id}
-                className="flex  justify-between border-b border-gray-200 py-1"
-              >
-                <div>
-                  <p className="font-bold">{item.name}</p>
-                  <p className="capitalize text-captions text-gray-500">
-                    {item.category}
-                  </p>
-                </div>
-                <div>
-                  <p
-                    className={`${item.type === "addition" ? "text-green" : "text-red"} font-bold`}
-                  >
-                    {item.type === "addition" ? "+" : "-"} ₦
-                    {Number(item.amount).toLocaleString()}
-                  </p>
-                  <p className="text-captions text-gray-500">
-                    {formatDate(item.date)}
-                  </p>
-                </div>
+              <div key={item.id}>
+                <MobileTransactionsTable
+                  setMode={() => setMode("edit")}
+                  setSelectedTransaction={() => setSelectedTransaction(item)}
+                  transaction={item}
+                  openEditModal={() => setAddEditModalOpen(true)}
+                />
               </div>
             ))}
           </div>

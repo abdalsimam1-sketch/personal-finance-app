@@ -43,3 +43,28 @@ export const addPotService = async (
     throw error;
   }
 };
+
+export const getPotsService = async (
+  userId: string,
+  page: number,
+  limit: number,
+) => {
+  const skip = (page - 1) * limit;
+  const take = limit;
+
+  const pots = await prisma.pot.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    skip,
+    take,
+  });
+
+  const count = await prisma.pot.count({ where: { userId } });
+  const totalPages = Math.ceil(count / take);
+
+  return { pots, count, totalPages };
+};

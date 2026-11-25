@@ -19,3 +19,23 @@ export const addPot = async (req: Request, res: Response) => {
     },
   });
 };
+
+export const getPots = async (req: Request, res: Response) => {
+  const userId = req.user!.id;
+  const { page = 1, limit = 10 } = req.query as any;
+  const { pots, count, totalPages } = await potsServices.getPotsService(
+    userId,
+    page,
+    limit,
+  );
+
+  res.status(200).json({
+    success: true,
+    message: "Pots found",
+    data: {
+      pots,
+      count,
+      totalPages,
+    },
+  });
+};

@@ -6,9 +6,6 @@ describe("hashToken", () => {
     const token = "cryptotoken";
     const hash = hashToken(token);
 
-    console.log(hash);
-    console.log(token);
-
     expect(token).not.toBe(hash);
   });
 });

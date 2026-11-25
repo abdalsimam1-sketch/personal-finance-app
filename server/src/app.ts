@@ -12,6 +12,7 @@ import { errorHandler } from "./middleware/errorHandler.js";
 
 import { authRouter } from "./routes/auth.routes.js";
 import { transactionsRouter } from "./routes/transactions.routes.js";
+import { potsRouter } from "./routes/pots.routes.js";
 
 export const app = express();
 app.set("trust proxy", 1);
@@ -47,6 +48,7 @@ app.use("/health", (req, res) => {
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/transactions", transactionsRouter);
+app.use("/api/v1/pots", potsRouter);
 
 app.all("*splat", notFound);
 

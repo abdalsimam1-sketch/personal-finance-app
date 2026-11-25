@@ -28,6 +28,7 @@ model User {
   createdAt                      DateTime      @default(now())
   updatedAt                      DateTime      @updatedAt
   transactions                   Transaction[]
+  pots                           Pot[]
 }
 
 model Transaction {
@@ -41,6 +42,21 @@ model Transaction {
   type      TYPE
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Pot {
+  id         String   @id @default(uuid())
+  name       String
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  totalSaved Decimal  @default(0) @db.Decimal(12, 2)
+  target     Decimal  @db.Decimal(12, 2)
+  color      String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId, color])
+  @@unique([userId, name])
 }
 
 enum TYPE {

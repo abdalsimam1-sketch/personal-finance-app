@@ -61,3 +61,16 @@ export const editPot = async (req: Request, res: Response) => {
     },
   });
 };
+
+export const deletePot = async (req: Request, res: Response) => {
+  const userId = req.user!.id;
+  const potId = req.params.id as string;
+
+  const pot = await potsServices.deletePotService(userId, potId);
+
+  res.status(200).json({
+    success: true,
+    message: "Pot deleted successfully",
+    data: { pot },
+  });
+};

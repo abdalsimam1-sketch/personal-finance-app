@@ -109,3 +109,25 @@ export const editPotService = async (
     return checkPrismaErrors(error);
   }
 };
+
+export const deletePotService = async (userId: string, potId: string) => {
+  let pot = await prisma.pot.findFirst({
+    where: {
+      id: potId,
+      userId,
+    },
+  });
+
+  if (!pot) {
+    throw new NotFound();
+  }
+
+  pot = await prisma.pot.delete({
+    where: {
+      id: pot.id,
+      userId,
+    },
+  });
+
+  return pot;
+};

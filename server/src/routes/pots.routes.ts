@@ -12,5 +12,6 @@ potsRouter.get("/", potsControllers.getPots);
 //edit a pot
 potsRouter.patch("/:id", potsControllers.editPot);
 //delete a pot
+potsRouter.delete("/:id", potsControllers.deletePot);
 //add money
 //withdraw money

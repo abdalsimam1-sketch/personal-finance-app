@@ -1,6 +1,32 @@
 import { prisma } from "../lib/prisma.js";
 import { Prisma } from "../generated/prisma/client.js";
-import { BadRequest, Conflict, Unauthorized } from "../errors/errors.js";
+import {
+  BadRequest,
+  Conflict,
+  NotFound,
+  Unauthorized,
+} from "../errors/errors.js";
+
+const checkPrismaErrors = (error: any): never => {
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    if (error.code === "P2002") {
+      const fields = JSON.stringify(error.meta ?? {});
+
+      if (fields.includes("_name_")) {
+        throw new Conflict("You already have a pot with that name.");
+      }
+      if (fields.includes("_color_")) {
+        throw new Conflict(
+          "This color has already been assigned to another pot, please choose another one.",
+        );
+      }
+    }
+    if (error.code === "P2003") {
+      throw new Unauthorized("Invalid or expired tokens");
+    }
+  }
+  throw error;
+};
 
 export const addPotService = async (
   userId: string,
@@ -23,24 +49,7 @@ export const addPotService = async (
     });
     return pot;
   } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === "P2002") {
-        const fields = JSON.stringify(error.meta ?? {});
-
-        if (fields.includes("name")) {
-          throw new Conflict("You already have a pot with that name.");
-        }
-        if (fields.includes("color")) {
-          throw new Conflict(
-            "This color has already been assigned to another pot, please choose another one.",
-          );
-        }
-      }
-      if (error.code === "P2003") {
-        throw new Unauthorized("Invalid or expired tokens");
-      }
-    }
-    throw error;
+    return checkPrismaErrors(error);
   }
 };
 
@@ -67,4 +76,36 @@ export const getPotsService = async (
   const totalPages = Math.ceil(count / take);
 
   return { pots, count, totalPages };
+};
+
+export const editPotService = async (
+  userId: string,
+  potId: string,
+  { name, target, color }: { name: string; target: number; color: string },
+) => {
+  let pot = await prisma.pot.findFirst({
+    where: {
+      userId,
+      id: potId,
+    },
+  });
+  if (!pot) {
+    throw new NotFound();
+  }
+  try {
+    pot = await prisma.pot.update({
+      where: {
+        id: pot.id,
+        userId,
+      },
+      data: {
+        name,
+        target,
+        color,
+      },
+    });
+    return pot;
+  } catch (error) {
+    return checkPrismaErrors(error);
+  }
 };

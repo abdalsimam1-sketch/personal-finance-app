@@ -39,3 +39,25 @@ export const getPots = async (req: Request, res: Response) => {
     },
   });
 };
+
+export const editPot = async (req: Request, res: Response) => {
+  const userId = req.user!.id;
+  const potId = req.params.id as string;
+  const { success, data, error } = addPotSchema.safeParse(req.body);
+  if (!success) {
+    throw new BadRequest(error.issues[0]?.message);
+  }
+  const pot = await potsServices.editPotService(userId, potId, {
+    name: data.name,
+    target: data.target,
+    color: data.color,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Pot edited successfully",
+    data: {
+      pot,
+    },
+  });
+};

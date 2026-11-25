@@ -10,6 +10,7 @@ potsRouter.post("/", potsControllers.addPot);
 //get pots with pagination
 potsRouter.get("/", potsControllers.getPots);
 //edit a pot
+potsRouter.patch("/:id", potsControllers.editPot);
 //delete a pot
 //add money
 //withdraw money

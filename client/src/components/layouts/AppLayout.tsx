@@ -37,7 +37,7 @@ export const AppLayout = () => {
     {
       name: "Pots",
       icon: pots,
-      link: "",
+      link: "/pots",
     },
     {
       name: "Budgets",
@@ -67,7 +67,7 @@ export const AppLayout = () => {
         <img src={chevronRight} alt="" />
       </Link>
       <div
-        className={`desktop-sidebar hidden lg:flex flex-col justify-between bg-grey-900 ${sideBarOpen ? "w-70" : "w-20"} h-screen rounded-r py-5 mr-10`}
+        className={`desktop-sidebar hidden lg:flex flex-col justify-between bg-grey-900 ${sideBarOpen ? "w-70" : "w-20"} h-screen rounded-r py-5 `}
       >
         <div className={`flex flex-col gap-10 items-center`}>
           <img
@@ -137,7 +137,7 @@ export const AppLayout = () => {
           </Link>
         ))}
       </div>
-      <div className="flex-1">
+      <div className="flex-1 lg:px-5">
         <Outlet />
       </div>
       {logoutModalOpen && (

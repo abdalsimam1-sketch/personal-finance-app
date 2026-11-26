@@ -11,6 +11,7 @@ import { ProtectedRoutes } from "./components/ProtectedRoutes";
 import { AppLayout } from "./components/layouts/AppLayout";
 import { Transactions } from "./pages/Transactions";
 import { Account } from "./pages/Account";
+import { Pots } from "./pages/Pots";
 
 function App() {
   return (
@@ -20,10 +21,12 @@ function App() {
           path="/"
           element={<Navigate to="/login" replace></Navigate>}
         ></Route>
+
         <Route
           path="/verify-account/:token"
           element={<VerifyAccount />}
         ></Route>
+
         <Route element={<AuthLayout />}>
           <Route path="/signup" element={<Signup />}></Route>
           <Route
@@ -45,6 +48,10 @@ function App() {
           <Route
             path="/transactions"
             element={<ProtectedRoutes children={<Transactions />} />}
+          ></Route>
+          <Route
+            path="/pots"
+            element={<ProtectedRoutes children={<Pots />} />}
           ></Route>
         </Route>
 

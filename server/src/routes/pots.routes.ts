@@ -16,3 +16,4 @@ potsRouter.delete("/:id", potsControllers.deletePot);
 //add money
 potsRouter.patch("/add/:id", potsControllers.addToPot);
 //withdraw money
+potsRouter.patch("/withdraw/:id", potsControllers.withdrawFromPot);

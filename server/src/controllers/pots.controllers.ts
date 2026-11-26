@@ -97,3 +97,27 @@ export const addToPot = async (req: Request, res: Response) => {
     },
   });
 };
+
+export const withdrawFromPot = async (req: Request, res: Response) => {
+  const userId = req.user!.id;
+  const potId = req.params.id as string;
+  const { data, error, success } = addWithdrawSchema.safeParse(req.body);
+
+  if (!success) {
+    throw new BadRequest(error.issues[0]?.message);
+  }
+
+  const pot = await potsServices.withdrawFromPotService(
+    userId,
+    potId,
+    data.amount,
+  );
+
+  res.status(200).json({
+    success: true,
+    message: "Money withdrawn from pot",
+    data: {
+      pot,
+    },
+  });
+};

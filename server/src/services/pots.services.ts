@@ -162,3 +162,43 @@ export const addToPotService = async (
   });
   return pot;
 };
+
+export const withdrawFromPotService = async (
+  userId: string,
+  potId: string,
+  amount: number,
+) => {
+  let pot = await prisma.pot.findFirst({
+    where: {
+      id: potId,
+      userId,
+    },
+  });
+  if (!pot) {
+    throw new NotFound();
+  }
+
+  const updatedPot = await prisma.pot.updateMany({
+    where: {
+      id: potId,
+      userId,
+      totalSaved: { gte: amount },
+    },
+    data: {
+      totalSaved: { decrement: amount },
+    },
+  });
+
+  if (updatedPot.count === 0) {
+    throw new BadRequest("Insufficient funds in this pot.");
+  }
+
+  pot = await prisma.pot.findUnique({
+    where: {
+      id: potId,
+      userId,
+    },
+  });
+
+  return pot;
+};

@@ -3,19 +3,26 @@ import { useGetPots } from "../hooks/pots/useGetPots";
 import type { PotType } from "../types/PotType";
 import { PotSkeleton } from "../components/PotSkeleton";
 import { ErrorMessage } from "../components/ErrorMessage";
+import { AddEditPotModal } from "../components/modals/AddEditPotModal";
+import { useState } from "react";
 
 export const Pots = () => {
   const { getPotsQuery } = useGetPots();
 
   const pots = getPotsQuery.data?.data?.pots;
   const error = getPotsQuery.error?.response?.data?.message;
-  console.log("error", error);
+  const [addEditModalOpen, setAddEditModalOpen] = useState(false);
+  const takenColors = new Set(pots?.map((item) => item.color));
 
   return (
     <div className="p-5 flex flex-col gap-5 pb-20">
       <section className="flex justify-between">
         <h1 className="text-heading">Pots</h1>
-        <button className="bg-gray-900 rounded  p-1 px-3 text-white self-center ">
+        <button
+          disabled={Number(pots?.length) >= 8}
+          className="bg-gray-900 rounded  p-1 px-3 text-white self-center cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+          onClick={() => setAddEditModalOpen(true)}
+        >
           + Add New Pot
         </button>
       </section>
@@ -44,6 +51,14 @@ export const Pots = () => {
           ))
         )}
       </section>
+
+      {addEditModalOpen && (
+        <AddEditPotModal
+          takenColors={takenColors}
+          addEditModalOpen={addEditModalOpen}
+          closeModal={() => setAddEditModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

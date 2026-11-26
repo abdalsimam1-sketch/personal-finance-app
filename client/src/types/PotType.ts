@@ -5,3 +5,9 @@ export type PotType = {
   totalSaved: number;
   target: number;
 };
+
+export type AddPotType = {
+  name: string;
+  color: string;
+  target: number;
+};

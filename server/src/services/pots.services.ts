@@ -53,14 +53,7 @@ export const addPotService = async (
   }
 };
 
-export const getPotsService = async (
-  userId: string,
-  page: number,
-  limit: number,
-) => {
-  const skip = (page - 1) * limit;
-  const take = limit;
-
+export const getPotsService = async (userId: string) => {
   const pots = await prisma.pot.findMany({
     where: {
       userId,
@@ -68,14 +61,9 @@ export const getPotsService = async (
     orderBy: {
       createdAt: "desc",
     },
-    skip,
-    take,
   });
 
-  const count = await prisma.pot.count({ where: { userId } });
-  const totalPages = Math.ceil(count / take);
-
-  return { pots, count, totalPages };
+  return pots;
 };
 
 export const editPotService = async (

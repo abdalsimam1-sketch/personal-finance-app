@@ -131,3 +131,34 @@ export const deletePotService = async (userId: string, potId: string) => {
 
   return pot;
 };
+
+export const addToPotService = async (
+  userId: string,
+  potId: string,
+  amount: number,
+) => {
+  let pot = await prisma.pot.findUnique({
+    where: {
+      id: potId,
+      userId,
+    },
+  });
+  if (!pot) {
+    throw new NotFound();
+  }
+  const newTotal = amount + Number(pot.totalSaved);
+  if (newTotal > Number(pot.target)) {
+    throw new BadRequest("Total is past target");
+  }
+
+  pot = await prisma.pot.update({
+    where: {
+      id: pot.id,
+      userId,
+    },
+    data: {
+      totalSaved: newTotal,
+    },
+  });
+  return pot;
+};

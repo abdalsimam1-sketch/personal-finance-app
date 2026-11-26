@@ -1,5 +1,8 @@
 import type { Request, Response } from "express";
-import { addPotSchema } from "../validations/pots.validations.js";
+import {
+  addPotSchema,
+  addWithdrawSchema,
+} from "../validations/pots.validations.js";
 import { BadRequest } from "../errors/errors.js";
 import * as potsServices from "../services/pots.services.js";
 
@@ -72,5 +75,25 @@ export const deletePot = async (req: Request, res: Response) => {
     success: true,
     message: "Pot deleted successfully",
     data: { pot },
+  });
+};
+
+export const addToPot = async (req: Request, res: Response) => {
+  const userId = req.user!.id;
+  const potId = req.params.id as string;
+
+  const { data, success, error } = addWithdrawSchema.safeParse(req.body);
+  if (!success) {
+    throw new BadRequest(error.issues[0]?.message);
+  }
+
+  const pot = await potsServices.addToPotService(userId, potId, data.amount);
+
+  res.status(200).json({
+    success: true,
+    message: "Money added to pot",
+    data: {
+      pot,
+    },
   });
 };

@@ -14,3 +14,7 @@ export const addPotSchema = z.object({
     "magenta",
   ]),
 });
+
+export const addWithdrawSchema = z.object({
+  amount: z.number().positive().max(9999999999),
+});

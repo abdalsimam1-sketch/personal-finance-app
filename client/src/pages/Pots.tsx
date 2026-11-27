@@ -12,7 +12,9 @@ export const Pots = () => {
   const pots = getPotsQuery.data?.data?.pots;
   const error = getPotsQuery.error?.response?.data?.message;
   const [addEditModalOpen, setAddEditModalOpen] = useState(false);
+  const [mode, setMode] = useState<"add" | "edit">("add");
   const takenColors = new Set(pots?.map((item) => item.color));
+  const [selectedPot, setSelectedPot] = useState<PotType | null>(null);
 
   return (
     <div className="p-5 flex flex-col gap-5 pb-20">
@@ -21,7 +23,10 @@ export const Pots = () => {
         <button
           disabled={Number(pots?.length) >= 8}
           className="bg-gray-900 rounded  p-1 px-3 text-white self-center cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-          onClick={() => setAddEditModalOpen(true)}
+          onClick={() => {
+            setAddEditModalOpen(true);
+            setMode("add");
+          }}
         >
           + Add New Pot
         </button>
@@ -42,6 +47,11 @@ export const Pots = () => {
           pots?.map((item: PotType) => (
             <div key={item.id}>
               <PotCard
+                setAddEditModalOpen={() => {
+                  setAddEditModalOpen(true);
+                  setMode("edit");
+                  setSelectedPot(item);
+                }}
                 color={item.color}
                 name={item.name}
                 totalSaved={item.totalSaved}
@@ -54,6 +64,8 @@ export const Pots = () => {
 
       {addEditModalOpen && (
         <AddEditPotModal
+          selectedPot={selectedPot}
+          mode={mode}
           takenColors={takenColors}
           addEditModalOpen={addEditModalOpen}
           closeModal={() => setAddEditModalOpen(false)}

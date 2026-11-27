@@ -6,7 +6,7 @@ export type PotType = {
   target: number;
 };
 
-export type AddPotType = {
+export type AddEditPotType = {
   name: string;
   color: string;
   target: number;

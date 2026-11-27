@@ -3,19 +3,38 @@ import { Input } from "../Input";
 import close from "../../assets/icon-close-modal.svg";
 import { colors } from "../../data/colors";
 import { useForm } from "react-hook-form";
-import type { AddPotType } from "../../types/PotType";
+import type { AddEditPotType, PotType } from "../../types/PotType";
 import { useAddPot } from "../../hooks/pots/useAddPot";
+import { useEditPot } from "../../hooks/pots/useEditPot";
 
 export const AddEditPotModal = ({
   addEditModalOpen,
   closeModal,
   takenColors,
+  mode,
+  selectedPot,
 }: {
   addEditModalOpen: boolean;
   closeModal: () => void;
   takenColors: any;
+  mode: "add" | "edit";
+  selectedPot: PotType | null;
 }) => {
+  const defaultValues =
+    mode === "edit" && selectedPot
+      ? {
+          name: selectedPot.name,
+          target: selectedPot.target,
+          color: selectedPot.color,
+        }
+      : {
+          name: "",
+          target: 0,
+          color: "",
+        };
+
   const dialogRef = useRef<HTMLDialogElement>(null);
+
   useEffect(() => {
     if (addEditModalOpen) {
       dialogRef.current?.showModal();
@@ -23,21 +42,39 @@ export const AddEditPotModal = ({
       dialogRef.current?.close();
     }
   });
+
   const {
     register,
     formState: { errors },
     handleSubmit,
     reset,
-  } = useForm<AddPotType>();
-  const { addPotMutation } = useAddPot();
+  } = useForm<AddEditPotType>({ defaultValues });
 
-  const onSubmit = (potForm: AddPotType) => {
-    addPotMutation.mutate(potForm, {
-      onSuccess: () => {
-        reset();
-        closeModal();
-      },
-    });
+  const { addPotMutation } = useAddPot();
+  const { editPotMutation } = useEditPot();
+
+  const onSubmit = (potForm: AddEditPotType) => {
+    if (mode === "add") {
+      addPotMutation.mutate(potForm, {
+        onSuccess: () => {
+          reset();
+          closeModal();
+        },
+      });
+    } else {
+      editPotMutation.mutate(
+        {
+          payload: potForm,
+          id: selectedPot?.id as string,
+        },
+        {
+          onSuccess: () => {
+            reset();
+            closeModal();
+          },
+        },
+      );
+    }
   };
 
   return (
@@ -47,7 +84,9 @@ export const AddEditPotModal = ({
       className="border border-gray-300 m-auto w-[min(95vw,500px)] p-5 rounded"
     >
       <div className="flex justify-between items-center">
-        <h1 className="text-heading">Add New Pot</h1>
+        <h1 className="text-heading">
+          {mode === "add" ? "Add New Pot" : "Edit Pot"}
+        </h1>
         <img
           src={close}
           alt="close modal"
@@ -56,8 +95,9 @@ export const AddEditPotModal = ({
         />
       </div>
       <p className="text-captions text-gray-500">
-        Create a pot to set savings targets. These can help keep you on track as
-        you save for special purchases.
+        {mode === "add"
+          ? "Create a pot to set savings targets. These can help keep you on track as you save for special purchases."
+          : "As your budgets change, feel free to update your spending limits."}
       </p>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
         <Input
@@ -106,8 +146,17 @@ export const AddEditPotModal = ({
             ))}
           </select>
         </div>
-        <button className="border bg-gray-900 text-white w-full rounded p-1 cursor-pointer">
-          Add Pot
+        <button
+          className="border bg-gray-900 text-white w-full rounded p-1 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+          disabled={addPotMutation.isPending || editPotMutation.isPending}
+        >
+          {mode === "add"
+            ? addPotMutation.isPending
+              ? "Adding..."
+              : "Add Pot"
+            : editPotMutation.isPending
+              ? "Editting..."
+              : "Edit Pot"}
         </button>
       </form>
     </dialog>

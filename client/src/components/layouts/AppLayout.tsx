@@ -82,7 +82,7 @@ export const AppLayout = () => {
               <Link
                 key={index}
                 to={item.link}
-                className={`flex items-start gap-5 bg-white rounded cursor-pointer ${sideBarOpen ? "pl-5 p-2" : "p-1"} border-l-5  ${activeLink(item.link) ? " border-green  text-green-800" : "border-white"}  `}
+                className={`flex items-start gap-5 bg-white rounded cursor-pointer ${sideBarOpen ? "pl-5 p-1" : "p-1"} border-l-5  ${activeLink(item.link) ? " border-green  text-green-800" : "border-white"}  `}
               >
                 <img
                   src={item.icon}
@@ -106,7 +106,7 @@ export const AppLayout = () => {
           </section>
 
           <button
-            className={`bg-white border-red border-2 text-red rounded p-2  ${sideBarOpen ? "w-[11rem]" : "h-[2rem]"} self-center cursor-pointer flex items-center justify-center gap-3 pl-3`}
+            className={`bg-white border-red border-2 text-red rounded p-1  ${sideBarOpen ? "w-[11rem]" : "h-[2rem]"} self-center cursor-pointer flex items-center justify-center gap-3 pl-3`}
             onClick={() => setLogoutModalOpen(true)}
           >
             <img

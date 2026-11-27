@@ -19,3 +19,10 @@ export const editPot = async (payload: AddEditPotType, id: string) => {
   const response = await api.patch(`/pots/${id}`, payload);
   return response.data;
 };
+
+export const deletePot = async (id: string) => {
+  const response = await api.delete<ApiResponse<{ pot: PotType }>>(
+    `/pots/${id}`,
+  );
+  return response.data;
+};

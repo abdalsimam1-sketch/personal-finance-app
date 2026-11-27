@@ -4,7 +4,7 @@ export const Actions = ({
   feature,
 }: {
   onEdit: any;
-  onDelete?: any;
+  onDelete: any;
   feature: string;
 }) => {
   return (

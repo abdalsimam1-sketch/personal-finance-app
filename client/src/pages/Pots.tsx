@@ -47,6 +47,7 @@ export const Pots = () => {
           pots?.map((item: PotType) => (
             <div key={item.id}>
               <PotCard
+                selectedPotId={item.id}
                 setAddEditModalOpen={() => {
                   setAddEditModalOpen(true);
                   setMode("edit");

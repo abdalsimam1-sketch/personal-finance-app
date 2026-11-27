@@ -2,22 +2,28 @@ import { useState } from "react";
 import dots from "../assets/icon-ellipsis.svg";
 import { PercentageBar } from "./PercentageBar";
 import { Actions } from "./Actions";
+import { DeleteModal } from "./modals/DeleteModal";
+import { useDeletePot } from "../hooks/pots/useDeletePot";
 
 export const PotCard = ({
   color,
   name,
   totalSaved,
   target,
+  selectedPotId,
   setAddEditModalOpen,
 }: {
   color: string;
   name: string;
   totalSaved: number;
   target: number;
+  selectedPotId: string;
   setAddEditModalOpen: (modalOpen: boolean) => void;
 }) => {
   const percentage = Number(totalSaved / target) * 100;
   const [potActionsOpen, setPotActionsOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const { deletePotMutation } = useDeletePot();
 
   return (
     <div className="w-full border border-gray-300 rounded p-5 flex flex-col gap-3 bg-white">
@@ -47,6 +53,10 @@ export const PotCard = ({
                 setPotActionsOpen(false);
               }}
               feature="Pot"
+              onDelete={() => {
+                setDeleteModalOpen(true);
+                setPotActionsOpen(false);
+              }}
             />
           )}
         </div>
@@ -76,6 +86,22 @@ export const PotCard = ({
           - Withdraw Money
         </button>
       </div>
+
+      {deleteModalOpen && (
+        <DeleteModal
+          feature="pot"
+          deleteModalOpen={true}
+          closeDeleteModal={() => setDeleteModalOpen(false)}
+          deleteFunction={() => {
+            deletePotMutation.mutate(selectedPotId, {
+              onSuccess: () => {
+                setDeleteModalOpen(false);
+              },
+            });
+          }}
+          buttonDisabled={deletePotMutation.isPending}
+        />
+      )}
     </div>
   );
 };

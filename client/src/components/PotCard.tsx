@@ -14,7 +14,6 @@ export const PotCard = ({
   target,
   selectedPotId,
   setAddEditModalOpen,
-  onAdd,
   selectedPot,
 }: {
   color: string;
@@ -23,7 +22,7 @@ export const PotCard = ({
   target: number;
   selectedPotId: string;
   setAddEditModalOpen: (modalOpen: boolean) => void;
-  onAdd: () => void;
+
   selectedPot: PotType;
 }) => {
   const percentage = Number(totalSaved / target) * 100;
@@ -31,6 +30,7 @@ export const PotCard = ({
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [addWithdrawModalOpen, setAddWithdrawModalOpen] = useState(false);
   const { deletePotMutation } = useDeletePot();
+  const [mode, setMode] = useState<"add" | "withdraw">("add");
 
   return (
     <div className="w-full border border-gray-300 rounded p-5 flex flex-col gap-3 bg-white">
@@ -90,12 +90,18 @@ export const PotCard = ({
           className="bg-beige-100 p-1 border rounded border-gray-300 cursor-pointer"
           onClick={() => {
             setAddWithdrawModalOpen(true);
-            onAdd();
+            setMode("add");
           }}
         >
           + Add Money
         </button>
-        <button className="bg-beige-100 p-1 border rounded border-gray-300 cursor-pointer">
+        <button
+          className="bg-beige-100 p-1 border rounded border-gray-300 cursor-pointer"
+          onClick={() => {
+            setAddWithdrawModalOpen(true);
+            setMode("withdraw");
+          }}
+        >
           - Withdraw Money
         </button>
       </div>
@@ -118,6 +124,7 @@ export const PotCard = ({
 
       {addWithdrawModalOpen && (
         <AddWithdrawPotModal
+          mode={mode}
           selectedPot={selectedPot}
           addWithdrawModalOpen={addWithdrawModalOpen}
           closeModal={() => setAddWithdrawModalOpen(false)}

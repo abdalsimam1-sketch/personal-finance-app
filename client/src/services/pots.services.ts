@@ -1,3 +1,4 @@
+import type { AxiosError } from "axios";
 import { api } from "../api/api";
 import type { ApiResponse } from "../types/ApiResponse";
 import type { PotType, AddEditPotType } from "../types/PotType";
@@ -33,5 +34,13 @@ export const addToPot = async (id: string, amount: number) => {
     { amount },
   );
 
+  return response.data;
+};
+
+export const withrawFromPot = async (id: string, amount: number) => {
+  const response = await api.patch<ApiResponse<{ pot: PotType }>>(
+    `/pots/withdraw/${id}`,
+    { amount },
+  );
   return response.data;
 };

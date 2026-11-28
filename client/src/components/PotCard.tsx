@@ -4,6 +4,8 @@ import { PercentageBar } from "./PercentageBar";
 import { Actions } from "./Actions";
 import { DeleteModal } from "./modals/DeleteModal";
 import { useDeletePot } from "../hooks/pots/useDeletePot";
+import { AddWithdrawPotModal } from "./modals/AddWithdrawPotModal";
+import type { PotType } from "../types/PotType";
 
 export const PotCard = ({
   color,
@@ -12,6 +14,8 @@ export const PotCard = ({
   target,
   selectedPotId,
   setAddEditModalOpen,
+  onAdd,
+  selectedPot,
 }: {
   color: string;
   name: string;
@@ -19,10 +23,13 @@ export const PotCard = ({
   target: number;
   selectedPotId: string;
   setAddEditModalOpen: (modalOpen: boolean) => void;
+  onAdd: () => void;
+  selectedPot: PotType;
 }) => {
   const percentage = Number(totalSaved / target) * 100;
   const [potActionsOpen, setPotActionsOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [addWithdrawModalOpen, setAddWithdrawModalOpen] = useState(false);
   const { deletePotMutation } = useDeletePot();
 
   return (
@@ -79,7 +86,13 @@ export const PotCard = ({
       </section>
 
       <div className="grid grid-cols-2 gap-5">
-        <button className="bg-beige-100 p-1 border rounded border-gray-300 cursor-pointer">
+        <button
+          className="bg-beige-100 p-1 border rounded border-gray-300 cursor-pointer"
+          onClick={() => {
+            setAddWithdrawModalOpen(true);
+            onAdd();
+          }}
+        >
           + Add Money
         </button>
         <button className="bg-beige-100 p-1 border rounded border-gray-300 cursor-pointer">
@@ -100,6 +113,14 @@ export const PotCard = ({
             });
           }}
           buttonDisabled={deletePotMutation.isPending}
+        />
+      )}
+
+      {addWithdrawModalOpen && (
+        <AddWithdrawPotModal
+          selectedPot={selectedPot}
+          addWithdrawModalOpen={addWithdrawModalOpen}
+          closeModal={() => setAddWithdrawModalOpen(false)}
         />
       )}
     </div>

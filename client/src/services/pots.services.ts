@@ -26,3 +26,12 @@ export const deletePot = async (id: string) => {
   );
   return response.data;
 };
+
+export const addToPot = async (id: string, amount: number) => {
+  const response = await api.patch<ApiResponse<{ pot: PotType }>>(
+    `/pots/add/${id}`,
+    { amount },
+  );
+
+  return response.data;
+};
